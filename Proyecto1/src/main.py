@@ -1,6 +1,7 @@
 import sys
 import os
 from PyQt5 import QtWidgets
+from tkinter import messagebox
 
 # agregando la carpeta ventanas al path de python
 script_dir = os.path.dirname(os.path.abspath(__file__))
@@ -26,7 +27,7 @@ class MainApp(QtWidgets.QWidget):
             self.close()
         else:
             #mostrar ventana de error en caso de que los datos sean incorrectos
-            print("Datos incorrectos.") 
+            messagebox.showerror("Error", "Usuario o contraseña incorrectos.")
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
