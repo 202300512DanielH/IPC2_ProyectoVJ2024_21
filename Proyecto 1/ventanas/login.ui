@@ -55,7 +55,7 @@ QPushButton#pushButton:hover{
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">border-image:url(:C:\Users\danie.000\Documents\IPC2\Proyecto\Proyecto 1\ventanas\login.jpg);
+     <string notr="true">border-image:url(:/images/login.jpg);
 background-color:rgba(0,0,0,80);
 border-top-left-radius: 50px;</string>
     </property>
