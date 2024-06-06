@@ -29,7 +29,7 @@
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">QPushButton#pushButton{
+    <string notr="true">QPushButton#button_login{
  background-color: rgb(236, 253, 212);
     color: rgb(0,0,0); 
     border: 2px solid rgb(199, 255, 193);
@@ -39,13 +39,13 @@
     font-size: 16px;
 }
 
-QPushButton#pushButton:hover{
+QPushButton#button_login:hover{
   background-color: rgb(150, 204, 144); 
  border: 2px solid rgb(236, 253, 212);
     color: white; 
 }</string>
    </property>
-   <widget class="QLabel" name="label">
+   <widget class="QLabel" name="fondo">
     <property name="geometry">
      <rect>
       <x>40</x>
@@ -56,11 +56,13 @@ QPushButton#pushButton:hover{
     </property>
     <property name="styleSheet">
      <string notr="true">border-image:url(:/images/login.jpg);
-background-color:rgba(0,0,0,80);
 border-top-left-radius: 50px;</string>
     </property>
     <property name="text">
      <string/>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
     </property>
    </widget>
    <widget class="QLabel" name="label_2">
@@ -119,9 +121,7 @@ border-top-left-radius: 50px;</string>
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">
-
-</string>
+     <string notr="true"/>
     </property>
     <property name="text">
      <string/>
@@ -176,14 +176,13 @@ border-top-left-radius: 50px;</string>
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">
-</string>
+     <string notr="true"/>
     </property>
     <property name="text">
      <string>Log In</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit">
+   <widget class="QLineEdit" name="user_name_label">
     <property name="geometry">
      <rect>
       <x>295</x>
@@ -229,7 +228,7 @@ background-color:rgb(255, 170, 0)</string>
      <string/>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_2">
+   <widget class="QLineEdit" name="password_label">
     <property name="geometry">
      <rect>
       <x>295</x>
@@ -270,7 +269,7 @@ background-color:rgb(255, 170, 0)</string>
      <string>Contraseña</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="button_login">
     <property name="geometry">
      <rect>
       <x>295</x>
