@@ -16,19 +16,28 @@ class MainApp(QtWidgets.QWidget):
     
     #constructor de la clase
     def __init__(self):
-        super().__init__()
-        self.ui = Ui_Form()
-        self.ui.setupUi(self)
+        super().__init__()#llamando al constructor de la clase padre QWidget
+        self.ui = Ui_Form()#creando un objeto de la clase Ui_Form de login.py
+        self.ui.setupUi(self)#inicializando la interfaz de usuario de login
         self.ui.verificador.connect(self.ingresoApp) #conectando la señal verificador de la clase Ui_Form a la funcion ingresoApp
+        
+        self.admin_window = QMainWindow()#creando un objeto de la clase QMainWindow de PyQt5
+        self.ui_admin = Ui_MainWindow()#creando un objeto de la clase Ui_MainWindow de ui_admin.py
+        self.ui_admin.setupUi(self.admin_window)#inicializando la interfaz de usuario de ui_admin
+        self.ui_admin.bt_minus.clicked.connect(lambda: self.ui_admin.minimizar(self.admin_window))#conectando el boton de minimizar a la funcion minimizar
+        self.ui_admin.bt_exit.clicked.connect(lambda: self.ui_admin.salir(self.admin_window))#conectando el boton de salir a la funcion salir
+        self.ui_admin.verificador.connect(self.ingresoApp)#conectando la señal verificador de la clase Ui_MainWindow a la funcion ingresoApp
 
     #metodo para verificar el ingreso a la aplicacion 
-    def ingresoApp(self, resultado):
-        if resultado:
+    def ingresoApp(self, resultado, resultado2 = False):
+        
+        if resultado or resultado2:
             print("Login Exitoso.")
             #cerrando la ventana de login, aca se abre la ventana del admin o del usuario segun sea el caso
-            self.close()
-            admin = Ui_MainWindow()
-            admin.show()
+            self.hide()
+            # Mostrando la ventana del admin 
+            self.admin_window.show()#mostrando la ventana del admin
+            
         else:
             #mostrar ventana de error en caso de que los datos sean incorrectos
             messagebox.showerror("Error", "Usuario o contraseña incorrectos.")
