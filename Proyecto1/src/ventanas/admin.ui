@@ -81,8 +81,8 @@ QPushButton:hover {
          <string/>
         </property>
         <property name="icon">
-         <iconset>
-          <normaloff>bt_exit.png</normaloff>bt_exit.png</iconset>
+         <iconset resource="res1.qrc">
+          <normaloff>:/images/bt_exit.png</normaloff>:/images/bt_exit.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -122,8 +122,8 @@ QPushButton:hover {
          <string/>
         </property>
         <property name="icon">
-         <iconset>
-          <normaloff>bt_minimizar.png</normaloff>bt_minimizar.png</iconset>
+         <iconset resource="res1.qrc">
+          <normaloff>:/images/bt_minimizar.png</normaloff>:/images/bt_minimizar.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -163,8 +163,8 @@ QPushButton:hover {
          <string/>
         </property>
         <property name="icon">
-         <iconset>
-          <normaloff>bt_expandir.png</normaloff>bt_expandir.png</iconset>
+         <iconset resource="res1.qrc">
+          <normaloff>:/images/bt_expandir.png</normaloff>:/images/bt_expandir.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -207,8 +207,8 @@ QPushButton:hover {
          <string/>
         </property>
         <property name="icon">
-         <iconset>
-          <normaloff>bt_opciones.png</normaloff>bt_opciones.png</iconset>
+         <iconset resource="res1.qrc">
+          <normaloff>:/images/bt_opciones.png</normaloff>:/images/bt_opciones.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -330,8 +330,8 @@ QLabel#subtitle {
               <string>Cargar</string>
              </property>
              <property name="icon">
-              <iconset>
-               <normaloff>bt_upload.png</normaloff>bt_upload.png</iconset>
+              <iconset resource="res1.qrc">
+               <normaloff>:/images/bt_upload.png</normaloff>:/images/bt_upload.png</iconset>
              </property>
              <property name="iconSize">
               <size>
@@ -347,8 +347,8 @@ QLabel#subtitle {
               <string>Reportes</string>
              </property>
              <property name="icon">
-              <iconset>
-               <normaloff>bt_reports.png</normaloff>bt_reports.png</iconset>
+              <iconset resource="res1.qrc">
+               <normaloff>:/images/bt_reports.png</normaloff>:/images/bt_reports.png</iconset>
              </property>
              <property name="iconSize">
               <size>
@@ -364,8 +364,8 @@ QLabel#subtitle {
               <string>Actividades</string>
              </property>
              <property name="icon">
-              <iconset>
-               <normaloff>bt_activities.png</normaloff>bt_activities.png</iconset>
+              <iconset resource="res1.qrc">
+               <normaloff>:/images/bt_activities.png</normaloff>:/images/bt_activities.png</iconset>
              </property>
              <property name="iconSize">
               <size>
@@ -381,8 +381,8 @@ QLabel#subtitle {
               <string>Compras</string>
              </property>
              <property name="icon">
-              <iconset>
-               <normaloff>bt_shop.png</normaloff>bt_shop.png</iconset>
+              <iconset resource="res1.qrc">
+               <normaloff>:/images/bt_shop.png</normaloff>:/images/bt_shop.png</iconset>
              </property>
              <property name="iconSize">
               <size>
@@ -457,8 +457,8 @@ QPushButton:hover {
                 <string>Salir</string>
                </property>
                <property name="icon">
-                <iconset>
-                 <normaloff>bt_back.png</normaloff>bt_back.png</iconset>
+                <iconset resource="res1.qrc">
+                 <normaloff>:/images/bt_back.png</normaloff>:/images/bt_back.png</iconset>
                </property>
                <property name="iconSize">
                 <size>
@@ -573,8 +573,8 @@ QPushButton:hover {
                 <string>Productos</string>
                </property>
                <property name="icon">
-                <iconset>
-                 <normaloff>up_products.png</normaloff>up_products.png</iconset>
+                <iconset resource="res1.qrc">
+                 <normaloff>:/images/up_products.png</normaloff>:/images/up_products.png</iconset>
                </property>
                <property name="iconSize">
                 <size>
@@ -626,8 +626,8 @@ QPushButton:hover {
                 <string>Usuarios</string>
                </property>
                <property name="icon">
-                <iconset>
-                 <normaloff>up_users.png</normaloff>up_users.png</iconset>
+                <iconset resource="res1.qrc">
+                 <normaloff>:/images/up_users.png</normaloff>:/images/up_users.png</iconset>
                </property>
                <property name="iconSize">
                 <size>
@@ -676,8 +676,8 @@ QPushButton:hover {
                 <string>Empleados</string>
                </property>
                <property name="icon">
-                <iconset>
-                 <normaloff>up_employee.png</normaloff>up_employee.png</iconset>
+                <iconset resource="res1.qrc">
+                 <normaloff>:/images/up_employee.png</normaloff>:/images/up_employee.png</iconset>
                </property>
                <property name="iconSize">
                 <size>
@@ -726,8 +726,8 @@ QPushButton:hover {
                 <string>Actividades</string>
                </property>
                <property name="icon">
-                <iconset>
-                 <normaloff>up_activities.png</normaloff>up_activities.png</iconset>
+                <iconset resource="res1.qrc">
+                 <normaloff>:/images/up_activities.png</normaloff>:/images/up_activities.png</iconset>
                </property>
                <property name="iconSize">
                 <size>
@@ -767,8 +767,8 @@ QPushButton:hover {
                 <string>Salir</string>
                </property>
                <property name="icon">
-                <iconset>
-                 <normaloff>bt_back.png</normaloff>bt_back.png</iconset>
+                <iconset resource="res1.qrc">
+                 <normaloff>:/images/bt_back.png</normaloff>:/images/bt_back.png</iconset>
                </property>
                <property name="iconSize">
                 <size>
@@ -837,11 +837,11 @@ QPushButton:hover {
 </string>
                </property>
                <property name="text">
-                <string>Doblemente Enlazada</string>
+                <string>Reporte de Usuarios</string>
                </property>
                <property name="icon">
-                <iconset>
-                 <normaloff>mandala.png</normaloff>mandala.png</iconset>
+                <iconset resource="res1.qrc">
+                 <normaloff>:/images/up_employee.png</normaloff>:/images/up_employee.png</iconset>
                </property>
                <property name="iconSize">
                 <size>
@@ -881,8 +881,8 @@ QPushButton:hover {
                 <string>Salir</string>
                </property>
                <property name="icon">
-                <iconset>
-                 <normaloff>bt_back.png</normaloff>bt_back.png</iconset>
+                <iconset resource="res1.qrc">
+                 <normaloff>:/images/bt_back.png</normaloff>:/images/bt_back.png</iconset>
                </property>
                <property name="iconSize">
                 <size>
@@ -928,11 +928,11 @@ QPushButton:hover {
 </string>
                </property>
                <property name="text">
-                <string>Circular Doblemente Enlazada</string>
+                <string>Reporte de Productos</string>
                </property>
                <property name="icon">
-                <iconset>
-                 <normaloff>mandala.png</normaloff>mandala.png</iconset>
+                <iconset resource="res1.qrc">
+                 <normaloff>:/images/up_products.png</normaloff>:/images/up_products.png</iconset>
                </property>
                <property name="iconSize">
                 <size>
@@ -978,7 +978,7 @@ QPushButton:hover {
 </string>
                </property>
                <property name="text">
-                <string>Cola</string>
+                <string>Reporte de Cola</string>
                </property>
                <property name="icon">
                 <iconset>
@@ -1028,11 +1028,11 @@ QPushButton:hover {
 </string>
                </property>
                <property name="text">
-                <string>Simplemente Enlzada</string>
+                <string>Reporte de Compras</string>
                </property>
                <property name="icon">
-                <iconset>
-                 <normaloff>rp_icon.png</normaloff>rp_icon.png</iconset>
+                <iconset resource="res1.qrc">
+                 <normaloff>:/images/bt_shop.png</normaloff>:/images/bt_shop.png</iconset>
                </property>
                <property name="iconSize">
                 <size>
@@ -1078,11 +1078,11 @@ QPushButton:hover {
 </string>
                </property>
                <property name="text">
-                <string>Simplemente Circular Enlazada</string>
+                <string>Reporte de Vendedores</string>
                </property>
                <property name="icon">
-                <iconset>
-                 <normaloff>rp_icon.png</normaloff>rp_icon.png</iconset>
+                <iconset resource="res1.qrc">
+                 <normaloff>:/images/img_admin.png</normaloff>:/images/img_admin.png</iconset>
                </property>
                <property name="iconSize">
                 <size>
@@ -1128,11 +1128,11 @@ QPushButton:hover {
 </string>
                </property>
                <property name="text">
-                <string>Ortogonal</string>
+                <string>Reporte de Actividades</string>
                </property>
                <property name="icon">
-                <iconset>
-                 <normaloff>rp_icon.png</normaloff>rp_icon.png</iconset>
+                <iconset resource="res1.qrc">
+                 <normaloff>:/images/up_activities.png</normaloff>:/images/up_activities.png</iconset>
                </property>
                <property name="iconSize">
                 <size>
@@ -1233,8 +1233,8 @@ QPushButton:hover {
                 <string>Salir</string>
                </property>
                <property name="icon">
-                <iconset>
-                 <normaloff>bt_back.png</normaloff>bt_back.png</iconset>
+                <iconset resource="res1.qrc">
+                 <normaloff>:/images/bt_back.png</normaloff>:/images/bt_back.png</iconset>
                </property>
                <property name="iconSize">
                 <size>
@@ -1317,8 +1317,8 @@ QPushButton:hover {
                 <string>Salir</string>
                </property>
                <property name="icon">
-                <iconset>
-                 <normaloff>bt_back.png</normaloff>bt_back.png</iconset>
+                <iconset resource="res1.qrc">
+                 <normaloff>:/images/bt_back.png</normaloff>:/images/bt_back.png</iconset>
                </property>
                <property name="iconSize">
                 <size>
@@ -1458,8 +1458,8 @@ QPushButton:hover {
                 <string>Salir</string>
                </property>
                <property name="icon">
-                <iconset>
-                 <normaloff>bt_back.png</normaloff>bt_back.png</iconset>
+                <iconset resource="res1.qrc">
+                 <normaloff>:/images/bt_back.png</normaloff>:/images/bt_back.png</iconset>
                </property>
                <property name="iconSize">
                 <size>
@@ -1507,8 +1507,8 @@ QPushButton:hover {
                 <string>Cargar</string>
                </property>
                <property name="icon">
-                <iconset>
-                 <normaloff>bt_upload.png</normaloff>bt_upload.png</iconset>
+                <iconset resource="res1.qrc">
+                 <normaloff>:/images/bt_upload.png</normaloff>:/images/bt_upload.png</iconset>
                </property>
                <property name="iconSize">
                 <size>
@@ -1550,8 +1550,8 @@ QPushButton:hover {
                 <string>Salir</string>
                </property>
                <property name="icon">
-                <iconset>
-                 <normaloff>bt_back.png</normaloff>bt_back.png</iconset>
+                <iconset resource="res1.qrc">
+                 <normaloff>:/images/bt_back.png</normaloff>:/images/bt_back.png</iconset>
                </property>
                <property name="iconSize">
                 <size>
@@ -1563,7 +1563,7 @@ QPushButton:hover {
               <widget class="QPushButton" name="bt_up_cargaMasivaProductos">
                <property name="geometry">
                 <rect>
-                 <x>190</x>
+                 <x>200</x>
                  <y>240</y>
                  <width>301</width>
                  <height>121</height>
@@ -1599,8 +1599,8 @@ QPushButton:hover {
                 <string>Cargar</string>
                </property>
                <property name="icon">
-                <iconset>
-                 <normaloff>bt_upload.png</normaloff>bt_upload.png</iconset>
+                <iconset resource="res1.qrc">
+                 <normaloff>:/images/bt_upload.png</normaloff>:/images/bt_upload.png</iconset>
                </property>
                <property name="iconSize">
                 <size>
@@ -1638,8 +1638,8 @@ QPushButton:hover {
               <widget class="QLabel" name="label_7">
                <property name="geometry">
                 <rect>
-                 <x>140</x>
-                 <y>80</y>
+                 <x>160</x>
+                 <y>90</y>
                  <width>391</width>
                  <height>141</height>
                 </rect>
@@ -1690,8 +1690,8 @@ QPushButton:hover {
                 <string>Salir</string>
                </property>
                <property name="icon">
-                <iconset>
-                 <normaloff>bt_back.png</normaloff>bt_back.png</iconset>
+                <iconset resource="res1.qrc">
+                 <normaloff>:/images/bt_back.png</normaloff>:/images/bt_back.png</iconset>
                </property>
                <property name="iconSize">
                 <size>
@@ -1703,7 +1703,7 @@ QPushButton:hover {
               <widget class="QPushButton" name="bt_up_cargaMasivaEmpleados">
                <property name="geometry">
                 <rect>
-                 <x>180</x>
+                 <x>200</x>
                  <y>240</y>
                  <width>301</width>
                  <height>121</height>
@@ -1739,8 +1739,8 @@ QPushButton:hover {
                 <string>Cargar</string>
                </property>
                <property name="icon">
-                <iconset>
-                 <normaloff>bt_upload.png</normaloff>bt_upload.png</iconset>
+                <iconset resource="res1.qrc">
+                 <normaloff>:/images/bt_upload.png</normaloff>:/images/bt_upload.png</iconset>
                </property>
                <property name="iconSize">
                 <size>
@@ -1807,8 +1807,8 @@ QPushButton:hover {
                 <string>Cargar</string>
                </property>
                <property name="icon">
-                <iconset>
-                 <normaloff>bt_upload.png</normaloff>bt_upload.png</iconset>
+                <iconset resource="res1.qrc">
+                 <normaloff>:/images/bt_upload.png</normaloff>:/images/bt_upload.png</iconset>
                </property>
                <property name="iconSize">
                 <size>
@@ -1872,8 +1872,8 @@ QPushButton:hover {
                 <string>Salir</string>
                </property>
                <property name="icon">
-                <iconset>
-                 <normaloff>bt_back.png</normaloff>bt_back.png</iconset>
+                <iconset resource="res1.qrc">
+                 <normaloff>:/images/bt_back.png</normaloff>:/images/bt_back.png</iconset>
                </property>
                <property name="iconSize">
                 <size>
@@ -1956,8 +1956,8 @@ QPushButton:hover {
                 <string>Salir</string>
                </property>
                <property name="icon">
-                <iconset>
-                 <normaloff>bt_back.png</normaloff>bt_back.png</iconset>
+                <iconset resource="res1.qrc">
+                 <normaloff>:/images/bt_back.png</normaloff>:/images/bt_back.png</iconset>
                </property>
                <property name="iconSize">
                 <size>
@@ -1979,6 +1979,8 @@ QPushButton:hover {
    </widget>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="res1.qrc"/>
+ </resources>
  <connections/>
 </ui>

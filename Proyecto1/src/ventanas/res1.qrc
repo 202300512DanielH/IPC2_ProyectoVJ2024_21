@@ -1,5 +1,24 @@
 <RCC>
   <qresource prefix="images">
+    <file>bt_activities.png</file>
+    <file>bt_back.png</file>
+    <file>bt_comprimir.png</file>
+    <file>bt_exit.png</file>
+    <file>bt_expandir.png</file>
+    <file>bt_minimizar.png</file>
+    <file>bt_opciones.png</file>
+    <file>bt_reports.png</file>
+    <file>bt_shop.png</file>
+    <file>bt_upload.png</file>
+    <file>img_admin.png</file>
+    <file>rp_icon.png</file>
+    <file>up_activities.png</file>
+    <file>up_employee.png</file>
+    <file>up_products.png</file>
+    <file>up_users.png</file>
+    <file>error-image.png</file>
+    <file>down-arrow.png</file>
+    <file>up-arrow (1).png</file>
     <file>cerrar-con-llave.png</file>
     <file>carretilla.png</file>
     <file>login.jpg</file>
