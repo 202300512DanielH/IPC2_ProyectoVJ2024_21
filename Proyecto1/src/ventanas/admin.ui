@@ -1,0 +1,1984 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1078</width>
+    <height>752</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <property name="font">
+    <font>
+     <family>Comic Sans MS</family>
+    </font>
+   </property>
+   <widget class="QFrame" name="frame">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>1081</width>
+      <height>751</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(255, 255, 255);</string>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout" stretch="1,8">
+     <item>
+      <widget class="QFrame" name="FrameSuperior">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(253,229,212);
+</string>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Raised</enum>
+       </property>
+       <widget class="QPushButton" name="bt_exit">
+        <property name="geometry">
+         <rect>
+          <x>970</x>
+          <y>10</y>
+          <width>71</width>
+          <height>51</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton {
+    background-color: rgb(255, 170, 0);
+    border: 2px solid #dd9300; 
+    color: white;
+    font-weight: bold;
+	border-top-left-radius:20px;
+	border-bottom-left-radius:20px;
+	border-top-right-radius:20px;
+	border-bottom-right-radius:20px;
+
+}
+
+QPushButton:hover {
+    background-color:#dd9300; 
+    border: 2px solid #dd9300; 
+}</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>bt_exit.png</normaloff>bt_exit.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>38</width>
+          <height>38</height>
+         </size>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="bt_minus">
+        <property name="geometry">
+         <rect>
+          <x>790</x>
+          <y>10</y>
+          <width>71</width>
+          <height>51</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton {
+    background-color: rgb(255, 170, 0);
+    border: 2px solid #dd9300; 
+    color: white;
+    font-weight: bold;
+	border-top-left-radius:20px;
+	border-bottom-left-radius:20px;
+	border-top-right-radius:20px;
+	border-bottom-right-radius:20px;
+
+}
+
+QPushButton:hover {
+    background-color:#dd9300; 
+    border: 2px solid #dd9300; 
+}</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>bt_minimizar.png</normaloff>bt_minimizar.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>38</width>
+          <height>38</height>
+         </size>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="bt_expand">
+        <property name="geometry">
+         <rect>
+          <x>880</x>
+          <y>10</y>
+          <width>71</width>
+          <height>51</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton {
+    background-color: rgb(255, 170, 0);
+    border: 2px solid #dd9300; 
+    color: white;
+    font-weight: bold;
+	border-top-left-radius:20px;
+	border-bottom-left-radius:20px;
+	border-top-right-radius:20px;
+	border-bottom-right-radius:20px;
+
+}
+
+QPushButton:hover {
+    background-color:#dd9300; 
+    border: 2px solid #dd9300; 
+}</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>bt_expandir.png</normaloff>bt_expandir.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>38</width>
+          <height>38</height>
+         </size>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="bt_option">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>10</y>
+          <width>291</width>
+          <height>61</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton {
+    background-color: rgb(255, 170, 0);
+    border: 2px solid #dd9300; 
+    color: white;
+    font-weight: bold;
+    min-width: 135px;
+    min-height: 0px;
+    padding: 0px;
+	border-top-left-radius:20px;
+	border-bottom-left-radius:20px;
+	border-top-right-radius:20px;
+	border-bottom-right-radius:20px;
+
+}
+
+QPushButton:hover {
+    background-color:#dd9300; 
+    border: 2px solid #dd9300; 
+}</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>bt_opciones.png</normaloff>bt_opciones.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>38</width>
+          <height>38</height>
+         </size>
+        </property>
+       </widget>
+      </widget>
+     </item>
+     <item>
+      <widget class="QFrame" name="FrameInferior">
+       <property name="styleSheet">
+        <string notr="true">QFrame {
+    border: 3px solid orange;
+}
+</string>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Raised</enum>
+       </property>
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <item>
+         <widget class="QFrame" name="frameBotones">
+          <property name="minimumSize">
+           <size>
+            <width>300</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>0</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <family>Comic Sans MS</family>
+           </font>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">/* Estilo para el QFrame */
+QFrame {
+    border: 2px solid #FFA500; /* Naranja */
+    background-color: rgb(253,229,212);
+    padding: 10px;
+}
+
+/* Estilo para los QLineEdit */
+QLineEdit {
+    border: 2px solid #FFA500; /* Naranja */
+    border-radius: 10px;
+    padding: 5px;
+    background-color: #FFEBCC; /* Color crema claro */
+    color: #333333;
+    font-size: 14px;
+    margin-bottom: 10px; /* Espacio entre los campos de entrada */
+}
+
+
+QPushButton {
+    background-color: rgb(255, 170, 0);
+    border: 2px solid #dd9300; /* Verde oscuro */
+	color: rgb(221, 147, 0);
+	color: rgb(200, 133, 0);
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    min-width: 135px;
+    min-height: 50px;
+    padding: 10px;
+	border-top-left-radius:20px;
+	border-bottom-left-radius:20px;
+
+}
+
+QPushButton:hover {
+    background-color:#dd9300; /* Verde más claro */
+    border: 2px solid #dd9300; /* Verde oscuro */
+}
+
+QPushButton:pressed {
+    background-color: #689F38; /* Verde oscuro */
+    border: 2px solid #33691E; /* Verde más oscuro */
+}
+
+
+/* Estilo para el QLabel (título) */
+QLabel#title {
+    color: #333333;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* Estilo para el QLabel (subtítulo) */
+QLabel#subtitle {
+    color: #FFA500;
+    font-size: 14px;
+}
+</string>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::StyledPanel</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Raised</enum>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_2">
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QPushButton" name="bt_menu_cargar">
+             <property name="text">
+              <string>Cargar</string>
+             </property>
+             <property name="icon">
+              <iconset>
+               <normaloff>bt_upload.png</normaloff>bt_upload.png</iconset>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>38</width>
+               <height>38</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="bt_menu_reportes">
+             <property name="text">
+              <string>Reportes</string>
+             </property>
+             <property name="icon">
+              <iconset>
+               <normaloff>bt_reports.png</normaloff>bt_reports.png</iconset>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>38</width>
+               <height>38</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="bt_menu_actividades">
+             <property name="text">
+              <string>Actividades</string>
+             </property>
+             <property name="icon">
+              <iconset>
+               <normaloff>bt_activities.png</normaloff>bt_activities.png</iconset>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>38</width>
+               <height>38</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="bt_menu_compras">
+             <property name="text">
+              <string>Compras</string>
+             </property>
+             <property name="icon">
+              <iconset>
+               <normaloff>bt_shop.png</normaloff>bt_shop.png</iconset>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>38</width>
+               <height>38</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QFrame" name="frame_3">
+          <property name="styleSheet">
+           <string notr="true">border-color: rgb(255, 255, 255);
+</string>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::StyledPanel</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Raised</enum>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_3">
+           <item>
+            <widget class="QStackedWidget" name="stackedWidget">
+             <property name="minimumSize">
+              <size>
+               <width>694</width>
+               <height>584</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>694</width>
+               <height>584</height>
+              </size>
+             </property>
+             <property name="currentIndex">
+              <number>0</number>
+             </property>
+             <widget class="QWidget" name="Inicial">
+              <widget class="QPushButton" name="go_login_inicio">
+               <property name="geometry">
+                <rect>
+                 <x>420</x>
+                 <y>20</y>
+                 <width>265</width>
+                 <height>51</height>
+                </rect>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QPushButton {
+    background-color: #ff7676;
+    border: 2px solid #e00000; 
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px;
+	border-top-left-radius:20px;
+	border-bottom-left-radius:20px;
+
+}
+
+QPushButton:hover {
+    background-color:#c20000; 
+    border: 2px solid #c20000; 
+}</string>
+               </property>
+               <property name="text">
+                <string>Salir</string>
+               </property>
+               <property name="icon">
+                <iconset>
+                 <normaloff>bt_back.png</normaloff>bt_back.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>30</width>
+                 <height>30</height>
+                </size>
+               </property>
+              </widget>
+              <widget class="QPushButton" name="pushButton_6">
+               <property name="geometry">
+                <rect>
+                 <x>140</x>
+                 <y>120</y>
+                 <width>391</width>
+                 <height>331</height>
+                </rect>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QPushButton {
+    background-color: #f0c348;
+    border: 2px solid #f0c348; 
+    font-size: 16px;
+    font-weight: bold;
+    min-width: 135px;
+    min-height: 50px;
+    padding: 10px;
+	border-top-left-radius:20px;
+	border-top-right-radius:20px;
+
+}
+
+</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset>
+                 <normaloff>img_admin.png</normaloff>img_admin.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>250</width>
+                 <height>250</height>
+                </size>
+               </property>
+              </widget>
+              <widget class="QLabel" name="label">
+               <property name="geometry">
+                <rect>
+                 <x>20</x>
+                 <y>470</y>
+                 <width>621</width>
+                 <height>91</height>
+                </rect>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Comic Sans MS</family>
+                 <pointsize>28</pointsize>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="text">
+                <string>¡Bienvenido Administrador!</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+               </property>
+              </widget>
+             </widget>
+             <widget class="QWidget" name="Carga">
+              <widget class="QPushButton" name="bt_cargar_productos">
+               <property name="geometry">
+                <rect>
+                 <x>370</x>
+                 <y>100</y>
+                 <width>311</width>
+                 <height>201</height>
+                </rect>
+               </property>
+               <property name="font">
+                <font>
+                 <pointsize>-1</pointsize>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QPushButton {
+    background-color: #8cebdb;
+    border: 2px solid #25D9B9; 
+	color: white;
+    font-size: 20px;
+    font-weight: bold;
+    min-width: 135px;
+    min-height: 50px;
+    padding: 10px;
+	border-top-left-radius:20px;
+	border-top-right-radius:20px;
+
+}
+QPushButton:hover {
+    background-color:#25D9B9;
+    border: 2px solid #25D9B9; 
+}
+
+</string>
+               </property>
+               <property name="text">
+                <string>Productos</string>
+               </property>
+               <property name="icon">
+                <iconset>
+                 <normaloff>up_products.png</normaloff>up_products.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>150</width>
+                 <height>145</height>
+                </size>
+               </property>
+              </widget>
+              <widget class="QPushButton" name="bt_cargar_usuarios">
+               <property name="geometry">
+                <rect>
+                 <x>0</x>
+                 <y>100</y>
+                 <width>311</width>
+                 <height>201</height>
+                </rect>
+               </property>
+               <property name="font">
+                <font>
+                 <pointsize>-1</pointsize>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QPushButton {
+    background-color: #c0f5a2;
+    border: 2px solid #9ee67a; 
+	color: white;
+    font-size: 20px;
+    font-weight: bold;
+    min-width: 135px;
+    min-height: 50px;
+    padding: 10px;
+	border-top-left-radius:20px;
+	border-top-right-radius:20px;
+
+}
+
+QPushButton:hover {
+    background-color:#9ee67a;
+    border: 2px solid #9ee67a; 
+}
+
+
+</string>
+               </property>
+               <property name="text">
+                <string>Usuarios</string>
+               </property>
+               <property name="icon">
+                <iconset>
+                 <normaloff>up_users.png</normaloff>up_users.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>150</width>
+                 <height>150</height>
+                </size>
+               </property>
+              </widget>
+              <widget class="QPushButton" name="bt_cargar_empleados">
+               <property name="geometry">
+                <rect>
+                 <x>10</x>
+                 <y>360</y>
+                 <width>311</width>
+                 <height>201</height>
+                </rect>
+               </property>
+               <property name="font">
+                <font>
+                 <pointsize>-1</pointsize>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QPushButton {
+    background-color: #9ee1ff;
+    border: 2px solid #66c6f2; 
+	color: white;
+    font-size: 20px;
+    font-weight: bold;
+    min-width: 135px;
+    min-height: 50px;
+    padding: 10px;
+	border-top-left-radius:20px;
+	border-top-right-radius:20px;
+
+}
+QPushButton:hover {
+    background-color:#66c6f2;
+    border: 2px solid #66c6f2; 
+}
+</string>
+               </property>
+               <property name="text">
+                <string>Empleados</string>
+               </property>
+               <property name="icon">
+                <iconset>
+                 <normaloff>up_employee.png</normaloff>up_employee.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>150</width>
+                 <height>150</height>
+                </size>
+               </property>
+              </widget>
+              <widget class="QPushButton" name="bt_cargar_actividades">
+               <property name="geometry">
+                <rect>
+                 <x>370</x>
+                 <y>360</y>
+                 <width>311</width>
+                 <height>201</height>
+                </rect>
+               </property>
+               <property name="font">
+                <font>
+                 <pointsize>-1</pointsize>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QPushButton {
+    background-color: #c4c2ff;
+    border: 2px solid #7f7ce6; 
+	color: white;
+    font-size: 20px;
+    font-weight: bold;
+    min-width: 135px;
+    min-height: 50px;
+    padding: 10px;
+	border-top-left-radius:20px;
+	border-top-right-radius:20px;
+
+}
+QPushButton:hover {
+    background-color:#7f7ce6;
+    border: 2px solid #7f7ce6; 
+}
+</string>
+               </property>
+               <property name="text">
+                <string>Actividades</string>
+               </property>
+               <property name="icon">
+                <iconset>
+                 <normaloff>up_activities.png</normaloff>up_activities.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>150</width>
+                 <height>150</height>
+                </size>
+               </property>
+              </widget>
+              <widget class="QPushButton" name="go_login_cargar">
+               <property name="geometry">
+                <rect>
+                 <x>420</x>
+                 <y>20</y>
+                 <width>265</width>
+                 <height>51</height>
+                </rect>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QPushButton {
+    background-color: #ff7676;
+    border: 2px solid #e00000; 
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px;
+	border-top-left-radius:20px;
+	border-bottom-left-radius:20px;
+
+}
+
+QPushButton:hover {
+    background-color:#c20000; 
+    border: 2px solid #c20000; 
+}</string>
+               </property>
+               <property name="text">
+                <string>Salir</string>
+               </property>
+               <property name="icon">
+                <iconset>
+                 <normaloff>bt_back.png</normaloff>bt_back.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>30</width>
+                 <height>30</height>
+                </size>
+               </property>
+              </widget>
+             </widget>
+             <widget class="QWidget" name="Reporte">
+              <widget class="QLabel" name="label_2">
+               <property name="geometry">
+                <rect>
+                 <x>70</x>
+                 <y>0</y>
+                 <width>291</width>
+                 <height>81</height>
+                </rect>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Comic Sans MS</family>
+                 <pointsize>36</pointsize>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="text">
+                <string>Reportes</string>
+               </property>
+              </widget>
+              <widget class="QPushButton" name="bt_reportes_DE">
+               <property name="geometry">
+                <rect>
+                 <x>0</x>
+                 <y>150</y>
+                 <width>331</width>
+                 <height>71</height>
+                </rect>
+               </property>
+               <property name="font">
+                <font>
+                 <family>MS Serif</family>
+                 <pointsize>11</pointsize>
+                 <weight>50</weight>
+                 <bold>false</bold>
+                </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QPushButton {
+    background-color: #ffcea3;
+    border: 2px solid #Faa255; 
+	color: white;
+    padding: 10px;
+	border-top-right-radius:20px;
+	border-bottom-right-radius:20px;
+
+}
+
+QPushButton:hover {
+    background-color:#Faa255;
+    border: 2px solid #Faa255; 
+}
+
+
+</string>
+               </property>
+               <property name="text">
+                <string>Doblemente Enlazada</string>
+               </property>
+               <property name="icon">
+                <iconset>
+                 <normaloff>mandala.png</normaloff>mandala.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>50</width>
+                 <height>100</height>
+                </size>
+               </property>
+              </widget>
+              <widget class="QPushButton" name="go_login_reportes">
+               <property name="geometry">
+                <rect>
+                 <x>420</x>
+                 <y>20</y>
+                 <width>265</width>
+                 <height>51</height>
+                </rect>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QPushButton {
+    background-color: #ff7676;
+    border: 2px solid #e00000; 
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px;
+	border-top-left-radius:20px;
+	border-bottom-left-radius:20px;
+
+}
+
+QPushButton:hover {
+    background-color:#c20000; 
+    border: 2px solid #c20000; 
+}</string>
+               </property>
+               <property name="text">
+                <string>Salir</string>
+               </property>
+               <property name="icon">
+                <iconset>
+                 <normaloff>bt_back.png</normaloff>bt_back.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>30</width>
+                 <height>30</height>
+                </size>
+               </property>
+              </widget>
+              <widget class="QPushButton" name="bt_reportes_CDE">
+               <property name="geometry">
+                <rect>
+                 <x>-10</x>
+                 <y>270</y>
+                 <width>331</width>
+                 <height>71</height>
+                </rect>
+               </property>
+               <property name="font">
+                <font>
+                 <family>MS Serif</family>
+                 <pointsize>11</pointsize>
+                 <weight>50</weight>
+                 <bold>false</bold>
+                </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QPushButton {
+    background-color: #FBE692;
+    border: 2px solid #F0C348; 
+	color: white;
+    padding: 10px;
+	border-top-right-radius:20px;
+	border-bottom-right-radius:20px;
+
+}
+
+QPushButton:hover {
+    background-color:#F0C348;
+    border: 2px solid #F0C348; 
+}
+
+
+</string>
+               </property>
+               <property name="text">
+                <string>Circular Doblemente Enlazada</string>
+               </property>
+               <property name="icon">
+                <iconset>
+                 <normaloff>mandala.png</normaloff>mandala.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>50</width>
+                 <height>100</height>
+                </size>
+               </property>
+              </widget>
+              <widget class="QPushButton" name="bt_reportes_COLA">
+               <property name="geometry">
+                <rect>
+                 <x>0</x>
+                 <y>390</y>
+                 <width>331</width>
+                 <height>71</height>
+                </rect>
+               </property>
+               <property name="font">
+                <font>
+                 <family>MS Serif</family>
+                 <pointsize>11</pointsize>
+                 <weight>50</weight>
+                 <bold>false</bold>
+                </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QPushButton {
+    background-color: #ecb4f5;
+    border: 2px solid #e27cf1; 
+	color: white;
+    padding: 10px;
+	border-top-right-radius:20px;
+	border-bottom-right-radius:20px;
+
+}
+
+QPushButton:hover {
+    background-color:#e27cf1;
+    border: 2px solid #e27cf1; 
+}
+
+
+</string>
+               </property>
+               <property name="text">
+                <string>Cola</string>
+               </property>
+               <property name="icon">
+                <iconset>
+                 <normaloff>rp_icon.png</normaloff>rp_icon.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>50</width>
+                 <height>100</height>
+                </size>
+               </property>
+              </widget>
+              <widget class="QPushButton" name="bt_reportes_SE">
+               <property name="geometry">
+                <rect>
+                 <x>360</x>
+                 <y>150</y>
+                 <width>331</width>
+                 <height>71</height>
+                </rect>
+               </property>
+               <property name="font">
+                <font>
+                 <family>MS Serif</family>
+                 <pointsize>11</pointsize>
+                 <weight>50</weight>
+                 <bold>false</bold>
+                </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QPushButton {
+    background-color: #FAB4D7;
+    border: 2px solid #f562AC; 
+	color: white;
+    padding: 10px;
+	border-top-left-radius:20px;
+	border-bottom-left-radius:20px;
+
+}
+
+QPushButton:hover {
+    background-color:#f562AC;
+    border: 2px solid #f562AC; 
+}
+
+
+</string>
+               </property>
+               <property name="text">
+                <string>Simplemente Enlzada</string>
+               </property>
+               <property name="icon">
+                <iconset>
+                 <normaloff>rp_icon.png</normaloff>rp_icon.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>50</width>
+                 <height>100</height>
+                </size>
+               </property>
+              </widget>
+              <widget class="QPushButton" name="bt_reportes_SCE">
+               <property name="geometry">
+                <rect>
+                 <x>360</x>
+                 <y>270</y>
+                 <width>331</width>
+                 <height>71</height>
+                </rect>
+               </property>
+               <property name="font">
+                <font>
+                 <family>MS Serif</family>
+                 <pointsize>11</pointsize>
+                 <weight>50</weight>
+                 <bold>false</bold>
+                </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QPushButton {
+    background-color: #feb1b1;
+    border: 2px solid #EB5959; 
+	color: white;
+    padding: 10px;
+	border-top-left-radius:20px;
+	border-bottom-left-radius:20px;
+
+}
+
+QPushButton:hover {
+    background-color:#EB5959;
+    border: 2px solid #EB5959; 
+}
+
+
+</string>
+               </property>
+               <property name="text">
+                <string>Simplemente Circular Enlazada</string>
+               </property>
+               <property name="icon">
+                <iconset>
+                 <normaloff>rp_icon.png</normaloff>rp_icon.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>50</width>
+                 <height>100</height>
+                </size>
+               </property>
+              </widget>
+              <widget class="QPushButton" name="bt_reportes_O">
+               <property name="geometry">
+                <rect>
+                 <x>360</x>
+                 <y>390</y>
+                 <width>331</width>
+                 <height>71</height>
+                </rect>
+               </property>
+               <property name="font">
+                <font>
+                 <family>MS Serif</family>
+                 <pointsize>11</pointsize>
+                 <weight>50</weight>
+                 <bold>false</bold>
+                </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QPushButton {
+    background-color: #78EBA8;
+    border: 2px solid #50D989; 
+	color: white;
+    padding: 10px;
+	border-top-left-radius:20px;
+	border-bottom-left-radius:20px;
+
+}
+
+QPushButton:hover {
+    background-color:#50D989;
+    border: 2px solid #50D989; 
+}
+
+
+</string>
+               </property>
+               <property name="text">
+                <string>Ortogonal</string>
+               </property>
+               <property name="icon">
+                <iconset>
+                 <normaloff>rp_icon.png</normaloff>rp_icon.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>50</width>
+                 <height>100</height>
+                </size>
+               </property>
+              </widget>
+             </widget>
+             <widget class="QWidget" name="Actividades">
+              <widget class="QLabel" name="label_3">
+               <property name="geometry">
+                <rect>
+                 <x>40</x>
+                 <y>0</y>
+                 <width>371</width>
+                 <height>121</height>
+                </rect>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Comic Sans MS</family>
+                 <pointsize>20</pointsize>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="text">
+                <string>¡Actividades de Hoy!</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+              <widget class="QScrollArea" name="area_actividades_panel">
+               <property name="geometry">
+                <rect>
+                 <x>40</x>
+                 <y>120</y>
+                 <width>621</width>
+                 <height>431</height>
+                </rect>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">border-color: rgb(255, 170, 0);</string>
+               </property>
+               <property name="widgetResizable">
+                <bool>true</bool>
+               </property>
+               <widget class="QWidget" name="scrollAreaWidgetContents">
+                <property name="geometry">
+                 <rect>
+                  <x>0</x>
+                  <y>0</y>
+                  <width>615</width>
+                  <height>425</height>
+                 </rect>
+                </property>
+                <layout class="QVBoxLayout" name="verticalLayout_4">
+                 <item>
+                  <widget class="QScrollBar" name="verticalScrollBar">
+                   <property name="orientation">
+                    <enum>Qt::Vertical</enum>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </widget>
+              <widget class="QPushButton" name="go_login_actividades">
+               <property name="geometry">
+                <rect>
+                 <x>420</x>
+                 <y>20</y>
+                 <width>265</width>
+                 <height>51</height>
+                </rect>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QPushButton {
+    background-color: #ff7676;
+    border: 2px solid #e00000; 
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px;
+	border-top-left-radius:20px;
+	border-bottom-left-radius:20px;
+
+}
+
+QPushButton:hover {
+    background-color:#c20000; 
+    border: 2px solid #c20000; 
+}</string>
+               </property>
+               <property name="text">
+                <string>Salir</string>
+               </property>
+               <property name="icon">
+                <iconset>
+                 <normaloff>bt_back.png</normaloff>bt_back.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>30</width>
+                 <height>30</height>
+                </size>
+               </property>
+              </widget>
+             </widget>
+             <widget class="QWidget" name="Compras">
+              <widget class="QLabel" name="label_4">
+               <property name="geometry">
+                <rect>
+                 <x>20</x>
+                 <y>20</y>
+                 <width>371</width>
+                 <height>121</height>
+                </rect>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Comic Sans MS</family>
+                 <pointsize>20</pointsize>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="text">
+                <string>Autoriza las Compras</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+              <widget class="QWidget" name="area_compras_panel" native="true">
+               <property name="geometry">
+                <rect>
+                 <x>20</x>
+                 <y>140</y>
+                 <width>451</width>
+                 <height>381</height>
+                </rect>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QWidget {
+    border: 2px solid #FFA500; /* Naranja */
+    background-color: rgb(253,229,212);
+    padding: 10px;
+}</string>
+               </property>
+              </widget>
+              <widget class="QPushButton" name="go_login_compras">
+               <property name="geometry">
+                <rect>
+                 <x>420</x>
+                 <y>20</y>
+                 <width>265</width>
+                 <height>51</height>
+                </rect>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QPushButton {
+    background-color: #ff7676;
+    border: 2px solid #e00000; 
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px;
+	border-top-left-radius:20px;
+	border-bottom-left-radius:20px;
+
+}
+
+QPushButton:hover {
+    background-color:#c20000; 
+    border: 2px solid #c20000; 
+}</string>
+               </property>
+               <property name="text">
+                <string>Salir</string>
+               </property>
+               <property name="icon">
+                <iconset>
+                 <normaloff>bt_back.png</normaloff>bt_back.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>30</width>
+                 <height>30</height>
+                </size>
+               </property>
+              </widget>
+              <widget class="QPushButton" name="bt_compras_ok">
+               <property name="geometry">
+                <rect>
+                 <x>494</x>
+                 <y>260</y>
+                 <width>191</width>
+                 <height>51</height>
+                </rect>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QPushButton {
+    background-color: #C0F5A2;
+    border: 2px solid #9EE67A; 
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px;
+	border-top-left-radius:20px;
+	border-bottom-left-radius:20px;
+
+}
+
+QPushButton:hover {
+    background-color:#9EE67A; 
+    border: 2px solid #9EE67A; 
+}</string>
+               </property>
+               <property name="text">
+                <string>Aprobar</string>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>30</width>
+                 <height>30</height>
+                </size>
+               </property>
+              </widget>
+              <widget class="QPushButton" name="bt_compras_no">
+               <property name="geometry">
+                <rect>
+                 <x>500</x>
+                 <y>340</y>
+                 <width>191</width>
+                 <height>51</height>
+                </rect>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QPushButton {
+    background-color: #ff7676;
+    border: 2px solid #e00000; 
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px;
+	border-top-left-radius:20px;
+	border-bottom-left-radius:20px;
+
+}
+
+QPushButton:hover {
+    background-color:#c20000; 
+    border: 2px solid #c20000; 
+}</string>
+               </property>
+               <property name="text">
+                <string>Denegar</string>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>30</width>
+                 <height>30</height>
+                </size>
+               </property>
+              </widget>
+             </widget>
+             <widget class="QWidget" name="CargaMasivaUsuarios">
+              <widget class="QLabel" name="label_5">
+               <property name="geometry">
+                <rect>
+                 <x>160</x>
+                 <y>90</y>
+                 <width>351</width>
+                 <height>141</height>
+                </rect>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Comic Sans MS</family>
+                 <pointsize>26</pointsize>
+                 <weight>50</weight>
+                 <bold>false</bold>
+                </font>
+               </property>
+               <property name="text">
+                <string>Cargar Usuarios</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+               </property>
+              </widget>
+              <widget class="QPushButton" name="go_login_CM_usuarios">
+               <property name="geometry">
+                <rect>
+                 <x>420</x>
+                 <y>20</y>
+                 <width>265</width>
+                 <height>51</height>
+                </rect>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QPushButton {
+    background-color: #ff7676;
+    border: 2px solid #e00000; 
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px;
+	border-top-left-radius:20px;
+	border-bottom-left-radius:20px;
+
+}
+
+QPushButton:hover {
+    background-color:#c20000; 
+    border: 2px solid #c20000; 
+}</string>
+               </property>
+               <property name="text">
+                <string>Salir</string>
+               </property>
+               <property name="icon">
+                <iconset>
+                 <normaloff>bt_back.png</normaloff>bt_back.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>30</width>
+                 <height>30</height>
+                </size>
+               </property>
+              </widget>
+              <widget class="QPushButton" name="bt_up_cargaMasivaUsuarios">
+               <property name="geometry">
+                <rect>
+                 <x>200</x>
+                 <y>240</y>
+                 <width>301</width>
+                 <height>121</height>
+                </rect>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Comic Sans MS</family>
+                 <pointsize>18</pointsize>
+                 <weight>50</weight>
+                 <bold>false</bold>
+                </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QPushButton {
+    background-color: #C0F5A2;
+    border: 2px solid #9EE67A; 
+    color: white;
+    padding: 10px;
+	border-top-left-radius:20px;
+	border-bottom-left-radius:20px;
+	border-top-right-radius:20px;
+	border-bottom-right-radius:20px;
+
+}
+
+QPushButton:hover {
+    background-color:#9EE67A; 
+    border: 2px solid #9EE67A; 
+}</string>
+               </property>
+               <property name="text">
+                <string>Cargar</string>
+               </property>
+               <property name="icon">
+                <iconset>
+                 <normaloff>bt_upload.png</normaloff>bt_upload.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>100</width>
+                 <height>100</height>
+                </size>
+               </property>
+              </widget>
+             </widget>
+             <widget class="QWidget" name="cargaMasivaProductos">
+              <widget class="QPushButton" name="go_login_CM_productos">
+               <property name="geometry">
+                <rect>
+                 <x>420</x>
+                 <y>20</y>
+                 <width>265</width>
+                 <height>51</height>
+                </rect>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QPushButton {
+    background-color: #ff7676;
+    border: 2px solid #e00000; 
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px;
+	border-top-left-radius:20px;
+	border-bottom-left-radius:20px;
+
+}
+
+QPushButton:hover {
+    background-color:#c20000; 
+    border: 2px solid #c20000; 
+}</string>
+               </property>
+               <property name="text">
+                <string>Salir</string>
+               </property>
+               <property name="icon">
+                <iconset>
+                 <normaloff>bt_back.png</normaloff>bt_back.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>30</width>
+                 <height>30</height>
+                </size>
+               </property>
+              </widget>
+              <widget class="QPushButton" name="bt_up_cargaMasivaProductos">
+               <property name="geometry">
+                <rect>
+                 <x>190</x>
+                 <y>240</y>
+                 <width>301</width>
+                 <height>121</height>
+                </rect>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Comic Sans MS</family>
+                 <pointsize>18</pointsize>
+                 <weight>50</weight>
+                 <bold>false</bold>
+                </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QPushButton {
+    background-color: #C0F5A2;
+    border: 2px solid #9EE67A; 
+    color: white;
+    padding: 10px;
+	border-top-left-radius:20px;
+	border-bottom-left-radius:20px;
+	border-top-right-radius:20px;
+	border-bottom-right-radius:20px;
+
+}
+
+QPushButton:hover {
+    background-color:#9EE67A; 
+    border: 2px solid #9EE67A; 
+}</string>
+               </property>
+               <property name="text">
+                <string>Cargar</string>
+               </property>
+               <property name="icon">
+                <iconset>
+                 <normaloff>bt_upload.png</normaloff>bt_upload.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>100</width>
+                 <height>100</height>
+                </size>
+               </property>
+              </widget>
+              <widget class="QLabel" name="label_6">
+               <property name="geometry">
+                <rect>
+                 <x>160</x>
+                 <y>90</y>
+                 <width>371</width>
+                 <height>141</height>
+                </rect>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Comic Sans MS</family>
+                 <pointsize>26</pointsize>
+                 <weight>50</weight>
+                 <bold>false</bold>
+                </font>
+               </property>
+               <property name="text">
+                <string>Cargar Productos</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+               </property>
+              </widget>
+             </widget>
+             <widget class="QWidget" name="cargaMasivaEmpleados">
+              <widget class="QLabel" name="label_7">
+               <property name="geometry">
+                <rect>
+                 <x>140</x>
+                 <y>80</y>
+                 <width>391</width>
+                 <height>141</height>
+                </rect>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Comic Sans MS</family>
+                 <pointsize>26</pointsize>
+                 <weight>50</weight>
+                 <bold>false</bold>
+                </font>
+               </property>
+               <property name="text">
+                <string>Cargar Empleados</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+               </property>
+              </widget>
+              <widget class="QPushButton" name="go_login_CM_empleados">
+               <property name="geometry">
+                <rect>
+                 <x>420</x>
+                 <y>20</y>
+                 <width>265</width>
+                 <height>51</height>
+                </rect>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QPushButton {
+    background-color: #ff7676;
+    border: 2px solid #e00000; 
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px;
+	border-top-left-radius:20px;
+	border-bottom-left-radius:20px;
+
+}
+
+QPushButton:hover {
+    background-color:#c20000; 
+    border: 2px solid #c20000; 
+}</string>
+               </property>
+               <property name="text">
+                <string>Salir</string>
+               </property>
+               <property name="icon">
+                <iconset>
+                 <normaloff>bt_back.png</normaloff>bt_back.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>30</width>
+                 <height>30</height>
+                </size>
+               </property>
+              </widget>
+              <widget class="QPushButton" name="bt_up_cargaMasivaEmpleados">
+               <property name="geometry">
+                <rect>
+                 <x>180</x>
+                 <y>240</y>
+                 <width>301</width>
+                 <height>121</height>
+                </rect>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Comic Sans MS</family>
+                 <pointsize>18</pointsize>
+                 <weight>50</weight>
+                 <bold>false</bold>
+                </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QPushButton {
+    background-color: #C0F5A2;
+    border: 2px solid #9EE67A; 
+    color: white;
+    padding: 10px;
+	border-top-left-radius:20px;
+	border-bottom-left-radius:20px;
+	border-top-right-radius:20px;
+	border-bottom-right-radius:20px;
+
+}
+
+QPushButton:hover {
+    background-color:#9EE67A; 
+    border: 2px solid #9EE67A; 
+}</string>
+               </property>
+               <property name="text">
+                <string>Cargar</string>
+               </property>
+               <property name="icon">
+                <iconset>
+                 <normaloff>bt_upload.png</normaloff>bt_upload.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>100</width>
+                 <height>100</height>
+                </size>
+               </property>
+              </widget>
+             </widget>
+             <widget class="QWidget" name="cargaMasivaActividades">
+              <widget class="QWidget" name="panel_CM_Actividades" native="true">
+               <property name="geometry">
+                <rect>
+                 <x>20</x>
+                 <y>300</y>
+                 <width>631</width>
+                 <height>251</height>
+                </rect>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QWidget {
+    border: 2px solid #FFA500; /* Naranja */
+    background-color: rgb(253,229,212);
+    padding: 10px;
+}</string>
+               </property>
+              </widget>
+              <widget class="QPushButton" name="bt_up_cargaMasivaActividades">
+               <property name="geometry">
+                <rect>
+                 <x>80</x>
+                 <y>130</y>
+                 <width>301</width>
+                 <height>121</height>
+                </rect>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Comic Sans MS</family>
+                 <pointsize>18</pointsize>
+                 <weight>50</weight>
+                 <bold>false</bold>
+                </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QPushButton {
+    background-color: #C0F5A2;
+    border: 2px solid #9EE67A; 
+    color: white;
+    padding: 10px;
+	border-top-left-radius:20px;
+	border-bottom-left-radius:20px;
+	border-top-right-radius:20px;
+	border-bottom-right-radius:20px;
+
+}
+
+QPushButton:hover {
+    background-color:#9EE67A; 
+    border: 2px solid #9EE67A; 
+}</string>
+               </property>
+               <property name="text">
+                <string>Cargar</string>
+               </property>
+               <property name="icon">
+                <iconset>
+                 <normaloff>bt_upload.png</normaloff>bt_upload.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>100</width>
+                 <height>100</height>
+                </size>
+               </property>
+              </widget>
+              <widget class="QLabel" name="label_8">
+               <property name="geometry">
+                <rect>
+                 <x>0</x>
+                 <y>-20</y>
+                 <width>411</width>
+                 <height>141</height>
+                </rect>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Comic Sans MS</family>
+                 <pointsize>26</pointsize>
+                 <weight>50</weight>
+                 <bold>false</bold>
+                </font>
+               </property>
+               <property name="text">
+                <string>Cargar Actividades</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+               </property>
+              </widget>
+              <widget class="QPushButton" name="go_login_CM_Actividades">
+               <property name="geometry">
+                <rect>
+                 <x>420</x>
+                 <y>20</y>
+                 <width>265</width>
+                 <height>51</height>
+                </rect>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QPushButton {
+    background-color: #ff7676;
+    border: 2px solid #e00000; 
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px;
+	border-top-left-radius:20px;
+	border-bottom-left-radius:20px;
+
+}
+
+QPushButton:hover {
+    background-color:#c20000; 
+    border: 2px solid #c20000; 
+}</string>
+               </property>
+               <property name="text">
+                <string>Salir</string>
+               </property>
+               <property name="icon">
+                <iconset>
+                 <normaloff>bt_back.png</normaloff>bt_back.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>30</width>
+                 <height>30</height>
+                </size>
+               </property>
+              </widget>
+             </widget>
+             <widget class="QWidget" name="showReport">
+              <widget class="QLabel" name="label_9">
+               <property name="geometry">
+                <rect>
+                 <x>0</x>
+                 <y>-20</y>
+                 <width>411</width>
+                 <height>141</height>
+                </rect>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Comic Sans MS</family>
+                 <pointsize>26</pointsize>
+                 <weight>50</weight>
+                 <bold>false</bold>
+                </font>
+               </property>
+               <property name="text">
+                <string>Reporte Creado</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+               </property>
+              </widget>
+              <widget class="QWidget" name="panel_imagen_reporteCreado" native="true">
+               <property name="geometry">
+                <rect>
+                 <x>10</x>
+                 <y>120</y>
+                 <width>681</width>
+                 <height>451</height>
+                </rect>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QWidget {
+    border: 2px solid #FFA500; /* Naranja */
+    background-color: rgb(253,229,212);
+    padding: 10px;
+}</string>
+               </property>
+              </widget>
+              <widget class="QPushButton" name="go_login_CM_Actividades_2">
+               <property name="geometry">
+                <rect>
+                 <x>420</x>
+                 <y>20</y>
+                 <width>265</width>
+                 <height>51</height>
+                </rect>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QPushButton {
+    background-color: #ff7676;
+    border: 2px solid #e00000; 
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px;
+	border-top-left-radius:20px;
+	border-bottom-left-radius:20px;
+
+}
+
+QPushButton:hover {
+    background-color:#c20000; 
+    border: 2px solid #c20000; 
+}</string>
+               </property>
+               <property name="text">
+                <string>Salir</string>
+               </property>
+               <property name="icon">
+                <iconset>
+                 <normaloff>bt_back.png</normaloff>bt_back.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>30</width>
+                 <height>30</height>
+                </size>
+               </property>
+              </widget>
+             </widget>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

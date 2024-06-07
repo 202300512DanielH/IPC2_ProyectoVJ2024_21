@@ -8,5 +8,12 @@ class Usuario:
         self.email = email
         self.telefono = telefono
 
+    def validar_email(self):
+        patron = r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'
+        return re.match(patron, self.email) is not None
+
+    def validar_telefono(self):
+        return self.telefono.isdigit() and len(self.telefono) == 8
+
     def __str__(self):
         return f"Usuario({self.id}, {self.nombre}, {self.edad}, {self.email}, {self.telefono})"
