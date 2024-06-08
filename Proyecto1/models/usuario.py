@@ -1,5 +1,4 @@
-
-
+import re
 class Usuario:
     def __init__(self, id, nombre, edad, email, telefono):
         self.id = id

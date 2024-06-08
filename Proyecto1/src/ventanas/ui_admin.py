@@ -1,6 +1,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import QPropertyAnimation
 import sys, os, res
+from PyQt5.QtWidgets import QFileDialog
 
 # agregando la carpeta ventanas al path de python
 script_dir = os.path.dirname(os.path.abspath(__file__))
@@ -14,6 +15,9 @@ class Ui_MainWindow(QtCore.QObject):
     verificador = QtCore.pyqtSignal(bool)  # inicializando la señal verificador como una señal de tipo bool
         
     def setupUi(self, MainWindow):
+        self.bt_up_cargaMasivaUsuarios = QtWidgets.QPushButton(MainWindow)
+        self.bt_up_cargaMasivaUsuarios.setObjectName("bt_up_cargaMasivaUsuarios")
+
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(1078, 752)
         MainWindow.setWindowFlags(QtCore.Qt.FramelessWindowHint)#quitando los bordes de la ventana
@@ -1126,6 +1130,11 @@ class Ui_MainWindow(QtCore.QObject):
         self.retranslateUi(MainWindow)
         self.stackedWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
+        #Conexión de botones para cargar un archivo XML
+        self.bt_up_cargaMasivaUsuarios.clicked.connect(self.open_xml_file)
+        self.bt_up_cargaMasivaEmpleados.clicked.connect(self.open_xml_file)
+        self.bt_up_cargaMasivaProductos.clicked.connect(self.open_xml_file)
+        self.bt_up_cargaMasivaActividades.clicked.connect(self.open_xml_file)
 
     def minimizar(self, MainWindow):
         MainWindow.showMinimized()
@@ -1174,6 +1183,15 @@ class Ui_MainWindow(QtCore.QObject):
                 self.animacion.setEasingCurve(QtCore.QEasingCurve.InOutQuart)
                 self.animacion.start()
 
+    def open_xml_file(self):
+            print("Función open_xml_file llamada.")
+            file_name, _ = QFileDialog.getOpenFileName(None, "Open XML File", "", "XML Files (*.xml)")
+            print(f"Valor de file_name: {file_name}")
+            if file_name:
+                    print(f"Archivo seleccionado: {file_name}")
+                    # Aquí puedes agregar el código para manejar el archivo XML seleccionado
+            else:
+                    print("No se seleccionó ningún archivo.")
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
