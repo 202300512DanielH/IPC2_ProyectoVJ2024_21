@@ -1,5 +1,4 @@
-
-
+import re
 class Usuario:
     def __init__(self, id, nombre, edad, email, telefono):
         self.id = id
@@ -16,4 +15,4 @@ class Usuario:
         return self.telefono.isdigit() and len(self.telefono) == 8
 
     def __str__(self):
-        return f"Usuario({self.id}, {self.nombre}, {self.edad}, {self.email}, {self.telefono})"
+        return f"ID: {self.id},\n Nombre: {self.nombre},\n Edad: {self.edad},\n Email: {self.email},\n Teléfono: {self.telefono}"

@@ -1,6 +1,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import QPropertyAnimation
 import sys, os, res
+from PyQt5.QtWidgets import QFileDialog
 
 # agregando la carpeta ventanas al path de python
 script_dir = os.path.dirname(os.path.abspath(__file__))
@@ -8,12 +9,24 @@ sys.path.append(os.path.join(script_dir, 'ventanas'))
 
 from login import Ui_Form #importando la clase Ui_Form de login.py en la carpeta ventanas
 
+# subiendo dos niveles para acceder a la carpeta que contiene la carpeta controller
+parent_dir = os.path.dirname(os.path.dirname(script_dir))
+
+# Navega a la carpeta controller y agrega la ruta al path de python
+sys.path.append(os.path.join(parent_dir, 'controller'))
+
+from cargaMasivaEmpleados import cargaMasivaEmpleados
+from cargaMasivaProducto import cargaMasivaProducto
+from cargaMasivaUsuarios import cargaMasivaUsuarios
 
 class Ui_MainWindow(QtCore.QObject):
         
     verificador = QtCore.pyqtSignal(bool)  # inicializando la señal verificador como una señal de tipo bool
         
     def setupUi(self, MainWindow):
+        self.bt_up_cargaMasivaUsuarios = QtWidgets.QPushButton(MainWindow)
+        self.bt_up_cargaMasivaUsuarios.setObjectName("bt_up_cargaMasivaUsuarios")
+
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(1078, 752)
         MainWindow.setWindowFlags(QtCore.Qt.FramelessWindowHint)#quitando los bordes de la ventana
@@ -1123,12 +1136,18 @@ class Ui_MainWindow(QtCore.QObject):
         self.go_login_CM_Actividades.clicked.connect(lambda: self.show_login(MainWindow))
         self.go_login_CM_Actividades_2.clicked.connect(lambda: self.show_login(MainWindow))
         
+        #Conexión de botones para cargar un archivo XML
+        self.bt_up_cargaMasivaUsuarios.clicked.connect(lambda: self.open_xml_file("Usuarios"))
+        self.bt_up_cargaMasivaEmpleados.clicked.connect(lambda: self.open_xml_file("Empleados"))
+        self.bt_up_cargaMasivaProductos.clicked.connect(lambda: self.open_xml_file("Productos"))
+        self.bt_up_cargaMasivaActividades.clicked.connect(lambda: self.open_xml_file("Actividades"))
+        
         self.retranslateUi(MainWindow)
         self.stackedWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
-    def minimizar(self, MainWindow):
-        MainWindow.showMinimized()
+        def minimizar(self, MainWindow):
+                MainWindow.showMinimized()
 
     def salir(self, MainWindow):
         MainWindow.close()
@@ -1173,6 +1192,29 @@ class Ui_MainWindow(QtCore.QObject):
                 self.animacion.setEndValue(extender)
                 self.animacion.setEasingCurve(QtCore.QEasingCurve.InOutQuart)
                 self.animacion.start()
+
+    def open_xml_file(self, tipo_archivo):
+        print("Función open_xml_file llamada.")
+        file_name, _ = QFileDialog.getOpenFileName(None, "Open XML File", "", "XML Files (*.xml)")
+        print(f"Valor de file_name: {file_name}")
+        if file_name:
+                #segun el tipo de archivo que se selecciono se manda a llamar a la funcion correspondiente
+                if tipo_archivo == "Usuarios":
+                        #se manda a llamar a la funcion que carga los usuarios en la clase cargaMasivaUsuarios
+                        self.cargaMasivaUsuarios = cargaMasivaUsuarios(file_name)
+                        self.cargaMasivaUsuarios.cargar_xml()
+                        #imprimir la lista de usuarios
+                        print(self.cargaMasivaUsuarios.lista_usuarios.imprimir())
+                elif tipo_archivo == "Empleados":
+                        #se manda a llamar a la funcion que carga los empleados en la clase cargaMasivaEmpleados
+                        self.cargaMasivaEmpleados = cargaMasivaEmpleados(file_name)
+                        self.cargaMasivaEmpleados.cargar_xml(file_name)
+                elif tipo_archivo == "Productos":
+                        #se manda a llamar a la funcion que carga los productos en la clase cargaMasivaProductos
+                        self.cargaMasivaProductos = cargaMasivaProductos(file_name)
+                        self.cargaMasivaProductos.cargar_xml(file_name)
+        else:
+                print("No se seleccionó ningún archivo.")
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
