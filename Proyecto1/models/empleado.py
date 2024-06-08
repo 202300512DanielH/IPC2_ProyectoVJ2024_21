@@ -6,4 +6,4 @@ class Empleado:
         self.puesto = puesto
 
     def __str__(self):
-        return f"Empleado({self.codigo}, {self.nombre}, {self.puesto})"
+        return f"Codigo: {self.codigo}\nNombre: {self.nombre}\nPuesto: {self.puesto}"

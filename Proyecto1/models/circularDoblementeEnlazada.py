@@ -1,9 +1,12 @@
 from nodoCircularDoble import Nodo
+
 class ListaCircularDoblementeEnlazada:
+    #constructor de la clase
     def __init__(self):
         self.primero = None
         self.ultimo = None
 
+    
     def insertar(self, producto):
         nuevo_nodo = Nodo(producto)
         if self.primero is None:
@@ -36,12 +39,12 @@ class ListaCircularDoblementeEnlazada:
                 break
         return False
 
-    def buscar(self, producto):
+    def imprimir(self):
         actual = self.primero
         while actual:
-            if actual.producto == producto:
-                return True
-            actual = actual.siguiente
-            if actual == self.primero:
+            print(f"ID: {actual.producto.id},\n Precio: {actual.producto.precio},\n Descripción: {actual.producto.descripcion},\n Categoría: {actual.producto.categoria},\n Cantidad: {actual.producto.cantidad},\n Imagen: {actual.producto.imagen}")
+            print("____________________________________________________")
+            if actual.siguiente == self.primero:
                 break
-        return False
+            actual = actual.siguiente
+        print()

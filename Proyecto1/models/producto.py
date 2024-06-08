@@ -1,5 +1,3 @@
-
-
 class Producto:
     def __init__(self, id, precio, descripcion, categoria, cantidad, imagen):
         self.id = id
@@ -10,4 +8,5 @@ class Producto:
         self.imagen = imagen
 
     def __str__(self):
-        return f"Producto({self.id}, {self.precio}, {self.descripcion}, {self.categoria}, {self.cantidad}, {self.imagen})"
+        return (f"ID: {self.id},\n Precio: {self.precio},\n Descripción: {self.descripcion},"
+                f"\n Categoría: {self.categoria},\n Cantidad: {self.cantidad},\n Imagen: {self.imagen}")
