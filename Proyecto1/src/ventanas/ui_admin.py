@@ -16,7 +16,7 @@ parent_dir = os.path.dirname(os.path.dirname(script_dir))
 sys.path.append(os.path.join(parent_dir, 'controller'))
 
 from cargaMasivaEmpleados import cargaMasivaEmpleados
-from cargaMasivaProducto import cargaMasivaProducto
+from cargaMasivaProducto import CargaMasivaProducto
 from cargaMasivaUsuarios import cargaMasivaUsuarios
 
 class Ui_MainWindow(QtCore.QObject):
@@ -1209,10 +1209,13 @@ class Ui_MainWindow(QtCore.QObject):
                         #se manda a llamar a la funcion que carga los empleados en la clase cargaMasivaEmpleados
                         self.cargaMasivaEmpleados = cargaMasivaEmpleados(file_name)
                         self.cargaMasivaEmpleados.cargar_xml(file_name)
+                        #imprimir la lista de empleados
+                        print(self.cargaMasivaEmpleados.lista_empleados.imprimir())
                 elif tipo_archivo == "Productos":
                         #se manda a llamar a la funcion que carga los productos en la clase cargaMasivaProductos
-                        self.cargaMasivaProductos = cargaMasivaProductos(file_name)
-                        self.cargaMasivaProductos.cargar_xml(file_name)
+                        self.cargaMasivaProducto = CargaMasivaProducto(file_name)
+                        self.cargaMasivaProducto.cargar_xml()
+                        print(self.cargaMasivaProducto.lista_productos.imprimir())
         else:
                 print("No se seleccionó ningún archivo.")
 
