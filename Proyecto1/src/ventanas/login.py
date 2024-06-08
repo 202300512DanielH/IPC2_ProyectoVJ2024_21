@@ -155,6 +155,8 @@ class Ui_Form(QtCore.QObject):  # poniendo QtCore.QObject como clase padre para 
         else:
             self.verificador.emit(False) #enviando la señal de que el login fue incorrecto
 
+
+
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
         Form.setWindowTitle(_translate("Form", "Form"))

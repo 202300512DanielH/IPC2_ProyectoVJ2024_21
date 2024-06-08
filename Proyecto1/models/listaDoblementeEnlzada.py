@@ -1,3 +1,4 @@
+from nodo import Nodo
 class ListaDoblementeEnlazada:
     def __init__(self):
         self.primero = None
