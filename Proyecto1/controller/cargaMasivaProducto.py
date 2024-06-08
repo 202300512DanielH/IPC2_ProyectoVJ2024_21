@@ -1,30 +1,28 @@
-import xml.etree.ElementTree as etree
-import os, sys
+import xml.etree.ElementTree as ET
+import os
+import sys
 
-#agregando la carpeta models al path de python
-script_dir = os.path.dirname(os.path.abspath(__file__))#obteniendo la ruta del directorio actual
-#subiendo un nivel en la jerarquia de directorios
+# Agregando la carpeta models al path de Python
+script_dir = os.path.dirname(os.path.abspath(__file__))
 ruta_proyecto = os.path.dirname(script_dir)
-#accediendo a la carpeta models
 sys.path.append(os.path.join(ruta_proyecto, 'models'))
 
-from nodo import Nodo
-from listaDoblementeEnlazada import ListaDoblementeEnlazada
+from nodoCircularDoble import Nodo
+from circularDoblementeEnlazada import ListaCircularDoblementeEnlazada
 from producto import Producto
 
-class cargaMasivaProducto:
+class CargaMasivaProducto:
     
-    def cargar_xml(archivo_xml):
-        # Crear una nueva lista circular doblemente enlazada
-        lista_productos = ListaCircularDoblementeEnlazada()
+    # Crear una nueva lista circular doblemente enlazada 
+    lista_productos = ListaCircularDoblementeEnlazada()
+    
+    def __init__(self, archivo_xml):
+        self.archivo_xml = archivo_xml
 
-        # Leer el archivo XML y obtener la raíz
-        arbol = ET.parse(archivo_xml)
+    def cargar_xml(self):
+        arbol = ET.parse(self.archivo_xml)
         raiz = arbol.getroot()
-
-        # Iterar sobre cada elemento 'producto' en la raíz
         for elemento_producto in raiz.findall('producto'):
-            # Crear un nuevo objeto Producto con los datos del elemento
             id = elemento_producto.get('id')
             precio = float(elemento_producto.find('precio').text)
             descripcion = elemento_producto.find('descripcion').text
@@ -32,9 +30,5 @@ class cargaMasivaProducto:
             cantidad = int(elemento_producto.find('cantidad').text)
             imagen = elemento_producto.find('imagen').text
             producto = Producto(id, precio, descripcion, categoria, cantidad, imagen)
-
-            # Agregar el objeto Producto a la lista circular doblemente enlazada
-            nodo_producto = Nodo(producto)
-            lista_productos.insertar(nodo_producto)
-
-        return lista_productos
+            self.lista_productos.insertar(producto)
+        return self.lista_productos
