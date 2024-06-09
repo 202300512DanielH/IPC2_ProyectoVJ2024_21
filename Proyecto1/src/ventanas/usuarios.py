@@ -1,6 +1,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 import res
 import sys, os
+from tkinter import messagebox
 
 # agregando la carpeta ventanas al path de python
 script_dir = os.path.dirname(os.path.abspath(__file__))
@@ -15,6 +16,7 @@ parent_dir = os.path.dirname(os.path.dirname(script_dir))
 sys.path.append(os.path.join(parent_dir, 'controller'))
 
 from cargaMasivaUsuarios import cargaMasivaUsuarios
+from cargaMasivaProducto import CargaMasivaProducto
 
 
 class Ui_Form(QtCore.QObject):
@@ -139,6 +141,13 @@ class Ui_Form(QtCore.QObject):
         self.ver_producto_button.setFont(font)
         self.ver_producto_button.setStyleSheet("color:black")
         self.ver_producto_button.setObjectName("ver_producto_button")
+        self.actualizar_button = QtWidgets.QPushButton(self.widget)
+        self.actualizar_button.setGeometry(QtCore.QRect(550, 168, 201, 41))
+        font = QtGui.QFont()
+        font.setPointSize(-1)
+        self.actualizar_button.setFont(font)
+        self.actualizar_button.setStyleSheet("color:black")
+        self.actualizar_button.setObjectName("actualizar_button")
         self.productos_combobox = QtWidgets.QComboBox(self.widget)
         self.productos_combobox.setGeometry(QtCore.QRect(30, 160, 391, 51))
         font = QtGui.QFont()
@@ -150,7 +159,6 @@ class Ui_Form(QtCore.QObject):
         self.productos_combobox.setObjectName("productos_combobox")
         self.productos_combobox.addItem("")
         self.productos_combobox.setItemText(0, "Seleccionar Producto")
-        self.productos_combobox.addItem("")
         self.cantidad_producto = QtWidgets.QSpinBox(self.widget)
         self.cantidad_producto.setGeometry(QtCore.QRect(670, 440, 91, 44))
         font = QtGui.QFont()
@@ -339,10 +347,66 @@ class Ui_Form(QtCore.QObject):
         
         #conectando el boton de regresar al login
         self.regresar_button.clicked.connect(lambda: self.show_login(Form))
-
+        
+        #conectando el boton de actualizar el combobox
+        self.actualizar_button.clicked.connect(lambda: self.actualizar_combobox())
+        
+        #conectando el boton de ver producto para mostrar la informacion del producto seleccionado
+        self.ver_producto_button.clicked.connect(lambda: self.mostrar_producto())
+        
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
-
+    
+    #funcion para mostrar la informacion del producto seleccionado
+    def mostrar_producto(self):
+        #Obteniendo el nombre del producto seleccionado
+        nombre_producto = self.productos_combobox.currentText()
+        
+        #Obteniendo la lista de productos 
+        self.carga_masiva_productos = CargaMasivaProducto()
+        self.lista_productos = self.carga_masiva_productos.lista_productos
+        
+        #obteniendo el producto seleccionado de la lista de productos
+        producto = self.lista_productos.buscar(nombre_producto)
+        
+        #insertando la informacion del producto en los labels correspondientes
+        self.nombre.setText(producto.nombre)
+        self.precio.setText(producto.precio)
+        self.descripcion.setText(producto.descripcion)
+        self.categoria.setText(producto.categoria)
+        self.cantidad.setText(producto.cantidad)
+        
+        #mostrando la imagen del producto en el label de la imagen
+        self.label.setStyleSheet(f"image:url(:/images/{producto.imagen});\n"
+"background-color:rgb(198, 198, 198);")
+        
+        #si no se ha seleccionado ningun producto se muestra un mensaje de error
+        if nombre_producto == "Seleccionar Producto":
+                messagebox.showerror("Error", "No se ha seleccionado ningun producto")
+        
+        #modificando el spinbox para que tenga un maximo de la cantidad del producto
+        self.cantidad_producto.setMaximum(int(producto.cantidad))
+        
+        # mostrando un mensaje de maximo alcanzado si la cantidad seleccionada es igual a la cantidad del producto
+        if self.cantidad_producto.value() == int(producto.cantidad):
+                self.cantidad_producto.setStyleSheet("color:red")
+                self.cantidad_producto.setSuffix(" (Máximo alcanzado)") #agregando un sufijo al spinbox
+    
+    #funcion para actualizar el combobox
+    def actualizar_combobox(self):
+        #Eliminando items innecesarios del combobox
+        self.productos_combobox.clear()
+        
+        #Obteniendo la lista de productos 
+        self.carga_masiva_productos = CargaMasivaProducto()
+        self.lista_productos = self.carga_masiva_productos.lista_productos
+        
+        #Agregando los productos al combobox teniendo en cuenta que la lista de productos no es iterable y que al inicio del programa no se ha cargado ningun producto
+        self.productos_combobox.addItem("Seleccionar Producto")
+        for producto in self.lista_productos:
+                self.productos_combobox.addItem(producto.nombre)
+    
+    #funcion para regresar al login
     def show_login(self, Form):
         print("Regresando al login")
         # Cerrando la ventana del usuario
@@ -355,7 +419,7 @@ class Ui_Form(QtCore.QObject):
         self.ui_login.verificador.connect(lambda: self.iniciar_sesion(self.ui_login, self.login_window))
         self.login_window.show()
         
-
+    #funcion para iniciar sesion
     def iniciar_sesion(self, ui_login, login_window):
         # Obtener los datos del usuario
         username = self.ui_login.user_name_label.text()
@@ -390,8 +454,8 @@ class Ui_Form(QtCore.QObject):
         Form.setWindowTitle(_translate("Form", "Form"))
         self.tittle.setText(_translate("Form", "Comprar"))
         self.ver_producto_button.setText(_translate("Form", "V E R"))
+        self.actualizar_button.setText(_translate("Form", "A C T U A L I Z A R"))
         self.productos_combobox.setCurrentText(_translate("Form", "Seleccionar Producto"))
-        self.productos_combobox.setItemText(1, _translate("Form", "New Item"))
         self.agregar_button.setText(_translate("Form", "A G R E G A R   A L    \n"
 "C A R R I T O  "))
         self.label_cantidad.setText(_translate("Form", "Cantidad a agregar al carrito:"))
@@ -403,8 +467,6 @@ class Ui_Form(QtCore.QObject):
         self.ver_carrito_button.setText(_translate("Form", "V E R   C A R R I T O"))
         self.comprar_button.setText(_translate("Form", "C O M P R A R"))
         self.regresar_button.setText(_translate("Form", "S A L I R"))
-
-
 
 if __name__ == "__main__":
     import sys
