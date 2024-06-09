@@ -24,6 +24,7 @@ class CargaMasivaProducto:
         try:
             arbol = ET.parse(self.archivo_xml)
             raiz = arbol.getroot()
+            ids_productos = set()  # Paso 1: Crear un conjunto para almacenar los IDs
             for elemento_producto in raiz.findall('producto'):
                 id = elemento_producto.get('id')
                 nombre = elemento_producto.find('nombre').text
@@ -32,8 +33,12 @@ class CargaMasivaProducto:
                 categoria = elemento_producto.find('categoria').text
                 cantidad = elemento_producto.find('cantidad').text
                 imagen = elemento_producto.find('imagen').text
-                producto = Producto(id,nombre, precio, descripcion, categoria, cantidad, imagen)
-                if producto.validar_precio() and producto.validar_cantidad():
+                producto = Producto(id, nombre, precio, descripcion, categoria, cantidad, imagen)
+                if id in ids_productos:  # Paso 2: Verificar si el ID ya existe
+                    print(f"Error: El ID {id} ya existe. El producto no se agregará.")
+                    messagebox.showerror("Error de ID", f"El ID {id} ya existe. El producto no se agregará.")
+                elif producto.validar_precio() and producto.validar_cantidad():
+                    ids_productos.add(id)  # Agregar el ID al conjunto si el producto es válido y se va a insertar
                     self.lista_productos.insertar(producto)
                 else:
                     print(f"El producto {producto.id} no pasó la validación.")

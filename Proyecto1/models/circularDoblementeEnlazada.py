@@ -1,4 +1,5 @@
 from nodoCircularDoble import Nodo
+import os 
 
 class ListaCircularDoblementeEnlazada:
     #constructor de la clase
@@ -51,3 +52,51 @@ class ListaCircularDoblementeEnlazada:
             actual = actual.siguiente
             if actual == self.primero:  # Si hemos vuelto al principio, termina el bucle
                 break
+
+    
+    def graficar(self):
+        codigo_dot = ''
+        carpeta_reportes = 'Reportes'
+        if not os.path.exists(carpeta_reportes):
+            os.makedirs(carpeta_reportes)
+
+        archivo = open(os.path.join(carpeta_reportes, 'ListaCircularDoblementeEnlazada.dot'), 'w')
+        codigo_dot += '''digraph G {
+        rankdir=LR;
+        node [shape = record, height = .1];'''
+
+        # Crear los nodos
+        contador_nodos = 0
+        actual = self.primero
+        nodos = []
+        if actual is not None:
+            while True:
+                producto = actual.producto
+                codigo_dot += f'node{contador_nodos} [label = "{{<f1>| ID: {producto.id}\\nNombre: {producto.nombre}\\nPrecio: {producto.precio}\\nDescripción: {producto.descripcion}\\nCategoría: {producto.categoria}\\nCantidad: {producto.cantidad}\\nImagen: {producto.imagen}|<f2>}}"];\n'
+                nodos.append(f'node{contador_nodos}')
+                contador_nodos += 1
+                actual = actual.siguiente
+                if actual == self.primero:
+                    break
+
+            # Hacer las relaciones
+            for i in range(contador_nodos):
+                siguiente = (i + 1) % contador_nodos
+                codigo_dot += f'{nodos[i]}:f2 -> {nodos[siguiente]}:f1;\n'
+                codigo_dot += f'{nodos[siguiente]}:f1 -> {nodos[i]}:f2;\n'
+
+        codigo_dot += '}'
+
+        archivo.write(codigo_dot)
+        archivo.close()
+
+        # Generar la imagen y abrir el reporte
+        ruta_dot = os.path.join(carpeta_reportes, 'ListaCircularDoblementeEnlazada.dot')
+        ruta_imagen = os.path.join(carpeta_reportes, 'ListaCircularDoblementeEnlazada.png')
+        comando = f'dot -Tpng {ruta_dot} -o {ruta_imagen}'
+        os.system(comando)
+
+        ruta_abrir_reporte = os.path.abspath(ruta_imagen)
+        os.startfile(ruta_abrir_reporte)
+        print('Reporte generado con éxito')
+
