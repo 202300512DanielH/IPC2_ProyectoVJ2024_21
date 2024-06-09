@@ -1,7 +1,0 @@
-digraph G {
-        rankdir=LR;
-        node [shape = record, height = .1]node0 [label = "{<f1>| ID: 1\nNombre: Juan Perez\nEdad: 30\nEmail: juan.perez@example.com\nTelefono: 12345678|<f2>}"];
-node1 [label = "{<f1>| ID: 2\nNombre: Maria Lopez\nEdad: 25\nEmail: maria.lopez@example.com\nTelefono: 87654321|<f2>}"];
-node0:f2 -> node1:f1;
-node1:f1 -> node0:f2;
-}

@@ -1161,6 +1161,8 @@ class Ui_MainWindow(QtCore.QObject):
                 self.carga_masiva_usuarios.lista_usuarios.graficar()
         elif tipo_reporte == "Productos":
                 print("Mostrando reporte de productos.")
+                self.carga_masiva_producto = CargaMasivaProducto()
+                self.carga_masiva_producto.lista_productos.graficar()
         elif tipo_reporte == "Actividades":
                 print("Mostrando reporte de actividades.")
         elif tipo_reporte == "Compras":

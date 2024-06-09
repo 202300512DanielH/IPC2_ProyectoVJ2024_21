@@ -8,7 +8,7 @@
         <cantidad>8</cantidad>
         <imagen>imagen3.jpg</imagen>
     </producto>
-    <producto id="5">
+    <producto id="4">
         <nombre>Auriculares GHI</nombre>
         <precio>50.25</precio>
         <descripcion>Auriculares inalámbricos GHI</descripcion>
