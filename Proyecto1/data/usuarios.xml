@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <usuarios>
-    <usuario id="1">
+    <usuario id="1" password="12345">
         <nombre>Juan Perez</nombre>
         <edad>30</edad>
         <email>juan.perez@example.com</email>
         <telefono>12345678</telefono>
     </usuario>
-    <usuario id="2">
+    <usuario id="2" password="54321">
         <nombre>Maria Lopez</nombre>
         <edad>25</edad>
         <email>maria.lopez@example.com</email>
