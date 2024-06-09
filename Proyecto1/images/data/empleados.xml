@@ -8,12 +8,4 @@
         <nombre>Carlos Ruiz</nombre>
         <puesto>Vendedor</puesto>
     </empleado>
-    <empleado codigo="002">
-        <nombre>Eduardo Ruiz</nombre>
-        <puesto>Vendedor</puesto>
-    </empleado>
-    <empleado codigo="003">
-        <nombre>Camila Rosales</nombre>
-        <puesto>Vendedor</puesto>
-    </empleado>
 </empleados>

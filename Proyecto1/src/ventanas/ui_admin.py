@@ -1169,6 +1169,8 @@ class Ui_MainWindow(QtCore.QObject):
                 print("Mostrando reporte de compras.")
         elif tipo_reporte == "Vendedores":
                 print("Mostrando reporte de vendedores.")
+                self.carga_masiva_empleados = cargaMasivaEmpleados()
+                self.carga_masiva_empleados.lista_empleados.graficar()
         elif tipo_reporte == "Cola":
                 print("Mostrando reporte de cola.")
         else:
@@ -1247,7 +1249,7 @@ class Ui_MainWindow(QtCore.QObject):
                 elif tipo_archivo == "Empleados":
                         #se manda a llamar a la funcion que carga los empleados en la clase cargaMasivaEmpleados
                         self.cargaMasivaEmpleados = cargaMasivaEmpleados(file_name)
-                        self.cargaMasivaEmpleados.cargar_xml(file_name)
+                        self.cargaMasivaEmpleados.cargar_xml()
                         #imprimir la lista de empleados
                         print(self.cargaMasivaEmpleados.lista_empleados.imprimir())
                 elif tipo_archivo == "Productos":
