@@ -388,9 +388,8 @@ class Ui_Form(QtCore.QObject):
         self.cantidad_producto.setMaximum(int(producto.cantidad))
         
         # mostrando un mensaje de maximo alcanzado si la cantidad seleccionada es igual a la cantidad del producto
-        if self.cantidad_producto.value() == int(producto.cantidad):
-                self.cantidad_producto.setStyleSheet("color:red")
-                self.cantidad_producto.setSuffix(" (Máximo alcanzado)") #agregando un sufijo al spinbox
+        if self.cantidad_producto.value() > int(producto.cantidad):
+                messagebox.showinfo("Maximo alcanzado", "La cantidad seleccionada es mayor a la cantidad disponible del producto")
     
     #funcion para actualizar el combobox
     def actualizar_combobox(self):
