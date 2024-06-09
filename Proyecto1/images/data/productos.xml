@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<productos>
+    <producto id="1">
+        <nombre>Smartphone XYZ</nombre>
+        <precio>100.50</precio>
+        <descripcion>Smartphone XYZ</descripcion>
+        <categoria>Electrónica</categoria>
+        <cantidad>10</cantidad>
+        <imagen>imagen1.jpg</imagen>
+    </producto>
+    <producto id="2">
+        <nombre>Tablet ABC</nombre>
+        <precio>200</precio>
+        <descripcion>Tablet ABC</descripcion>
+        <categoria>Electrónica</categoria>
+        <cantidad>5.1</cantidad>
+        <imagen>imagen2.jpg</imagen>
+    </producto>
+</productos>
