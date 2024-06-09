@@ -40,11 +40,14 @@ class ListaCircularDoblementeEnlazada:
         return False
 
     def imprimir(self):
+        if self.primero is None:
+            print("La lista está vacía")
+            return
+
         actual = self.primero
-        while actual:
-            print(f"ID: {actual.producto.id},\n Precio: {actual.producto.precio},\n Descripción: {actual.producto.descripcion},\n Categoría: {actual.producto.categoria},\n Cantidad: {actual.producto.cantidad},\n Imagen: {actual.producto.imagen}")
-            print("____________________________________________________")
-            if actual.siguiente == self.primero:
-                break
+        while True:
+            producto = actual.producto  # Accede al atributo 'producto' del nodo actual
+            print(f"ID: {producto.id},\n Nombre: {producto.nombre},\n Precio: {producto.precio},\n Descripción: {producto.descripcion},\n Categoría: {producto.categoria},\n Cantidad: {producto.cantidad},\n Imagen: {producto.imagen}")
             actual = actual.siguiente
-        print()
+            if actual == self.primero:  # Si hemos vuelto al principio, termina el bucle
+                break
