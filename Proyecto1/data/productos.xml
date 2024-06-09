@@ -6,7 +6,7 @@
         <descripcion>Smartphone XYZ</descripcion>
         <categoria>Electrónica</categoria>
         <cantidad>10</cantidad>
-        <imagen>imagen1.jpg</imagen>
+        <imagen>carretilla.png</imagen>
     </producto>
     <producto id="2">
         <nombre>Tablet ABC</nombre>

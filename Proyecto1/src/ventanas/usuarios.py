@@ -1,5 +1,22 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 import res
+import sys, os
+from tkinter import messagebox
+
+# agregando la carpeta ventanas al path de python
+script_dir = os.path.dirname(os.path.abspath(__file__))
+sys.path.append(os.path.join(script_dir, 'ventanas'))
+
+from login import Ui_Form as ui_login_Form #importando la clase Ui_Form de login.py en la carpeta ventanas
+
+# subiendo dos niveles para acceder a la carpeta que contiene la carpeta controller
+parent_dir = os.path.dirname(os.path.dirname(script_dir))
+
+# Navega a la carpeta controller y agrega la ruta al path de python
+sys.path.append(os.path.join(parent_dir, 'controller'))
+
+from cargaMasivaUsuarios import cargaMasivaUsuarios
+from cargaMasivaProducto import CargaMasivaProducto
 
 
 class Ui_Form(QtCore.QObject):
@@ -13,6 +30,7 @@ class Ui_Form(QtCore.QObject):
         font.setBold(True)
         font.setWeight(75)
         Form.setFont(font)
+        self.Form = Form
         self.widget = QtWidgets.QWidget(Form)
         self.widget.setGeometry(QtCore.QRect(10, 9, 961, 591))
         self.widget.setStyleSheet("QPushButton{\n"
@@ -28,6 +46,21 @@ class Ui_Form(QtCore.QObject):
 "QPushButton:hover{\n"
 "  background-color: rgb(150, 204, 144); \n"
 " border: 2px solid rgb(236, 253, 212);\n"
+"    color: white; \n"
+"}\n"
+"QPushButton#regresar_button{\n"
+" background-color: rgb(255, 189, 189);\n"
+"    color: rgb(0,0,0); \n"
+"    border: 2px solid rgb(255, 155, 155);\n"
+"    border-bottom-width: 4px; \n"
+"    border-bottom-color: rgb(255, 85, 85); \n"
+"    border-radius: 15px; \n"
+"    font-size: 16px;\n"
+"}\n"
+"\n"
+"QPushButton#regresar_button:hover{\n"
+"  background-color: rgb(255, 85, 85); \n"
+" border: 2px solid rgb(255, 189, 189);\n"
 "    color: white; \n"
 "}\n"
 "\n"
@@ -108,6 +141,13 @@ class Ui_Form(QtCore.QObject):
         self.ver_producto_button.setFont(font)
         self.ver_producto_button.setStyleSheet("color:black")
         self.ver_producto_button.setObjectName("ver_producto_button")
+        self.actualizar_button = QtWidgets.QPushButton(self.widget)
+        self.actualizar_button.setGeometry(QtCore.QRect(550, 168, 201, 41))
+        font = QtGui.QFont()
+        font.setPointSize(-1)
+        self.actualizar_button.setFont(font)
+        self.actualizar_button.setStyleSheet("color:black")
+        self.actualizar_button.setObjectName("actualizar_button")
         self.productos_combobox = QtWidgets.QComboBox(self.widget)
         self.productos_combobox.setGeometry(QtCore.QRect(30, 160, 391, 51))
         font = QtGui.QFont()
@@ -119,7 +159,6 @@ class Ui_Form(QtCore.QObject):
         self.productos_combobox.setObjectName("productos_combobox")
         self.productos_combobox.addItem("")
         self.productos_combobox.setItemText(0, "Seleccionar Producto")
-        self.productos_combobox.addItem("")
         self.cantidad_producto = QtWidgets.QSpinBox(self.widget)
         self.cantidad_producto.setGeometry(QtCore.QRect(670, 440, 91, 44))
         font = QtGui.QFont()
@@ -133,6 +172,16 @@ class Ui_Form(QtCore.QObject):
 "    border-radius: 15px;\n"
 "    background-color: rgb(253, 236, 224);\n"
 "    font-size: 12px;")
+        
+        #Agregando PushButton para regresar al login
+        self.regresar_button = QtWidgets.QPushButton(self.widget)
+        self.regresar_button.setGeometry(QtCore.QRect(740, 50, 191, 41))
+        font = QtGui.QFont()
+        font.setPointSize(-1)
+        self.regresar_button.setFont(font)
+        self.regresar_button.setStyleSheet("color:black")
+        self.regresar_button.setObjectName("regresar_button")
+        
         self.cantidad_producto.setObjectName("cantidad_producto")
         self.agregar_button = QtWidgets.QPushButton(self.widget)
         self.agregar_button.setEnabled(True)
@@ -295,17 +344,117 @@ class Ui_Form(QtCore.QObject):
         self.cantidad.setText("")
         self.cantidad.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
         self.cantidad.setObjectName("cantidad")
-
+        
+        #conectando el boton de regresar al login
+        self.regresar_button.clicked.connect(lambda: self.show_login(Form))
+        
+        #conectando el boton de actualizar el combobox
+        self.actualizar_button.clicked.connect(lambda: self.actualizar_combobox())
+        
+        #conectando el boton de ver producto para mostrar la informacion del producto seleccionado
+        self.ver_producto_button.clicked.connect(lambda: self.mostrar_producto())
+        
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
+    
+    #funcion para mostrar la informacion del producto seleccionado
+    def mostrar_producto(self):
+        #Obteniendo el nombre del producto seleccionado
+        nombre_producto = self.productos_combobox.currentText()
+        
+        #Obteniendo la lista de productos 
+        self.carga_masiva_productos = CargaMasivaProducto()
+        self.lista_productos = self.carga_masiva_productos.lista_productos
+        
+        #obteniendo el producto seleccionado de la lista de productos
+        producto = self.lista_productos.buscar(nombre_producto)
+        
+        #insertando la informacion del producto en los labels correspondientes
+        self.nombre.setText(producto.nombre)
+        self.precio.setText(producto.precio)
+        self.descripcion.setText(producto.descripcion)
+        self.categoria.setText(producto.categoria)
+        self.cantidad.setText(producto.cantidad)
+        
+        #mostrando la imagen del producto en el label de la imagen
+        self.label.setStyleSheet(f"image:url(:/images/{producto.imagen});\n"
+"background-color:rgb(198, 198, 198);")
+        
+        #si no se ha seleccionado ningun producto se muestra un mensaje de error
+        if nombre_producto == "Seleccionar Producto":
+                messagebox.showerror("Error", "No se ha seleccionado ningun producto")
+        
+        #modificando el spinbox para que tenga un maximo de la cantidad del producto
+        self.cantidad_producto.setMaximum(int(producto.cantidad))
+        
+        # mostrando un mensaje de maximo alcanzado si la cantidad seleccionada es igual a la cantidad del producto
+        if self.cantidad_producto.value() > int(producto.cantidad):
+                messagebox.showinfo("Maximo alcanzado", "La cantidad seleccionada es mayor a la cantidad disponible del producto")
+    
+    #funcion para actualizar el combobox
+    def actualizar_combobox(self):
+        #Eliminando items innecesarios del combobox
+        self.productos_combobox.clear()
+        
+        #Obteniendo la lista de productos 
+        self.carga_masiva_productos = CargaMasivaProducto()
+        self.lista_productos = self.carga_masiva_productos.lista_productos
+        
+        #Agregando los productos al combobox teniendo en cuenta que la lista de productos no es iterable y que al inicio del programa no se ha cargado ningun producto
+        self.productos_combobox.addItem("Seleccionar Producto")
+        for producto in self.lista_productos:
+                self.productos_combobox.addItem(producto.nombre)
+    
+    #funcion para regresar al login
+    def show_login(self, Form):
+        print("Regresando al login")
+        # Cerrando la ventana del usuario
+        self.Form.close()
+    
+        # Creando la ventana del login
+        self.login_window = QtWidgets.QWidget()
+        self.ui_login = ui_login_Form()
+        self.ui_login.setupUi(self.login_window)
+        self.ui_login.verificador.connect(lambda: self.iniciar_sesion(self.ui_login, self.login_window))
+        self.login_window.show()
+        
+    #funcion para iniciar sesion
+    def iniciar_sesion(self, ui_login, login_window):
+        # Obtener los datos del usuario
+        username = self.ui_login.user_name_label.text()
+        password = self.ui_login.password_label.text()
+        
+        #recorriendo la lista de usuarios 
+        usuario_encontrado = False
+        #llamando a la lista de usuarios en la carga masiva
+        self.carga_masiva_usuarios = cargaMasivaUsuarios()
+        usuario = self.carga_masiva_usuarios.lista_usuarios.buscar(username)
+        usuario_encontrado = False
+
+        if usuario is not None and usuario.id == username and usuario.password == password:
+            usuario_encontrado = True        
+
+        # validacion del login, si los datos son correctos devuelve True y si no False
+        if username == "1" and password == "1":
+            self.verificador.emit("admin") #enviando la señal de que el login fue exitoso
+            #Cerrando la ventana del login
+            self.login_window.close()
+        elif usuario_encontrado:
+            self.verificador.emit("usuario") #enviando la señal de que el login fue exitoso
+            #Cerrando la ventana del login
+            self.login_window.close()
+        else:
+            self.verificador.emit("error") #enviando la señal de que el login fue incorrecto
+            username = self.ui_login.user_name_label.setText("")
+            password = self.ui_login.password_label.setText("")
 
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
         Form.setWindowTitle(_translate("Form", "Form"))
         self.tittle.setText(_translate("Form", "Comprar"))
         self.ver_producto_button.setText(_translate("Form", "V E R"))
+        self.actualizar_button.setText(_translate("Form", "A C T U A L I Z A R"))
         self.productos_combobox.setCurrentText(_translate("Form", "Seleccionar Producto"))
-        self.productos_combobox.setItemText(1, _translate("Form", "New Item"))
         self.agregar_button.setText(_translate("Form", "A G R E G A R   A L    \n"
 "C A R R I T O  "))
         self.label_cantidad.setText(_translate("Form", "Cantidad a agregar al carrito:"))
@@ -316,8 +465,7 @@ class Ui_Form(QtCore.QObject):
         self.label_categoria_2.setText(_translate("Form", "Cantidad:"))
         self.ver_carrito_button.setText(_translate("Form", "V E R   C A R R I T O"))
         self.comprar_button.setText(_translate("Form", "C O M P R A R"))
-
-
+        self.regresar_button.setText(_translate("Form", "S A L I R"))
 
 if __name__ == "__main__":
     import sys

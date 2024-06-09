@@ -1177,7 +1177,7 @@ class Ui_MainWindow(QtCore.QObject):
                 print("No se ha seleccionado un tipo de reporte válido.")
 
     def minimizar(self, MainWindow):
-                MainWindow.showMinimized()
+        MainWindow.showMinimized()
 
     def salir(self, MainWindow):
         MainWindow.close()
@@ -1214,10 +1214,15 @@ class Ui_MainWindow(QtCore.QObject):
         # validacion del login, si los datos son correctos devuelve True y si no False
         if username == "1" and password == "1":
             self.verificador.emit("admin") #enviando la señal de que el login fue exitoso
+            #Cerrando la ventana de login
+            self.login_window.close()
         elif usuario_encontrado:
             self.verificador.emit("usuario") #enviando la señal de que el login fue exitoso
+            self.login_window.close()
         else:
             self.verificador.emit("error") #enviando la señal de que el login fue incorrecto
+            username = self.ui_login.user_name_label.setText("")
+            password = self.ui_login.password_label.setText("")
         
     def mover_menu(self):
         if True: 
