@@ -1142,11 +1142,37 @@ class Ui_MainWindow(QtCore.QObject):
         self.bt_up_cargaMasivaProductos.clicked.connect(lambda: self.open_xml_file("Productos"))
         self.bt_up_cargaMasivaActividades.clicked.connect(lambda: self.open_xml_file("Actividades"))
         
+        #Conectando los botones para los reportes 
+        self.bt_reporte_usuarios.clicked.connect(lambda: self.mostrar_reporte("Usuarios"))
+        self.bt_reporte_productos.clicked.connect(lambda: self.mostrar_reporte("Productos"))
+        self.bt_reporte_actividades.clicked.connect(lambda: self.mostrar_reporte("Actividades"))
+        self.bt_reporte_compras.clicked.connect(lambda: self.mostrar_reporte("Compras"))
+        self.bt_reporte_vendedores.clicked.connect(lambda: self.mostrar_reporte("Vendedores"))
+        self.bt_reportes_COLA.clicked.connect(lambda: self.mostrar_reporte("Cola"))
+        
         self.retranslateUi(MainWindow)
         self.stackedWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
-        def minimizar(self, MainWindow):
+    def mostrar_reporte(self, tipo_reporte):
+        if tipo_reporte == "Usuarios":
+                print("Mostrando reporte de usuarios.")
+                self.carga_masiva_usuarios = cargaMasivaUsuarios()
+                self.carga_masiva_usuarios.lista_usuarios.graficar()
+        elif tipo_reporte == "Productos":
+                print("Mostrando reporte de productos.")
+        elif tipo_reporte == "Actividades":
+                print("Mostrando reporte de actividades.")
+        elif tipo_reporte == "Compras":
+                print("Mostrando reporte de compras.")
+        elif tipo_reporte == "Vendedores":
+                print("Mostrando reporte de vendedores.")
+        elif tipo_reporte == "Cola":
+                print("Mostrando reporte de cola.")
+        else:
+                print("No se ha seleccionado un tipo de reporte válido.")
+
+    def minimizar(self, MainWindow):
                 MainWindow.showMinimized()
 
     def salir(self, MainWindow):
