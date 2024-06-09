@@ -1,49 +1,62 @@
 import sys
 import os
 from PyQt5 import QtWidgets
+from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget
 from tkinter import messagebox
-from PyQt5.QtWidgets import QApplication, QMainWindow
 
-# agregando la carpeta ventanas al path de python
+# Agregando la carpeta ventanas al path de python
 script_dir = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(os.path.join(script_dir, 'ventanas'))
 
-from login import Ui_Form #importando la clase Ui_Form de login.py en la carpeta ventanas
-from ui_admin import Ui_MainWindow #importando la clase Ui_MainWindow de ui_admin.py en la carpeta ventanas
+from login import Ui_Form as LoginForm  # Renombrando la clase Ui_Form a LoginForm
+from ui_admin import Ui_MainWindow as AdminForm  # Renombrando la clase Ui_MainWindow a AdminForm
+from usuarios import Ui_Form as UserForm  # Renombrando la clase Ui_Form a UserForm
 
-#clase principal de la aplicacion
+# Clase principal de la aplicación
 class MainApp(QtWidgets.QWidget):
-    
-    #constructor de la clase
-    def __init__(self):
-        super().__init__()#llamando al constructor de la clase padre QWidget
-        self.ui = Ui_Form()#creando un objeto de la clase Ui_Form de login.py
-        self.ui.setupUi(self)#inicializando la interfaz de usuario de login
-        self.ui.verificador.connect(self.ingresoApp) #conectando la señal verificador de la clase Ui_Form a la funcion ingresoApp
-        
-        self.admin_window = QMainWindow()#creando un objeto de la clase QMainWindow de PyQt5
-        self.ui_admin = Ui_MainWindow()#creando un objeto de la clase Ui_MainWindow de ui_admin.py
-        self.ui_admin.setupUi(self.admin_window)#inicializando la interfaz de usuario de ui_admin
-        self.ui_admin.bt_minus.clicked.connect(lambda: self.ui_admin.minimizar(self.admin_window))#conectando el boton de minimizar a la funcion minimizar
-        self.ui_admin.bt_exit.clicked.connect(lambda: self.ui_admin.salir(self.admin_window))#conectando el boton de salir a la funcion salir
-        self.ui_admin.verificador.connect(self.ingresoApp)#conectando la señal verificador de la clase Ui_MainWindow a la funcion ingresoApp
 
-    #metodo para verificar el ingreso a la aplicacion 
-    def ingresoApp(self, resultado, resultado2 = False):
-        
-        if resultado or resultado2:
-            print("Login Exitoso.")
-            #cerrando la ventana de login, aca se abre la ventana del admin o del usuario segun sea el caso
-            self.hide()
-            # Mostrando la ventana del admin 
-            self.admin_window.show()#mostrando la ventana del admin
-            
+    # Constructor de la clase
+    def __init__(self):
+        super().__init__()  # Llamando al constructor de la clase padre QWidget
+
+        self.login_window = QWidget()  # Creando un objeto de la clase QWidget para el login
+        self.ui_login = LoginForm()  # Creando un objeto de la clase LoginForm
+        self.ui_login.setupUi(self.login_window)  # Inicializando la interfaz de usuario de login
+        self.ui_login.verificador.connect(self.ingresoApp)  # Conectando la señal verificador de la clase LoginForm a la función ingresoApp
+
+        self.admin_window = QMainWindow()  # Creando un objeto de la clase QMainWindow de PyQt5
+        self.ui_admin = AdminForm()  # Creando un objeto de la clase AdminForm
+        self.ui_admin.setupUi(self.admin_window)  # Inicializando la interfaz de usuario de ui_admin
+        self.ui_admin.bt_minus.clicked.connect(lambda: self.ui_admin.minimizar(self.admin_window))  # Conectando el botón de minimizar a la función minimizar
+        self.ui_admin.bt_exit.clicked.connect(lambda: self.ui_admin.salir(self.admin_window))  # Conectando el botón de salir a la función salir
+        self.ui_admin.verificador.connect(self.ingresoApp)  # Conectando la señal verificador de la clase Ui_MainWindow a la función ingresoApp
+
+        self.user_window = QWidget()  # Creando un objeto de la clase QWidget para el usuario
+        self.ui_user = UserForm()  # Creando un objeto de la clase UserForm de usuarios.py
+        self.ui_user.setupUi(self.user_window)  # Inicializando la interfaz de usuario de usuarios
+
+    # Método para verificar el ingreso a la aplicación
+    def ingresoApp(self, resultado, resultado2=False):
+        # Si el resultado es admin se muestra la ventana de administrador
+        if resultado == "admin" or resultado2 == "admin":
+            print("Login Exitoso, como admin")
+            # Cerrando la ventana de login, acá se abre la ventana del admin o del usuario según sea el caso
+            self.login_window.hide()
+            # Mostrando la ventana del admin
+            self.admin_window.show()  # Mostrando la ventana del admin
+        # Si el resultado es user se muestra la ventana de usuario
+        elif resultado == "usuario" or resultado2 == "usuario":
+            print("Login Exitoso, como usuario")
+            # Cerrando la ventana de login, acá se abre la ventana del admin o del usuario según sea el caso
+            self.login_window.hide()
+            # Mostrando la ventana del usuario
+            self.user_window.show()
         else:
-            #mostrar ventana de error en caso de que los datos sean incorrectos
+            # Mostrar ventana de error en caso de que los datos sean incorrectos
             messagebox.showerror("Error", "Usuario o contraseña incorrectos.")
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
     main_window = MainApp()
-    main_window.show()
+    main_window.login_window.show()# Mostrando la ventana de login
     sys.exit(app.exec_())
