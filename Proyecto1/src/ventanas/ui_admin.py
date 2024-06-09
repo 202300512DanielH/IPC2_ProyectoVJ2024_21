@@ -21,7 +21,7 @@ from cargaMasivaUsuarios import cargaMasivaUsuarios
 
 class Ui_MainWindow(QtCore.QObject):
         
-    verificador = QtCore.pyqtSignal(bool)  # inicializando la señal verificador como una señal de tipo bool
+    verificador = QtCore.pyqtSignal(str)  # inicializando la señal verificador como una señal de tipo str
         
     def setupUi(self, MainWindow):
         self.bt_up_cargaMasivaUsuarios = QtWidgets.QPushButton(MainWindow)
@@ -1170,13 +1170,24 @@ class Ui_MainWindow(QtCore.QObject):
         # Obtener los datos del usuario
         username = self.ui_login.user_name_label.text()
         password = self.ui_login.password_label.text()
-        # validacion del login, si los datos son correctos devuelve True y si no False
-        if username == "admin" and password == "admin":
-            self.verificador.emit(True) #enviando la señal de que el login fue exitoso
-            self.login_window.hide() #cerrando la ventana de login
-        else:
-            self.verificador.emit(False) #enviando la señal de que el login fue incorrecto
         
+        #recorriendo la lista de usuarios 
+        usuario_encontrado = False
+        #llamando a la lista de usuarios en la carga masiva
+        self.carga_masiva_usuarios = cargaMasivaUsuarios()
+        usuario = self.carga_masiva_usuarios.lista_usuarios.buscar(username)
+        usuario_encontrado = False
+
+        if usuario is not None and usuario.id == username and usuario.password == password:
+            usuario_encontrado = True        
+
+        # validacion del login, si los datos son correctos devuelve True y si no False
+        if username == "1" and password == "1":
+            self.verificador.emit("admin") #enviando la señal de que el login fue exitoso
+        elif usuario_encontrado:
+            self.verificador.emit("usuario") #enviando la señal de que el login fue exitoso
+        else:
+            self.verificador.emit("error") #enviando la señal de que el login fue incorrecto
         
     def mover_menu(self):
         if True: 
