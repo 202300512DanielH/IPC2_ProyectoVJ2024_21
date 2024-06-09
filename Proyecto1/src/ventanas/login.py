@@ -30,6 +30,7 @@ class Ui_Form(QtCore.QObject):  # poniendo QtCore.QObject como clase padre para 
         font.setBold(True)
         font.setWeight(75)
         Form.setFont(font)
+        self.Form = Form
         self.widget = QtWidgets.QWidget(Form)
         self.widget.setGeometry(QtCore.QRect(30, 30, 550, 500))
         self.widget.setStyleSheet("QPushButton#button_login{\n"
@@ -154,7 +155,7 @@ class Ui_Form(QtCore.QObject):  # poniendo QtCore.QObject como clase padre para 
         self.label_3.setGraphicsEffect(QtWidgets.QGraphicsDropShadowEffect(blurRadius=25, xOffset=0, yOffset=0, color=QtGui.QColor(0, 0, 0, 255)))
         self.button_login.setGraphicsEffect(QtWidgets.QGraphicsDropShadowEffect(blurRadius=25, xOffset=0, yOffset=0, color=QtGui.QColor(0, 0, 0, 255)))
 
-        self.button_login.clicked.connect(self.login) #conectando el boton con la funcion login 
+        self.button_login.clicked.connect(lambda: self.login()) #conectando el boton con la funcion login 
 
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
@@ -178,11 +179,18 @@ class Ui_Form(QtCore.QObject):  # poniendo QtCore.QObject como clase padre para 
         # validacion del login, si los datos son correctos devuelve True y si no False
         if username == "1" and password == "1":
             self.verificador.emit("admin") #enviando la señal de que el login fue exitoso
+            #Cerrando la ventana 
+            self.Form.close()
         elif usuario_encontrado:
             self.verificador.emit("usuario") #enviando la señal de que el login fue exitoso
+            #Cerrando la ventana
+            self.Form.close()
         else:
             self.verificador.emit("error") #enviando la señal de que el login fue incorrecto
-
+            #Limpiando los campos de texto
+            self.user_name_label.setText("")
+            self.password_label.setText("")
+            
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
         Form.setWindowTitle(_translate("Form", "Form"))

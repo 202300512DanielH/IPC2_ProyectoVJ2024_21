@@ -1,5 +1,20 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 import res
+import sys, os
+
+# agregando la carpeta ventanas al path de python
+script_dir = os.path.dirname(os.path.abspath(__file__))
+sys.path.append(os.path.join(script_dir, 'ventanas'))
+
+from login import Ui_Form as ui_login_Form #importando la clase Ui_Form de login.py en la carpeta ventanas
+
+# subiendo dos niveles para acceder a la carpeta que contiene la carpeta controller
+parent_dir = os.path.dirname(os.path.dirname(script_dir))
+
+# Navega a la carpeta controller y agrega la ruta al path de python
+sys.path.append(os.path.join(parent_dir, 'controller'))
+
+from cargaMasivaUsuarios import cargaMasivaUsuarios
 
 
 class Ui_Form(QtCore.QObject):
@@ -13,6 +28,7 @@ class Ui_Form(QtCore.QObject):
         font.setBold(True)
         font.setWeight(75)
         Form.setFont(font)
+        self.Form = Form
         self.widget = QtWidgets.QWidget(Form)
         self.widget.setGeometry(QtCore.QRect(10, 9, 961, 591))
         self.widget.setStyleSheet("QPushButton{\n"
@@ -28,6 +44,21 @@ class Ui_Form(QtCore.QObject):
 "QPushButton:hover{\n"
 "  background-color: rgb(150, 204, 144); \n"
 " border: 2px solid rgb(236, 253, 212);\n"
+"    color: white; \n"
+"}\n"
+"QPushButton#regresar_button{\n"
+" background-color: rgb(255, 189, 189);\n"
+"    color: rgb(0,0,0); \n"
+"    border: 2px solid rgb(255, 155, 155);\n"
+"    border-bottom-width: 4px; \n"
+"    border-bottom-color: rgb(255, 85, 85); \n"
+"    border-radius: 15px; \n"
+"    font-size: 16px;\n"
+"}\n"
+"\n"
+"QPushButton#regresar_button:hover{\n"
+"  background-color: rgb(255, 85, 85); \n"
+" border: 2px solid rgb(255, 189, 189);\n"
 "    color: white; \n"
 "}\n"
 "\n"
@@ -133,6 +164,16 @@ class Ui_Form(QtCore.QObject):
 "    border-radius: 15px;\n"
 "    background-color: rgb(253, 236, 224);\n"
 "    font-size: 12px;")
+        
+        #Agregando PushButton para regresar al login
+        self.regresar_button = QtWidgets.QPushButton(self.widget)
+        self.regresar_button.setGeometry(QtCore.QRect(740, 50, 191, 41))
+        font = QtGui.QFont()
+        font.setPointSize(-1)
+        self.regresar_button.setFont(font)
+        self.regresar_button.setStyleSheet("color:black")
+        self.regresar_button.setObjectName("regresar_button")
+        
         self.cantidad_producto.setObjectName("cantidad_producto")
         self.agregar_button = QtWidgets.QPushButton(self.widget)
         self.agregar_button.setEnabled(True)
@@ -295,9 +336,54 @@ class Ui_Form(QtCore.QObject):
         self.cantidad.setText("")
         self.cantidad.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
         self.cantidad.setObjectName("cantidad")
+        
+        #conectando el boton de regresar al login
+        self.regresar_button.clicked.connect(lambda: self.show_login(Form))
 
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
+
+    def show_login(self, Form):
+        print("Regresando al login")
+        # Cerrando la ventana del usuario
+        self.Form.close()
+    
+        # Creando la ventana del login
+        self.login_window = QtWidgets.QWidget()
+        self.ui_login = ui_login_Form()
+        self.ui_login.setupUi(self.login_window)
+        self.ui_login.verificador.connect(lambda: self.iniciar_sesion(self.ui_login, self.login_window))
+        self.login_window.show()
+        
+
+    def iniciar_sesion(self, ui_login, login_window):
+        # Obtener los datos del usuario
+        username = self.ui_login.user_name_label.text()
+        password = self.ui_login.password_label.text()
+        
+        #recorriendo la lista de usuarios 
+        usuario_encontrado = False
+        #llamando a la lista de usuarios en la carga masiva
+        self.carga_masiva_usuarios = cargaMasivaUsuarios()
+        usuario = self.carga_masiva_usuarios.lista_usuarios.buscar(username)
+        usuario_encontrado = False
+
+        if usuario is not None and usuario.id == username and usuario.password == password:
+            usuario_encontrado = True        
+
+        # validacion del login, si los datos son correctos devuelve True y si no False
+        if username == "1" and password == "1":
+            self.verificador.emit("admin") #enviando la señal de que el login fue exitoso
+            #Cerrando la ventana del login
+            self.login_window.close()
+        elif usuario_encontrado:
+            self.verificador.emit("usuario") #enviando la señal de que el login fue exitoso
+            #Cerrando la ventana del login
+            self.login_window.close()
+        else:
+            self.verificador.emit("error") #enviando la señal de que el login fue incorrecto
+            username = self.ui_login.user_name_label.setText("")
+            password = self.ui_login.password_label.setText("")
 
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
@@ -316,6 +402,7 @@ class Ui_Form(QtCore.QObject):
         self.label_categoria_2.setText(_translate("Form", "Cantidad:"))
         self.ver_carrito_button.setText(_translate("Form", "V E R   C A R R I T O"))
         self.comprar_button.setText(_translate("Form", "C O M P R A R"))
+        self.regresar_button.setText(_translate("Form", "S A L I R"))
 
 
 

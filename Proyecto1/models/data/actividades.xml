@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<actividades>
+    <actividad id="101">
+        <nombre>Reunión de Ventas</nombre>
+        <descripcion>Reunión mensual del equipo de ventas</descripcion>
+        <empleado>001</empleado> <!-- Código del empleado responsable -->
+        <dia>Lunes</dia>
+        <hora>10:00</hora>
+    </actividad>
+    <actividad id="102">
+        <nombre>Capacitación</nombre>
+        <descripcion>Capacitación sobre nuevos productos</descripcion>
+        <empleado>002</empleado>
+        <dia>Miércoles</dia>
+        <hora>14:00</hora>
+    </actividad>
+</actividades>
