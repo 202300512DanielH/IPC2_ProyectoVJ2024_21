@@ -34,21 +34,19 @@ class MainApp(QtWidgets.QWidget):
         self.user_window = QWidget()  # Creando un objeto de la clase QWidget para el usuario
         self.ui_user = UserForm()  # Creando un objeto de la clase UserForm de usuarios.py
         self.ui_user.setupUi(self.user_window)  # Inicializando la interfaz de usuario de usuarios
+        # Conectando la señal verificador de la clase UserForm a la función ingresoApp
+        self.ui_user.verificador.connect(self.ingresoApp)
 
     # Método para verificar el ingreso a la aplicación
-    def ingresoApp(self, resultado, resultado2=False):
+    def ingresoApp(self, resultado, resultado2 = None, resultado3 = None):
         # Si el resultado es admin se muestra la ventana de administrador
-        if resultado == "admin" or resultado2 == "admin":
+        if resultado == "admin" or resultado2 == "admin" or resultado3 == "admin":
             print("Login Exitoso, como admin")
-            # Cerrando la ventana de login, acá se abre la ventana del admin o del usuario según sea el caso
-            self.login_window.hide()
             # Mostrando la ventana del admin
             self.admin_window.show()  # Mostrando la ventana del admin
         # Si el resultado es user se muestra la ventana de usuario
-        elif resultado == "usuario" or resultado2 == "usuario":
+        elif resultado == "usuario" or resultado2 == "usuario" or resultado3 == "usuario":
             print("Login Exitoso, como usuario")
-            # Cerrando la ventana de login, acá se abre la ventana del admin o del usuario según sea el caso
-            self.login_window.hide()
             # Mostrando la ventana del usuario
             self.user_window.show()
         else:
