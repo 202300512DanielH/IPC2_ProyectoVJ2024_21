@@ -1,6 +1,8 @@
 from nodo import Nodo
 from usuario import Usuario
 
+import os
+
 # Definición de la clase ListaDoblementeEnlazada
 class ListaDoblementeEnlazada:
     def __init__(self):
@@ -52,3 +54,49 @@ class ListaDoblementeEnlazada:
             print("____________________________________________________")
             actual = actual.siguiente
         print()
+    
+    # Método para graficar la lista de usuarios con Graphviz
+    def graficar(self):
+        codigo_dot = ''
+        carpeta_reportes = 'Reportes'
+        if not os.path.exists(carpeta_reportes):
+            os.makedirs(carpeta_reportes)
+
+        archivo = open(os.path.join(carpeta_reportes, 'Listas_doblemente_enlazadas.dot'), 'w')
+        codigo_dot += '''digraph G {
+        rankdir=LR;
+        node [shape = record, height = .1]'''
+
+        # Crear los nodos
+        contador_nodos = 0
+        actual = self.primero
+        while actual is not None:
+            codigo_dot += 'node'+str(contador_nodos)+' [label = \"{<f1>| ID: '+str(actual.usuario.id)+'\\nNombre: '+str(actual.usuario.nombre)+'\\nEdad: '+str(actual.usuario.edad)+'\\nEmail: '+str(actual.usuario.email)+'\\nTelefono: '+str(actual.usuario.telefono)+'|<f2>}"];\n'
+            contador_nodos += 1
+            actual = actual.siguiente
+            
+        #HACEMOS LAS RELACIONES
+        actual = self.primero
+        contador_nodos = 0
+        while actual.siguiente != None:
+            #RELACIONES DE IZQUIERDA A DERECHA
+            codigo_dot += 'node'+str(contador_nodos)+':f2 -> node'+str(contador_nodos+1)+':f1;\n'
+            #RELACIONES DE DERECHA A IZQUIERDA
+            codigo_dot += 'node'+str(contador_nodos+1)+':f1 -> node'+str(contador_nodos)+':f2;\n'
+            contador_nodos += 1
+            actual = actual.siguiente
+
+        codigo_dot += '}'
+
+        archivo.write(codigo_dot)
+        archivo.close()
+
+        # Generar la imagen y abrir el reporte
+        ruta_dot = 'Reportes/Listas_doblemente_enlazadas.dot'
+        ruta_imagen = 'Reportes/Listas_doblemente_enlazadas.png'
+        comando = 'dot -Tpng ' + ruta_dot + ' -o ' + ruta_imagen
+        os.system(comando)
+
+        ruta_abrir_reporte = os.path.abspath(ruta_imagen)
+        os.startfile(ruta_abrir_reporte)
+        print('Reporte generado con éxito')

@@ -1,9 +1,25 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
-import sys, res
+import sys, os
+
+
+# Obteniendo la ruta del directorio actual
+script_dir = os.path.dirname(os.path.abspath(__file__))
+
+# Subiendo dos niveles en la jerarquia de directorios
+ruta_proyecto = os.path.dirname(os.path.dirname(script_dir))
+
+# Accediendo a la carpeta controller
+ruta_controller = os.path.join(ruta_proyecto, 'controller')
+
+# Asegurándose de que Python puede importar desde la carpeta controller
+if ruta_controller not in sys.path:
+    sys.path.append(ruta_controller)
+
+from cargaMasivaUsuarios import cargaMasivaUsuarios
 
 class Ui_Form(QtCore.QObject):  # poniendo QtCore.QObject como clase padre para poder usar señales
         
-    verificador = QtCore.pyqtSignal(bool)  # inicializando la señal verificador como una señal de tipo bool
+    verificador = QtCore.pyqtSignal(str)  # inicializando la señal verificador como una señal de tipo
 
     def setupUi(self, Form):
         Form.setObjectName("Form")
@@ -148,14 +164,24 @@ class Ui_Form(QtCore.QObject):  # poniendo QtCore.QObject como clase padre para 
         # Obtener los datos del usuario
         username = self.user_name_label.text()
         password = self.password_label.text()
+        
+        #recorriendo la lista de usuarios 
+        usuario_encontrado = False
+        #llamando a la lista de usuarios en la carga masiva
+        self.carga_masiva_usuarios = cargaMasivaUsuarios()
+        usuario = self.carga_masiva_usuarios.lista_usuarios.buscar(username)
+        usuario_encontrado = False
+
+        if usuario is not None and usuario.id == username and usuario.password == password:
+            usuario_encontrado = True        
 
         # validacion del login, si los datos son correctos devuelve True y si no False
-        if username == "admin" and password == "admin":
-            self.verificador.emit(True) #enviando la señal de que el login fue exitoso
+        if username == "1" and password == "1":
+            self.verificador.emit("admin") #enviando la señal de que el login fue exitoso
+        elif usuario_encontrado:
+            self.verificador.emit("usuario") #enviando la señal de que el login fue exitoso
         else:
-            self.verificador.emit(False) #enviando la señal de que el login fue incorrecto
-
-
+            self.verificador.emit("error") #enviando la señal de que el login fue incorrecto
 
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate

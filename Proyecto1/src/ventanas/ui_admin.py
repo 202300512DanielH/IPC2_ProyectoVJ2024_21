@@ -21,7 +21,7 @@ from cargaMasivaUsuarios import cargaMasivaUsuarios
 
 class Ui_MainWindow(QtCore.QObject):
         
-    verificador = QtCore.pyqtSignal(bool)  # inicializando la señal verificador como una señal de tipo bool
+    verificador = QtCore.pyqtSignal(str)  # inicializando la señal verificador como una señal de tipo str
         
     def setupUi(self, MainWindow):
         self.bt_up_cargaMasivaUsuarios = QtWidgets.QPushButton(MainWindow)
@@ -1142,11 +1142,37 @@ class Ui_MainWindow(QtCore.QObject):
         self.bt_up_cargaMasivaProductos.clicked.connect(lambda: self.open_xml_file("Productos"))
         self.bt_up_cargaMasivaActividades.clicked.connect(lambda: self.open_xml_file("Actividades"))
         
+        #Conectando los botones para los reportes 
+        self.bt_reporte_usuarios.clicked.connect(lambda: self.mostrar_reporte("Usuarios"))
+        self.bt_reporte_productos.clicked.connect(lambda: self.mostrar_reporte("Productos"))
+        self.bt_reporte_actividades.clicked.connect(lambda: self.mostrar_reporte("Actividades"))
+        self.bt_reporte_compras.clicked.connect(lambda: self.mostrar_reporte("Compras"))
+        self.bt_reporte_vendedores.clicked.connect(lambda: self.mostrar_reporte("Vendedores"))
+        self.bt_reportes_COLA.clicked.connect(lambda: self.mostrar_reporte("Cola"))
+        
         self.retranslateUi(MainWindow)
         self.stackedWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
-        def minimizar(self, MainWindow):
+    def mostrar_reporte(self, tipo_reporte):
+        if tipo_reporte == "Usuarios":
+                print("Mostrando reporte de usuarios.")
+                self.carga_masiva_usuarios = cargaMasivaUsuarios()
+                self.carga_masiva_usuarios.lista_usuarios.graficar()
+        elif tipo_reporte == "Productos":
+                print("Mostrando reporte de productos.")
+        elif tipo_reporte == "Actividades":
+                print("Mostrando reporte de actividades.")
+        elif tipo_reporte == "Compras":
+                print("Mostrando reporte de compras.")
+        elif tipo_reporte == "Vendedores":
+                print("Mostrando reporte de vendedores.")
+        elif tipo_reporte == "Cola":
+                print("Mostrando reporte de cola.")
+        else:
+                print("No se ha seleccionado un tipo de reporte válido.")
+
+    def minimizar(self, MainWindow):
                 MainWindow.showMinimized()
 
     def salir(self, MainWindow):
@@ -1170,13 +1196,24 @@ class Ui_MainWindow(QtCore.QObject):
         # Obtener los datos del usuario
         username = self.ui_login.user_name_label.text()
         password = self.ui_login.password_label.text()
-        # validacion del login, si los datos son correctos devuelve True y si no False
-        if username == "admin" and password == "admin":
-            self.verificador.emit(True) #enviando la señal de que el login fue exitoso
-            self.login_window.hide() #cerrando la ventana de login
-        else:
-            self.verificador.emit(False) #enviando la señal de que el login fue incorrecto
         
+        #recorriendo la lista de usuarios 
+        usuario_encontrado = False
+        #llamando a la lista de usuarios en la carga masiva
+        self.carga_masiva_usuarios = cargaMasivaUsuarios()
+        usuario = self.carga_masiva_usuarios.lista_usuarios.buscar(username)
+        usuario_encontrado = False
+
+        if usuario is not None and usuario.id == username and usuario.password == password:
+            usuario_encontrado = True        
+
+        # validacion del login, si los datos son correctos devuelve True y si no False
+        if username == "1" and password == "1":
+            self.verificador.emit("admin") #enviando la señal de que el login fue exitoso
+        elif usuario_encontrado:
+            self.verificador.emit("usuario") #enviando la señal de que el login fue exitoso
+        else:
+            self.verificador.emit("error") #enviando la señal de que el login fue incorrecto
         
     def mover_menu(self):
         if True: 
