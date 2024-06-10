@@ -1,4 +1,10 @@
 digraph G {
         rankdir=LR;
         node [shape = record, style=filled, fillcolor=lightblue, fontname="Arial"];
-        edge [fontname="Arial"];}
+        edge [fontname="Arial"];node0 [label = "{ Código: 001\nNombre: Ana Garcia\nPuesto: Gerente|<f2>}"];
+node1 [label = "{ Código: 002\nNombre: Carlos Ruiz\nPuesto: Vendedor|<f2>}"];
+node2 [label = "{ Código: 003\nNombre: Camila Rosales\nPuesto: Vendedor|<f2>}"];
+node0 -> node1;
+node1 -> node2;
+node2 -> node0;
+}

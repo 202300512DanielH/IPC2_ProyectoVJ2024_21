@@ -64,6 +64,10 @@ class ListaCircularSimpleEnlazada:
         print()
     
     def graficar(self):
+        if self.primero is None:
+            print("La lista está vacía, no hay nada que graficar.")
+            return
+
         codigo_dot = ''
         carpeta_reportes = 'Reportes'
         if not os.path.exists(carpeta_reportes):
@@ -79,30 +83,34 @@ class ListaCircularSimpleEnlazada:
         contador_nodos = 0
         actual = self.primero
         nodos = []
-        if actual is not None:
-            while True:
-                empleado = actual.empleado
-                codigo_dot += f'node{contador_nodos} [label = "{{Código: {empleado.codigo}\\nNombre: {empleado.nombre}\\nApellido: {empleado.apellido}\\nEdad: {empleado.edad}\\nDepartamento: {empleado.departamento}\\nSalario: {empleado.salario}}}"];\n'
-                nodos.append(f'node{contador_nodos}')
-                contador_nodos += 1
-                actual = actual.siguiente
-                if actual == self.primero:
-                    break
+        while True:
+            empleado = actual.empleado
+            codigo_dot += f'node{contador_nodos} [label = "{{ Código: {empleado.codigo}\\nNombre: {empleado.nombre}\\nPuesto: {empleado.puesto}|<f2>}}"];\n'
+            nodos.append(f'node{contador_nodos}')
+            contador_nodos += 1
+            actual = actual.siguiente
+            if actual == self.primero:
+                break
 
-            # Hacer las relaciones
-            for i in range(contador_nodos):
-                siguiente = (i + 1) % contador_nodos
-                codigo_dot += f'{nodos[i]} -> {nodos[siguiente]};\n'
+        # Hacer las relaciones
+        for i in range(contador_nodos):
+            siguiente = (i + 1) % contador_nodos
+            codigo_dot += f'{nodos[i]} -> {nodos[siguiente]};\n'
 
         codigo_dot += '}'
 
         archivo.write(codigo_dot)
         archivo.close()
 
+        # Imprimir el contenido del archivo .dot para depuración
+        print("Contenido del archivo .dot:")
+        print(codigo_dot)
+
         # Generar la imagen y abrir el reporte
         ruta_dot = os.path.join(carpeta_reportes, 'ListaCircularSimpleEnlazada.dot')
         ruta_imagen = os.path.join(carpeta_reportes, 'ListaCircularSimpleEnlazada.png')
         comando = f'dot -Tpng {ruta_dot} -o {ruta_imagen}'
+        print(f"Ejecutando comando: {comando}")
         os.system(comando)
 
         ruta_abrir_reporte = os.path.abspath(ruta_imagen)

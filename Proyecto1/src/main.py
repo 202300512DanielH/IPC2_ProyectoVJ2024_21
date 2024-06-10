@@ -25,27 +25,24 @@ class MainApp(QtWidgets.QWidget):
         self.ui_login.verificador.connect(self.ingresoApp)  # Conectando la señal verificador de la clase LoginForm a la función ingresoApp
 
         self.admin_window = QMainWindow()  # Creando un objeto de la clase QMainWindow de PyQt5
-        self.ui_admin = AdminForm()  # Creando un objeto de la clase AdminForm
+        self.ui_admin = AdminForm(self.login_window)  # Creando un objeto de la clase AdminForm
         self.ui_admin.setupUi(self.admin_window)  # Inicializando la interfaz de usuario de ui_admin
         self.ui_admin.bt_minus.clicked.connect(lambda: self.ui_admin.minimizar(self.admin_window))  # Conectando el botón de minimizar a la función minimizar
         self.ui_admin.bt_exit.clicked.connect(lambda: self.ui_admin.salir(self.admin_window))  # Conectando el botón de salir a la función salir
-        self.ui_admin.verificador.connect(self.ingresoApp)  # Conectando la señal verificador de la clase Ui_MainWindow a la función ingresoApp
 
         self.user_window = QWidget()  # Creando un objeto de la clase QWidget para el usuario
-        self.ui_user = UserForm()  # Creando un objeto de la clase UserForm de usuarios.py
+        self.ui_user = UserForm(self.login_window, self.ui_login)  # Creando un objeto de la clase UserForm de usuarios.py
         self.ui_user.setupUi(self.user_window)  # Inicializando la interfaz de usuario de usuarios
-        # Conectando la señal verificador de la clase UserForm a la función ingresoApp
-        self.ui_user.verificador.connect(self.ingresoApp)
 
     # Método para verificar el ingreso a la aplicación
-    def ingresoApp(self, resultado, resultado2 = None, resultado3 = None):
+    def ingresoApp(self, resultado):
         # Si el resultado es admin se muestra la ventana de administrador
-        if resultado == "admin" or resultado2 == "admin" or resultado3 == "admin":
+        if resultado == "admin":
             print("Login Exitoso, como admin")
             # Mostrando la ventana del admin
             self.admin_window.show()  # Mostrando la ventana del admin
         # Si el resultado es user se muestra la ventana de usuario
-        elif resultado == "usuario" or resultado2 == "usuario" or resultado3 == "usuario":
+        elif resultado == "usuario":
             print("Login Exitoso, como usuario")
             # Mostrando la ventana del usuario
             self.user_window.show()
