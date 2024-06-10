@@ -18,8 +18,15 @@ sys.path.append(os.path.join(parent_dir, 'controller'))
 from cargaMasivaUsuarios import cargaMasivaUsuarios
 from cargaMasivaProducto import CargaMasivaProducto
 
+sys.path.append(os.path.join(parent_dir, 'models'))
+
+from pila import pila
+from carrito_compras import carrito_compras
 
 class Ui_Form(QtCore.QObject):
+        
+    #Creando pila para el carrito 
+    lista_carrito = pila()
         
     verificador = QtCore.pyqtSignal(str)  # inicializando la señal verificador como una señal de tipo str
         
@@ -354,8 +361,54 @@ class Ui_Form(QtCore.QObject):
         #conectando el boton de ver producto para mostrar la informacion del producto seleccionado
         self.ver_producto_button.clicked.connect(lambda: self.mostrar_producto())
         
+        #conectando el boton de agregar al carrito
+        self.agregar_button.clicked.connect(lambda: self.agregar_carrito())
+        
+        #conectando el boton de ver carrito para graficar el carrito
+        self.ver_carrito_button.clicked.connect(lambda: self.graficar_carrito())
+        
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
+    
+    #funcion para agregar un producto al carrito con la cantidad seleccionada
+    def agregar_carrito(self):
+        
+        global lista_carrito
+        
+        #Obteniendo el nombre del producto seleccionado
+        nombre_producto = self.productos_combobox.currentText()
+        
+        #Obteniendo la lista de productos 
+        self.carga_masiva_productos = CargaMasivaProducto()
+        self.lista_productos = self.carga_masiva_productos.lista_productos
+        
+        #obteniendo el producto seleccionado de la lista de productos
+        producto = self.lista_productos.buscar(nombre_producto)
+        
+        #obteniendo la cantidad seleccionada
+        cantidad_seleccionada = self.cantidad_producto.value()
+        
+        #creando un nuevo carrito 
+        self.carrito_compras = carrito_compras(producto, cantidad_seleccionada)
+        
+        #si no se ha seleccionado ningun producto se muestra un mensaje de error
+        if nombre_producto == "Seleccionar Producto":
+                messagebox.showerror("Error", "No se ha seleccionado ningun producto")
+        
+        #mostrando un mensaje de maximo alcanzado si la cantidad seleccionada es mayor a la cantidad del producto
+        if cantidad_seleccionada > int(producto.cantidad):
+                messagebox.showinfo("Maximo alcanzado", "La cantidad seleccionada es mayor a la cantidad disponible del producto")
+        
+        #si la cantidad seleccionada es mayor a 0 se agrega el producto al carrito
+        if cantidad_seleccionada > 0:
+                #Agregando el producto al carrito
+                self.lista_carrito.push(self.carrito_compras)
+                messagebox.showinfo("Producto agregado", "El producto ha sido agregado al carrito")
+    
+    #funcion para graficar el carrito
+    def graficar_carrito(self):
+        global lista_carrito
+        self.lista_carrito.graficar()
     
     #funcion para mostrar la informacion del producto seleccionado
     def mostrar_producto(self):

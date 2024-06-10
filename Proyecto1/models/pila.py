@@ -1,4 +1,5 @@
 from nodo_simple import Nodo
+import os, sys
 
 class pila: 
     # Constructor de la clase
@@ -37,8 +38,20 @@ class pila:
             anterior.siguiente = actual.siguiente
             self.size -= 1
             return True
-        
-    # Método para obtener el tamaño de la pila
-    def getSize(self):
-        return self.size
     
+    # Método para graficar la pila con Graphviz
+    def graficar(self):
+        codigo_dot = ''
+        contador_nodos = 0
+        actual = self.head
+        while actual:
+            codigo_dot += f"nodo{contador_nodos} [label=\"{actual.dato}\"];\n"
+            if actual.siguiente:
+                codigo_dot += f"nodo{contador_nodos} -> nodo{contador_nodos+1};\n"
+            actual = actual.siguiente
+            contador_nodos += 1
+        codigo_dot = f"digraph G {{\n{codigo_dot}}}"
+        with open("pila.dot", "w") as file:
+            file.write(codigo_dot)
+        os.system("dot -Tpng pila.dot -o pila.png")
+        os.system("pila.png")
