@@ -58,10 +58,13 @@ class ListaDoblementeEnlazada:
     # Método para graficar la lista de usuarios con Graphviz
     def graficar(self):
         codigo_dot = ''
+        
+        # Crear la carpeta Reportes si no existe
         carpeta_reportes = 'Reportes'
         if not os.path.exists(carpeta_reportes):
             os.makedirs(carpeta_reportes)
 
+        # Crear el archivo .dot
         archivo = open(os.path.join(carpeta_reportes, 'Listas_doblemente_enlazadas.dot'), 'w')
         codigo_dot += '''digraph G {
         rankdir=LR;
