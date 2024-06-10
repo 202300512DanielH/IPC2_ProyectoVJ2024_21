@@ -52,7 +52,37 @@ class ListaCircularDoblementeEnlazada:
             actual = actual.siguiente
             if actual == self.primero:  # Si hemos vuelto al principio, termina el bucle
                 break
+    
+    #Metodo para verificar si la lista esta vacia
+    def esta_vacia(self):
+        return self.primero is None
+    
+    # Método para buscar un producto en la lisat circular doblemente enlazada, recibe el nombre del producto a buscar
+    def buscar(self, nombre):
+        # Si la lista está vacía
+        if self.esta_vacia():
+            return None
+        else: 
+            actual = self.primero
+            while True:
+                if actual.producto.nombre == nombre:
+                    return actual.producto
+                actual = actual.siguiente
+                if actual == self.primero:
+                    break
 
+    # Método para iterar sobre la lista circular doblemente enlazada
+    def __iter__(self):
+        #si la lista esta vacia
+        if self.esta_vacia():
+            return
+        else: 
+            actual = self.primero
+            while True:
+                yield actual.producto
+                actual = actual.siguiente
+                if actual == self.primero:
+                    break
     
     def graficar(self):
         codigo_dot = ''
