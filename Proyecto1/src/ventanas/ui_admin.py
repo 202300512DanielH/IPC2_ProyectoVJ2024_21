@@ -294,7 +294,7 @@ class Ui_MainWindow(QtCore.QObject):
 "")
         self.pushButton_6.setText("")
         icon9 = QtGui.QIcon()
-        icon9.addPixmap(QtGui.QPixmap("img_admin.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon9.addPixmap(QtGui.QPixmap(":/images/img_admin.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.pushButton_6.setIcon(icon9)
         self.pushButton_6.setIconSize(QtCore.QSize(250, 250))
         self.pushButton_6.setObjectName("pushButton_6")
