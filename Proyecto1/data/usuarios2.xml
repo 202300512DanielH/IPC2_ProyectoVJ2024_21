@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <usuarios>
-    <usuario id="" password="qwerty123">
+    <usuario id="6" password="qwerty123">
         <nombre>Gabriela Muñoz</nombre>
         <edad>26</edad>
         <email>gabriela.munoz@example.com</email>
