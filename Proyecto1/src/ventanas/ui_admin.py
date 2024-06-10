@@ -20,8 +20,11 @@ from cargaMasivaProducto import CargaMasivaProducto
 from cargaMasivaUsuarios import cargaMasivaUsuarios
 
 class Ui_MainWindow(QtCore.QObject):
-        
-    verificador = QtCore.pyqtSignal(str)  # inicializando la señal verificador como una señal de tipo str
+    
+    #constructor de la clase
+    def __init__(self, ui_login):
+        super().__init__()
+        self.ui_login = ui_login
         
     def setupUi(self, MainWindow):
         self.bt_up_cargaMasivaUsuarios = QtWidgets.QPushButton(MainWindow)
@@ -1185,45 +1188,9 @@ class Ui_MainWindow(QtCore.QObject):
     def show_login(self, MainWindow):
         # Cerrando la ventana del administrador
         MainWindow.hide()
-    
         #Regresando a la ventana de login
-        self.login_window = QtWidgets.QWidget()  # Creando un objeto de la clase QWidget de PyQt5
-        self.ui_login = Ui_Form()  # Creando un objeto de la clase Ui_Form de ui_login.py
-        self.ui_login.setupUi(self.login_window)  # Inicializando la interfaz de usuario de ui_login
-        
-        # Conectar el botón de "Iniciar sesión" a la función iniciar_sesion
-        self.ui_login.button_login.clicked.connect(lambda: self.iniciar_sesion(self.ui_login, self.login_window))
-        
-        self.login_window.show()
-
-    def iniciar_sesion(self, ui_login, login_window):
-        # Obtener los datos del usuario
-        username = self.ui_login.user_name_label.text()
-        password = self.ui_login.password_label.text()
-        
-        #recorriendo la lista de usuarios 
-        usuario_encontrado = False
-        #llamando a la lista de usuarios en la carga masiva
-        self.carga_masiva_usuarios = cargaMasivaUsuarios()
-        usuario = self.carga_masiva_usuarios.lista_usuarios.buscar(username)
-        usuario_encontrado = False
-
-        if usuario is not None and usuario.id == username and usuario.password == password:
-            usuario_encontrado = True        
-
-        # validacion del login, si los datos son correctos devuelve True y si no False
-        if username == "1" and password == "1":
-            self.verificador.emit("admin") #enviando la señal de que el login fue exitoso
-            #Cerrando la ventana de login
-            self.login_window.close()
-        elif usuario_encontrado:
-            self.verificador.emit("usuario") #enviando la señal de que el login fue exitoso
-            self.login_window.close()
-        else:
-            self.verificador.emit("error") #enviando la señal de que el login fue incorrecto
-            username = self.ui_login.user_name_label.setText("")
-            password = self.ui_login.password_label.setText("")
-        
+        self.ui_login.show()
+    
     def mover_menu(self):
         if True: 
                 width = self.frameBotones.width()
