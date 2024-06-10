@@ -20,6 +20,7 @@ from cargaMasivaUsuarios import cargaMasivaUsuarios
 class Ui_Form(QtCore.QObject):  # poniendo QtCore.QObject como clase padre para poder usar señales
         
     verificador = QtCore.pyqtSignal(str)  # inicializando la señal verificador como una señal de tipo
+    id_user = QtCore.pyqtSignal(str)  # inicializando la señal id_user como una señal de tipo str
 
     def setupUi(self, Form):
         Form.setObjectName("Form")
@@ -179,10 +180,18 @@ class Ui_Form(QtCore.QObject):  # poniendo QtCore.QObject como clase padre para 
         # validacion del login, si los datos son correctos devuelve True y si no False
         if username == "1" and password == "1":
             self.verificador.emit("admin") #enviando la señal de que el login fue exitoso
+            #limpiando los campos de texto
+            self.user_name_label.setText("")
+            self.password_label.setText("")
             #Cerrando la ventana 
             self.Form.close()
         elif usuario_encontrado:
             self.verificador.emit("usuario") #enviando la señal de que el login fue exitoso
+            #enviando el id del usuario a la señal
+            self.id_user.emit(username)
+            #Limpiando los campos de texto
+            self.user_name_label.setText("")
+            self.password_label.setText("")
             #Cerrando la ventana
             self.Form.close()
         else:
