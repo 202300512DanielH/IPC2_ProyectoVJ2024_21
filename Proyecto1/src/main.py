@@ -24,15 +24,15 @@ class MainApp(QtWidgets.QWidget):
         self.ui_login.setupUi(self.login_window)  # Inicializando la interfaz de usuario de login
         self.ui_login.verificador.connect(self.ingresoApp)  # Conectando la señal verificador de la clase LoginForm a la función ingresoApp
 
-        self.admin_window = QMainWindow()  # Creando un objeto de la clase QMainWindow de PyQt5
-        self.ui_admin = AdminForm(self.login_window)  # Creando un objeto de la clase AdminForm
-        self.ui_admin.setupUi(self.admin_window)  # Inicializando la interfaz de usuario de ui_admin
-        self.ui_admin.bt_minus.clicked.connect(lambda: self.ui_admin.minimizar(self.admin_window))  # Conectando el botón de minimizar a la función minimizar
-        self.ui_admin.bt_exit.clicked.connect(lambda: self.ui_admin.salir(self.admin_window))  # Conectando el botón de salir a la función salir
-
         self.user_window = QWidget()  # Creando un objeto de la clase QWidget para el usuario
         self.ui_user = UserForm(self.login_window, self.ui_login)  # Creando un objeto de la clase UserForm de usuarios.py
         self.ui_user.setupUi(self.user_window)  # Inicializando la interfaz de usuario de usuarios
+        
+        self.admin_window = QMainWindow()  # Creando un objeto de la clase QMainWindow de PyQt5
+        self.ui_admin = AdminForm(self.login_window, self.ui_user)  # Creando un objeto de la clase AdminForm
+        self.ui_admin.setupUi(self.admin_window)  # Inicializando la interfaz de usuario de ui_admin
+        self.ui_admin.bt_minus.clicked.connect(lambda: self.ui_admin.minimizar(self.admin_window))  # Conectando el botón de minimizar a la función minimizar
+        self.ui_admin.bt_exit.clicked.connect(lambda: self.ui_admin.salir(self.admin_window))  # Conectando el botón de salir a la función salir
 
     # Método para verificar el ingreso a la aplicación
     def ingresoApp(self, resultado):

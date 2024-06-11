@@ -438,6 +438,9 @@ class Ui_Form(QtCore.QObject):
                 
                 #imprimiendo la cola 
                 self.cola_compras.imprimir()
+                
+                # mostrando un mensaje de exito
+                messagebox.showinfo("Compra realizada", "Esperando que el administrador apruebe la compra")
         except:
                 messagebox("Error", "No se ha podido realizar la compra")
 

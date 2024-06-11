@@ -1,9 +1,10 @@
 digraph G {
-nodo0 [label="<carrito_compras.carrito_compras object at 0x000001AB47C876E0>"];
+nodo0 [label="Nombre de producto: Laptop DEF: 
+Cantidad seleccionada: 3"];
 nodo0 -> nodo1;
-nodo1 [label="<carrito_compras.carrito_compras object at 0x000001AB47C87C20>"];
+nodo1 [label="Nombre de producto: Auriculares GHI: 
+Cantidad seleccionada: 3"];
 nodo1 -> nodo2;
-nodo2 [label="<carrito_compras.carrito_compras object at 0x000001AB47C87FB0>"];
-nodo2 -> nodo3;
-nodo3 [label="<carrito_compras.carrito_compras object at 0x000001AB47C87A10>"];
+nodo2 [label="Nombre de producto: Auriculares GHI: 
+Cantidad seleccionada: 3"];
 }
