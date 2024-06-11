@@ -12,32 +12,30 @@ class pila:
         nuevo_nodo = Nodo(dato)
         if self.head is None:
             self.head = nuevo_nodo
-            self.size += 1
-            return
         else:
             actual = self.head
             while actual.siguiente:
                 actual = actual.siguiente
             actual.siguiente = nuevo_nodo
-            self.size += 1
+        self.size += 1
     
     # Método para eliminar el nodo que está en la cima de la pila
     def pop(self):
-        actual = self.head
-        anterior = None
-        while actual.siguiente:
-            anterior = actual
-            actual = actual.siguiente
-        if actual is None:
-            return False
-        elif anterior is None:
-            self.head = actual.siguiente
-            self.size -= 1
-            return True
+        if self.head is None:
+            return None
+        if self.head.siguiente is None:
+            dato = self.head.dato
+            self.head = None
         else:
-            anterior.siguiente = actual.siguiente
-            self.size -= 1
-            return True
+            actual = self.head
+            anterior = None
+            while actual.siguiente:
+                anterior = actual
+                actual = actual.siguiente
+            dato = actual.dato
+            anterior.siguiente = None
+        self.size -= 1
+        return dato
         
     # Método para retornar el valor que está en la cima de la pila y eliminarlo para posteriormente extraer el siguiente valor
     def obtener(self):
@@ -63,17 +61,20 @@ class pila:
     
     # Método para graficar la pila con Graphviz
     def graficar(self):
-        codigo_dot = ''
-        contador_nodos = 0
+        codigo_dot = 'digraph G {\n'
         actual = self.head
+        contador_nodos = 0
         while actual:
-            codigo_dot += f"nodo{contador_nodos} [label=\"{actual.dato}\"];\n"
+            # Solo graficar el nombre del producto y la cantidad seleccionada por el usuario
+            codigo_dot += f'nodo{contador_nodos} [label="Nombre de producto: {actual.dato.producto.nombre}: \nCantidad seleccionada: {actual.dato.cantidad}"];\n'
             if actual.siguiente:
-                codigo_dot += f"nodo{contador_nodos} -> nodo{contador_nodos+1};\n"
+                codigo_dot += f'nodo{contador_nodos} -> nodo{contador_nodos + 1};\n'
             actual = actual.siguiente
             contador_nodos += 1
-        codigo_dot = f"digraph G {{\n{codigo_dot}}}"
+        codigo_dot += '}'
+
         with open("pila.dot", "w") as file:
             file.write(codigo_dot)
+
         os.system("dot -Tpng pila.dot -o pila.png")
         os.system("pila.png")
