@@ -2,6 +2,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import QPropertyAnimation
 import sys, os, res
 from PyQt5.QtWidgets import QFileDialog
+from tkinter import messagebox
 
 # agregando la carpeta ventanas al path de python
 script_dir = os.path.dirname(os.path.abspath(__file__))
@@ -19,17 +20,25 @@ from cargaMasivaEmpleados import cargaMasivaEmpleados
 from cargaMasivaProducto import CargaMasivaProducto
 from cargaMasivaUsuarios import cargaMasivaUsuarios
 
+sys.path.append(os.path.join(parent_dir, 'models'))
+
+from lista_simplemente_enlazada import Lista_simplemente_enlazada
+
+
 class Ui_MainWindow(QtCore.QObject):
+
+    #lista simplemente enlazada para almacenar las compras aceptadas
+    lista_compras_aceptadas = Lista_simplemente_enlazada()
     
     #constructor de la clase
-    def __init__(self, ui_login):
+    def __init__(self, login_window, ui_user):
         super().__init__()
-        self.ui_login = ui_login
-        
+        self.login_window = login_window
+        self.ui_user = ui_user
+
     def setupUi(self, MainWindow):
         self.bt_up_cargaMasivaUsuarios = QtWidgets.QPushButton(MainWindow)
         self.bt_up_cargaMasivaUsuarios.setObjectName("bt_up_cargaMasivaUsuarios")
-
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(1078, 752)
         MainWindow.setWindowFlags(QtCore.Qt.FramelessWindowHint)#quitando los bordes de la ventana
@@ -78,7 +87,7 @@ class Ui_MainWindow(QtCore.QObject):
         self.bt_exit.setIconSize(QtCore.QSize(38, 38))
         self.bt_exit.setObjectName("bt_exit")
         self.bt_minus = QtWidgets.QPushButton(self.FrameSuperior)
-        self.bt_minus.setGeometry(QtCore.QRect(890, 10, 71, 51))
+        self.bt_minus.setGeometry(QtCore.QRect(880, 10, 71, 51))
         self.bt_minus.setStyleSheet("QPushButton {\n"
 "    background-color: rgb(255, 170, 0);\n"
 "    border: 2px solid #dd9300; \n"
@@ -674,21 +683,6 @@ class Ui_MainWindow(QtCore.QObject):
         self.label_3.setFont(font)
         self.label_3.setAlignment(QtCore.Qt.AlignCenter)
         self.label_3.setObjectName("label_3")
-        self.area_actividades_panel = QtWidgets.QScrollArea(self.Actividades)
-        self.area_actividades_panel.setGeometry(QtCore.QRect(40, 120, 621, 431))
-        self.area_actividades_panel.setStyleSheet("border-color: rgb(255, 170, 0);")
-        self.area_actividades_panel.setWidgetResizable(True)
-        self.area_actividades_panel.setObjectName("area_actividades_panel")
-        self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 615, 425))
-        self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
-        self.verticalLayout_4 = QtWidgets.QVBoxLayout(self.scrollAreaWidgetContents)
-        self.verticalLayout_4.setObjectName("verticalLayout_4")
-        self.verticalScrollBar = QtWidgets.QScrollBar(self.scrollAreaWidgetContents)
-        self.verticalScrollBar.setOrientation(QtCore.Qt.Vertical)
-        self.verticalScrollBar.setObjectName("verticalScrollBar")
-        self.verticalLayout_4.addWidget(self.verticalScrollBar)
-        self.area_actividades_panel.setWidget(self.scrollAreaWidgetContents)
         self.go_login_actividades = QtWidgets.QPushButton(self.Actividades)
         self.go_login_actividades.setGeometry(QtCore.QRect(420, 20, 265, 51))
         self.go_login_actividades.setStyleSheet("QPushButton {\n"
@@ -710,6 +704,126 @@ class Ui_MainWindow(QtCore.QObject):
         self.go_login_actividades.setIcon(icon8)
         self.go_login_actividades.setIconSize(QtCore.QSize(30, 30))
         self.go_login_actividades.setObjectName("go_login_actividades")
+        self.area_actividades_panel = QtWidgets.QScrollArea(self.Actividades)
+        self.area_actividades_panel.setGeometry(QtCore.QRect(40, 110, 621, 431))
+        self.area_actividades_panel.setStyleSheet("border-color: rgb(255, 170, 0);")
+        self.area_actividades_panel.setWidgetResizable(True)
+        self.area_actividades_panel.setObjectName("area_actividades_panel")
+        self.scrollAreaDeActividades = QtWidgets.QWidget()
+        self.scrollAreaDeActividades.setGeometry(QtCore.QRect(0, 0, 615, 425))
+        self.scrollAreaDeActividades.setStyleSheet("")
+        self.scrollAreaDeActividades.setObjectName("scrollAreaDeActividades")
+        self.molde_mostrar_actividades = QtWidgets.QFrame(self.scrollAreaDeActividades)
+        self.molde_mostrar_actividades.setGeometry(QtCore.QRect(20, 10, 571, 231))
+        self.molde_mostrar_actividades.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.molde_mostrar_actividades.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.molde_mostrar_actividades.setObjectName("molde_mostrar_actividades")
+        self.textoID = QtWidgets.QLabel(self.molde_mostrar_actividades)
+        self.textoID.setGeometry(QtCore.QRect(10, 20, 41, 41))
+        font = QtGui.QFont()
+        font.setFamily("Comic Sans MS")
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.textoID.setFont(font)
+        self.textoID.setStyleSheet("border-color: rgb(255, 255, 255);")
+        self.textoID.setObjectName("textoID")
+        self.textoEmpleado = QtWidgets.QLabel(self.molde_mostrar_actividades)
+        self.textoEmpleado.setGeometry(QtCore.QRect(10, 60, 91, 41))
+        font = QtGui.QFont()
+        font.setFamily("Comic Sans MS")
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.textoEmpleado.setFont(font)
+        self.textoEmpleado.setStyleSheet("border-color: rgb(255, 255, 255);")
+        self.textoEmpleado.setObjectName("textoEmpleado")
+        self.textoHora = QtWidgets.QLabel(self.molde_mostrar_actividades)
+        self.textoHora.setGeometry(QtCore.QRect(10, 100, 91, 41))
+        font = QtGui.QFont()
+        font.setFamily("Comic Sans MS")
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.textoHora.setFont(font)
+        self.textoHora.setStyleSheet("border-color: rgb(255, 255, 255);")
+        self.textoHora.setObjectName("textoHora")
+        self.textoActividad = QtWidgets.QLabel(self.molde_mostrar_actividades)
+        self.textoActividad.setGeometry(QtCore.QRect(10, 140, 101, 41))
+        font = QtGui.QFont()
+        font.setFamily("Comic Sans MS")
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.textoActividad.setFont(font)
+        self.textoActividad.setStyleSheet("border-color: rgb(255, 255, 255);")
+        self.textoActividad.setObjectName("textoActividad")
+        self.textoDescripcion = QtWidgets.QLabel(self.molde_mostrar_actividades)
+        self.textoDescripcion.setGeometry(QtCore.QRect(10, 180, 111, 41))
+        font = QtGui.QFont()
+        font.setFamily("Comic Sans MS")
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.textoDescripcion.setFont(font)
+        self.textoDescripcion.setStyleSheet("border-color: rgb(255, 255, 255);")
+        self.textoDescripcion.setObjectName("textoDescripcion")
+        self.llenartextoActividad = QtWidgets.QLabel(self.molde_mostrar_actividades)
+        self.llenartextoActividad.setGeometry(QtCore.QRect(120, 140, 441, 41))
+        font = QtGui.QFont()
+        font.setFamily("Comic Sans MS")
+        font.setPointSize(10)
+        font.setBold(False)
+        font.setWeight(50)
+        self.llenartextoActividad.setFont(font)
+        self.llenartextoActividad.setStyleSheet("border-color: rgb(255, 255, 255);")
+        self.llenartextoActividad.setText("")
+        self.llenartextoActividad.setObjectName("llenartextoActividad")
+        self.llenartextoDescripcion = QtWidgets.QLabel(self.molde_mostrar_actividades)
+        self.llenartextoDescripcion.setGeometry(QtCore.QRect(120, 180, 441, 41))
+        font = QtGui.QFont()
+        font.setFamily("Comic Sans MS")
+        font.setPointSize(10)
+        font.setBold(False)
+        font.setWeight(50)
+        self.llenartextoDescripcion.setFont(font)
+        self.llenartextoDescripcion.setStyleSheet("border-color: rgb(255, 255, 255);")
+        self.llenartextoDescripcion.setText("")
+        self.llenartextoDescripcion.setObjectName("llenartextoDescripcion")
+        self.llenartextoHora = QtWidgets.QLabel(self.molde_mostrar_actividades)
+        self.llenartextoHora.setGeometry(QtCore.QRect(120, 100, 441, 41))
+        font = QtGui.QFont()
+        font.setFamily("Comic Sans MS")
+        font.setPointSize(10)
+        font.setBold(False)
+        font.setWeight(50)
+        self.llenartextoHora.setFont(font)
+        self.llenartextoHora.setStyleSheet("border-color: rgb(255, 255, 255);")
+        self.llenartextoHora.setText("")
+        self.llenartextoHora.setObjectName("llenartextoHora")
+        self.llenartextoEmpleado = QtWidgets.QLabel(self.molde_mostrar_actividades)
+        self.llenartextoEmpleado.setGeometry(QtCore.QRect(120, 60, 441, 41))
+        font = QtGui.QFont()
+        font.setFamily("Comic Sans MS")
+        font.setPointSize(10)
+        font.setBold(False)
+        font.setWeight(50)
+        self.llenartextoEmpleado.setFont(font)
+        self.llenartextoEmpleado.setStyleSheet("border-color: rgb(255, 255, 255);")
+        self.llenartextoEmpleado.setText("")
+        self.llenartextoEmpleado.setObjectName("llenartextoEmpleado")
+        self.llenartextoID = QtWidgets.QLabel(self.molde_mostrar_actividades)
+        self.llenartextoID.setGeometry(QtCore.QRect(120, 20, 441, 41))
+        font = QtGui.QFont()
+        font.setFamily("Comic Sans MS")
+        font.setPointSize(10)
+        font.setBold(False)
+        font.setWeight(50)
+        self.llenartextoID.setFont(font)
+        self.llenartextoID.setStyleSheet("border-color: rgb(255, 255, 255);")
+        self.llenartextoID.setText("")
+        self.llenartextoID.setObjectName("llenartextoID")
+        self.area_actividades_panel.setWidget(self.scrollAreaDeActividades)
         self.stackedWidget.addWidget(self.Actividades)
         self.Compras = QtWidgets.QWidget()
         self.Compras.setObjectName("Compras")
@@ -731,6 +845,86 @@ class Ui_MainWindow(QtCore.QObject):
 "    padding: 10px;\n"
 "}")
         self.area_compras_panel.setObjectName("area_compras_panel")
+        self.LlenartextoUsuario = QtWidgets.QLabel(self.area_compras_panel)
+        self.LlenartextoUsuario.setGeometry(QtCore.QRect(170, 90, 271, 61))
+        font = QtGui.QFont()
+        font.setFamily("Comic Sans MS")
+        font.setPointSize(14)
+        font.setBold(False)
+        font.setWeight(50)
+        self.LlenartextoUsuario.setFont(font)
+        self.LlenartextoUsuario.setStyleSheet("border-color: rgb(253, 229, 212);")
+        self.LlenartextoUsuario.setText("")
+        self.LlenartextoUsuario.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.LlenartextoUsuario.setObjectName("LlenartextoUsuario")
+        self.LlenartextoProductos = QtWidgets.QLabel(self.area_compras_panel)
+        self.LlenartextoProductos.setGeometry(QtCore.QRect(170, 150, 271, 61))
+        font = QtGui.QFont()
+        font.setFamily("Comic Sans MS")
+        font.setPointSize(14)
+        font.setBold(False)
+        font.setWeight(50)
+        self.LlenartextoProductos.setFont(font)
+        self.LlenartextoProductos.setStyleSheet("border-color: rgb(253, 229, 212);")
+        self.LlenartextoProductos.setText("")
+        self.LlenartextoProductos.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.LlenartextoProductos.setObjectName("LlenartextoProductos")
+        self.textoProductos = QtWidgets.QLabel(self.area_compras_panel)
+        self.textoProductos.setGeometry(QtCore.QRect(10, 150, 171, 61))
+        font = QtGui.QFont()
+        font.setFamily("Comic Sans MS")
+        font.setPointSize(16)
+        font.setBold(True)
+        font.setWeight(75)
+        self.textoProductos.setFont(font)
+        self.textoProductos.setStyleSheet("border-color: rgb(253, 229, 212);")
+        self.textoProductos.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.textoProductos.setObjectName("textoProductos")
+        self.textoTotal = QtWidgets.QLabel(self.area_compras_panel)
+        self.textoTotal.setGeometry(QtCore.QRect(10, 210, 161, 61))
+        font = QtGui.QFont()
+        font.setFamily("Comic Sans MS")
+        font.setPointSize(16)
+        font.setBold(True)
+        font.setWeight(75)
+        self.textoTotal.setFont(font)
+        self.textoTotal.setStyleSheet("border-color: rgb(253, 229, 212);")
+        self.textoTotal.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.textoTotal.setObjectName("textoTotal")
+        self.soloTextoCompra = QtWidgets.QLabel(self.area_compras_panel)
+        self.soloTextoCompra.setGeometry(QtCore.QRect(90, 10, 261, 81))
+        font = QtGui.QFont()
+        font.setFamily("Comic Sans MS")
+        font.setPointSize(20)
+        font.setBold(True)
+        font.setWeight(75)
+        self.soloTextoCompra.setFont(font)
+        self.soloTextoCompra.setStyleSheet("border-color: rgb(253, 229, 212);")
+        self.soloTextoCompra.setAlignment(QtCore.Qt.AlignCenter)
+        self.soloTextoCompra.setObjectName("soloTextoCompra")
+        self.textoUsuario = QtWidgets.QLabel(self.area_compras_panel)
+        self.textoUsuario.setGeometry(QtCore.QRect(10, 90, 131, 61))
+        font = QtGui.QFont()
+        font.setFamily("Comic Sans MS")
+        font.setPointSize(16)
+        font.setBold(True)
+        font.setWeight(75)
+        self.textoUsuario.setFont(font)
+        self.textoUsuario.setStyleSheet("border-color: rgb(253, 229, 212);")
+        self.textoUsuario.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.textoUsuario.setObjectName("textoUsuario")
+        self.LlenartextoTotal = QtWidgets.QLabel(self.area_compras_panel)
+        self.LlenartextoTotal.setGeometry(QtCore.QRect(170, 210, 271, 61))
+        font = QtGui.QFont()
+        font.setFamily("Comic Sans MS")
+        font.setPointSize(14)
+        font.setBold(False)
+        font.setWeight(50)
+        self.LlenartextoTotal.setFont(font)
+        self.LlenartextoTotal.setStyleSheet("border-color: rgb(253, 229, 212);")
+        self.LlenartextoTotal.setText("")
+        self.LlenartextoTotal.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.LlenartextoTotal.setObjectName("LlenartextoTotal")
         self.go_login_compras = QtWidgets.QPushButton(self.Compras)
         self.go_login_compras.setGeometry(QtCore.QRect(420, 20, 265, 51))
         self.go_login_compras.setStyleSheet("QPushButton {\n"
@@ -792,6 +986,26 @@ class Ui_MainWindow(QtCore.QObject):
 "}")
         self.bt_compras_no.setIconSize(QtCore.QSize(30, 30))
         self.bt_compras_no.setObjectName("bt_compras_no")
+        self.bt_compras_actualizar = QtWidgets.QPushButton(self.Compras)
+        self.bt_compras_actualizar.setGeometry(QtCore.QRect(490, 180, 191, 51))
+        self.bt_compras_actualizar.setStyleSheet("QPushButton {\n"
+"    background-color: #FBE692;\n"
+"    border: 2px solid #F0C348; \n"
+"    color: white;\n"
+"    font-size: 16px;\n"
+"    font-weight: bold;\n"
+"    padding: 10px;\n"
+"    border-top-left-radius:20px;\n"
+"    border-bottom-left-radius:20px;\n"
+"\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"    background-color:#F0C348; \n"
+"    border: 2px solid #F0C348; \n"
+"}")
+        self.bt_compras_actualizar.setIconSize(QtCore.QSize(30, 30))
+        self.bt_compras_actualizar.setObjectName("bt_compras_actualizar")
         self.stackedWidget.addWidget(self.Compras)
         self.CargaMasivaUsuarios = QtWidgets.QWidget()
         self.CargaMasivaUsuarios.setObjectName("CargaMasivaUsuarios")
@@ -1094,7 +1308,7 @@ class Ui_MainWindow(QtCore.QObject):
         self.verticalLayout.setStretch(1, 8)
         MainWindow.setCentralWidget(self.centralwidget)
 
-        # Agregando sombras a los botones de la barra de navegación
+         # Agregando sombras a los botones de la barra de navegación
         self.bt_option.setGraphicsEffect(QtWidgets.QGraphicsDropShadowEffect(blurRadius=10, xOffset=0, yOffset=0, color=QtGui.QColor(0, 0, 0, 255)))
         self.bt_minus.setGraphicsEffect(QtWidgets.QGraphicsDropShadowEffect(blurRadius=10, xOffset=0, yOffset=0, color=QtGui.QColor(0, 0, 0, 255)))
         self.bt_exit.setGraphicsEffect(QtWidgets.QGraphicsDropShadowEffect(blurRadius=10, xOffset=0, yOffset=0, color=QtGui.QColor(0, 0, 0, 255)))
@@ -1153,11 +1367,82 @@ class Ui_MainWindow(QtCore.QObject):
         self.bt_reporte_vendedores.clicked.connect(lambda: self.mostrar_reporte("Vendedores"))
         self.bt_reportes_COLA.clicked.connect(lambda: self.mostrar_reporte("Cola"))
         
+        #conectando el boton de actualizar en la pestaña de compras 
+        self.bt_compras_actualizar.clicked.connect(self.actualizar_compras)
+        
+        #conectando el boton de aceptar en la pestaña de compras
+        self.bt_compras_ok.clicked.connect(self.aceptar_compra)
+        
+        #conectando el boton de rechazar en la pestaña de compras
+        self.bt_compras_no.clicked.connect(self.rechazar_compra)
+
         self.retranslateUi(MainWindow)
         self.stackedWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
-
+    
+    #Funcion para obtener la cola de compras 
+    def obtener_cola_compras(self):
+        return self.ui_user.cola_compras
+    
+    #Funcion para rechazar una compra
+    def rechazar_compra(self):
+        cola_compras = self.obtener_cola_compras()
+        # Eliminar el primer nodo de la cola de compras
+        if cola_compras.esta_vacia():
+                messagebox.showinfo("Compras", "Cola de compras vacía.")
+                self.LlenartextoUsuario.setText("")
+                self.LlenartextoProductos.setText("")
+                self.LlenartextoTotal.setText("")
+        else:
+                cola_compras.pop()
+                messagebox.showinfo("Compra", "compra rechazada con exito.")
+                self.actualizar_compras()
+    
+    #Funcion para aceptar una compra
+    def aceptar_compra(self):
+        
+        global lista_compras_aceptadas
+        
+        cola_compras = self.obtener_cola_compras()
+        # Eliminar el primer nodo de la cola de compras
+        if cola_compras.esta_vacia():
+                messagebox.showinfo("Compras", "Cola de compras vacía.")
+                self.LlenartextoUsuario.setText("")
+                self.LlenartextoProductos.setText("")
+                self.LlenartextoTotal.setText("")
+        else:
+                # obteniendo el primer nodo de la cola
+                primer_nodo = cola_compras.primero()
+                # Almacenando los datos del primer nodo de la cola en la lista de compras aceptadas
+                self.lista_compras_aceptadas.append(primer_nodo)
+                # Eliminando el primer nodo de la cola
+                cola_compras.pop()
+                # Mensaje de exito 
+                messagebox.showinfo("Compra", "compra aceptada con exito.")
+                # Actualizar la lista de compras
+                self.actualizar_compras()
+    
+    #Funcion para actualizar la lista de compras
+    def actualizar_compras(self):
+        cola_compras = self.obtener_cola_compras()
+        # Mostrar los datos del primer nodo de la cola 
+        if cola_compras.esta_vacia():
+                messagebox.showinfo("Compras", "Cola de compras vacía.")
+                self.LlenartextoUsuario.setText("")
+                self.LlenartextoProductos.setText("")
+                self.LlenartextoTotal.setText("")
+        else:
+                # Mostrar los datos del primer nodo de la cola
+                primer_nodo = cola_compras.primero()
+                self.LlenartextoUsuario.setText(primer_nodo.nombre_usuario)
+                self.LlenartextoProductos.setText(primer_nodo.productos)
+                self.LlenartextoTotal.setText(str(primer_nodo.total))
+    
+    #Funcion mostrar reporte correspondiente 
     def mostrar_reporte(self, tipo_reporte):
+        
+        global lista_compras_aceptadas
+        
         if tipo_reporte == "Usuarios":
                 print("Mostrando reporte de usuarios.")
                 self.carga_masiva_usuarios = cargaMasivaUsuarios()
@@ -1170,6 +1455,7 @@ class Ui_MainWindow(QtCore.QObject):
                 print("Mostrando reporte de actividades.")
         elif tipo_reporte == "Compras":
                 print("Mostrando reporte de compras.")
+                self.lista_compras_aceptadas.graficar()
         elif tipo_reporte == "Vendedores":
                 print("Mostrando reporte de vendedores.")
                 self.carga_masiva_empleados = cargaMasivaEmpleados()
@@ -1179,18 +1465,22 @@ class Ui_MainWindow(QtCore.QObject):
         else:
                 print("No se ha seleccionado un tipo de reporte válido.")
 
+    #Funcion para minimizar la ventana
     def minimizar(self, MainWindow):
         MainWindow.showMinimized()
-
+    
+    #Funcion para cerrar la ventana
     def salir(self, MainWindow):
         MainWindow.close()
-
+    
+    #Funcion para regresar a la ventana de login
     def show_login(self, MainWindow):
         # Cerrando la ventana del administrador
         MainWindow.hide()
         #Regresando a la ventana de login
-        self.ui_login.show()
+        self.login_window.show()
     
+    #Funcion para mover el menu
     def mover_menu(self):
         if True: 
                 width = self.frameBotones.width()
@@ -1205,7 +1495,8 @@ class Ui_MainWindow(QtCore.QObject):
                 self.animacion.setEndValue(extender)
                 self.animacion.setEasingCurve(QtCore.QEasingCurve.InOutQuart)
                 self.animacion.start()
-
+    
+    #Funcion para abrir un archivo XML y hacer la carga masiva correspondiente
     def open_xml_file(self, tipo_archivo):
         print("Función open_xml_file llamada.")
         file_name, _ = QFileDialog.getOpenFileName(None, "Open XML File", "", "XML Files (*.xml)")
@@ -1256,10 +1547,20 @@ class Ui_MainWindow(QtCore.QObject):
         self.bt_reporte_actividades.setText(_translate("MainWindow", "Reporte de Actividades"))
         self.label_3.setText(_translate("MainWindow", "¡Actividades de Hoy!"))
         self.go_login_actividades.setText(_translate("MainWindow", "Salir"))
+        self.textoID.setText(_translate("MainWindow", "ID:"))
+        self.textoEmpleado.setText(_translate("MainWindow", "Empleado:"))
+        self.textoHora.setText(_translate("MainWindow", "Hora:"))
+        self.textoActividad.setText(_translate("MainWindow", "Actividad:"))
+        self.textoDescripcion.setText(_translate("MainWindow", "Descripción:"))
         self.label_4.setText(_translate("MainWindow", "Autoriza las Compras"))
+        self.textoProductos.setText(_translate("MainWindow", "Productos:"))
+        self.textoTotal.setText(_translate("MainWindow", "Total:"))
+        self.soloTextoCompra.setText(_translate("MainWindow", "Compra"))
+        self.textoUsuario.setText(_translate("MainWindow", "Usuario:"))
         self.go_login_compras.setText(_translate("MainWindow", "Salir"))
         self.bt_compras_ok.setText(_translate("MainWindow", "Aprobar"))
         self.bt_compras_no.setText(_translate("MainWindow", "Denegar"))
+        self.bt_compras_actualizar.setText(_translate("MainWindow", "Actualizar"))
         self.label_5.setText(_translate("MainWindow", "Cargar Usuarios"))
         self.go_login_CM_usuarios.setText(_translate("MainWindow", "Salir"))
         self.bt_up_cargaMasivaUsuarios.setText(_translate("MainWindow", "Cargar"))
@@ -1275,11 +1576,3 @@ class Ui_MainWindow(QtCore.QObject):
         self.label_9.setText(_translate("MainWindow", "Reporte Creado"))
         self.go_login_CM_Actividades_2.setText(_translate("MainWindow", "Salir"))
 
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_MainWindow()
-    ui.setupUi(MainWindow)
-    MainWindow.show()
-    sys.exit(app.exec_())

@@ -22,7 +22,7 @@ class cola:
             self.size += 1
             return
     
-    # Método para eliminar un nodo de la cola y retornar su valor
+    # Método para eliminar un nodo de la cola
     def pop(self):
         if self.head is None:
             return None
@@ -31,6 +31,17 @@ class cola:
             self.head = self.head.siguiente
             self.size -= 1
             return aux.dato
+    
+    # Método para saber si la cola esta vacia 
+    def esta_vacia(self):
+        return self.head is None
+    
+    # Método para obtener el primer nodo de la cola sin eliminarlo
+    def primero(self):
+        if self.head is None:
+            return None
+        else:
+            return self.head.dato
     
     # Método para imprimir la cola
     def imprimir(self):
