@@ -1,0 +1,3 @@
+digraph G {
+nodo0 [label="<carrito_compras.carrito_compras object at 0x00000166D130E030>"];
+}
