@@ -102,7 +102,7 @@ class ListaCircularDoblementeEnlazada:
         if actual is not None:
             while True:
                 producto = actual.producto
-                codigo_dot += f'node{contador_nodos} [label = "{{<f1>| ID: {producto.id}\\nNombre: {producto.nombre}\\nPrecio: {producto.precio}\\nDescripción: {producto.descripcion}\\nCategoría: {producto.categoria}\\nCantidad: {producto.cantidad}\\nImagen: {producto.imagen}|<f2>}}"];\n'
+                codigo_dot += f'node{contador_nodos} [label = "{{<f1>| ID: {producto.id}\\nNombre: {producto.nombre}\\nPrecio: {producto.precio}\\nDescripción: {producto.descripcion}\\nCategoría: {producto.categoria}\\nCantidad: {producto.cantidad}|<f2>}}"];\n'
                 nodos.append(f'node{contador_nodos}')
                 contador_nodos += 1
                 actual = actual.siguiente

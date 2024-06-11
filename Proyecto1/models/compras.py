@@ -6,6 +6,7 @@ class Compras:
         self.nombre_usuario = nombre
         self.productos = productos
         self.total = total
+        self.estado = estado
     
     # Método para cambiar el estado de la compra
     def set_estado(self, estado):
