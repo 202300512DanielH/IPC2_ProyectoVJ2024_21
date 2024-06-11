@@ -29,6 +29,8 @@ from cargaMasivaEmpleados import cargaMasivaEmpleados
 from cargaMasivaProducto import CargaMasivaProducto
 from cargaMasivaUsuarios import cargaMasivaUsuarios
 
+from usuarios import Ui_Form as IU_Form
+
 
 class Ui_MainWindow(QtCore.QObject):
     #constructor de la clase
@@ -39,6 +41,11 @@ class Ui_MainWindow(QtCore.QObject):
     def setupUi(self, MainWindow):
         self.bt_up_cargaMasivaUsuarios = QtWidgets.QPushButton(MainWindow)
         self.bt_up_cargaMasivaUsuarios.setObjectName("bt_up_cargaMasivaUsuarios")
+
+        # Asegúrate de tener una referencia a la instancia de Ui_Form
+        self.ui_user = IU_Form(self.login_window, self.ui_login)
+        # Definir la función que manejará la cola de compras
+        self.ui_user.cola_compras_signal.connect(self.handle_cola_compras)
 
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(1078, 752)
@@ -1471,6 +1478,10 @@ class Ui_MainWindow(QtCore.QObject):
         else:
                 print("No se seleccionó ningún archivo.")
 
+    def handle_cola_compras(self, cola_compras):
+        # Aquí es en teória donde puedes manejar la cola de compras
+        # Para asegurarnos, puedes imprimir la cola de compras que debería ser la misma que en usuarios
+        cola_compras.imprimir()
 
 
     def retranslateUi(self, MainWindow):
