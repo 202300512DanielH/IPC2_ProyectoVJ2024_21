@@ -423,7 +423,7 @@ QLabel#subtitle {
               </size>
              </property>
              <property name="currentIndex">
-              <number>0</number>
+              <number>2</number>
              </property>
              <widget class="QWidget" name="Inicial">
               <widget class="QPushButton" name="go_login_inicio">
@@ -800,7 +800,7 @@ QPushButton:hover {
                 <string>Reportes</string>
                </property>
               </widget>
-              <widget class="QPushButton" name="bt_reportes_DE">
+              <widget class="QPushButton" name="bt_reporte_usuarios">
                <property name="geometry">
                 <rect>
                  <x>0</x>
@@ -891,7 +891,7 @@ QPushButton:hover {
                 </size>
                </property>
               </widget>
-              <widget class="QPushButton" name="bt_reportes_CDE">
+              <widget class="QPushButton" name="bt_reporte_productos">
                <property name="geometry">
                 <rect>
                  <x>-10</x>
@@ -991,7 +991,7 @@ QPushButton:hover {
                 </size>
                </property>
               </widget>
-              <widget class="QPushButton" name="bt_reportes_SE">
+              <widget class="QPushButton" name="bt_reporte_compras">
                <property name="geometry">
                 <rect>
                  <x>360</x>
@@ -1041,7 +1041,7 @@ QPushButton:hover {
                 </size>
                </property>
               </widget>
-              <widget class="QPushButton" name="bt_reportes_SCE">
+              <widget class="QPushButton" name="bt_reporte_vendedores">
                <property name="geometry">
                 <rect>
                  <x>360</x>
@@ -1091,7 +1091,7 @@ QPushButton:hover {
                 </size>
                </property>
               </widget>
-              <widget class="QPushButton" name="bt_reportes_O">
+              <widget class="QPushButton" name="bt_reporte_actividades">
                <property name="geometry">
                 <rect>
                  <x>360</x>
@@ -1167,41 +1167,6 @@ QPushButton:hover {
                 <set>Qt::AlignCenter</set>
                </property>
               </widget>
-              <widget class="QScrollArea" name="area_actividades_panel">
-               <property name="geometry">
-                <rect>
-                 <x>40</x>
-                 <y>120</y>
-                 <width>621</width>
-                 <height>431</height>
-                </rect>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">border-color: rgb(255, 170, 0);</string>
-               </property>
-               <property name="widgetResizable">
-                <bool>true</bool>
-               </property>
-               <widget class="QWidget" name="scrollAreaWidgetContents">
-                <property name="geometry">
-                 <rect>
-                  <x>0</x>
-                  <y>0</y>
-                  <width>615</width>
-                  <height>425</height>
-                 </rect>
-                </property>
-                <layout class="QVBoxLayout" name="verticalLayout_4">
-                 <item>
-                  <widget class="QScrollBar" name="verticalScrollBar">
-                   <property name="orientation">
-                    <enum>Qt::Vertical</enum>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </widget>
-              </widget>
               <widget class="QPushButton" name="go_login_actividades">
                <property name="geometry">
                 <rect>
@@ -1242,6 +1207,291 @@ QPushButton:hover {
                  <height>30</height>
                 </size>
                </property>
+              </widget>
+              <widget class="QScrollArea" name="area_actividades_panel">
+               <property name="geometry">
+                <rect>
+                 <x>40</x>
+                 <y>110</y>
+                 <width>621</width>
+                 <height>431</height>
+                </rect>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">border-color: rgb(255, 170, 0);</string>
+               </property>
+               <property name="widgetResizable">
+                <bool>true</bool>
+               </property>
+               <widget class="QWidget" name="scrollAreaDeActividades">
+                <property name="geometry">
+                 <rect>
+                  <x>0</x>
+                  <y>0</y>
+                  <width>615</width>
+                  <height>425</height>
+                 </rect>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true"/>
+                </property>
+                <widget class="QFrame" name="molde_mostrar_actividades">
+                 <property name="geometry">
+                  <rect>
+                   <x>20</x>
+                   <y>10</y>
+                   <width>571</width>
+                   <height>231</height>
+                  </rect>
+                 </property>
+                 <property name="frameShape">
+                  <enum>QFrame::StyledPanel</enum>
+                 </property>
+                 <property name="frameShadow">
+                  <enum>QFrame::Raised</enum>
+                 </property>
+                 <widget class="QLabel" name="textoID">
+                  <property name="geometry">
+                   <rect>
+                    <x>10</x>
+                    <y>20</y>
+                    <width>41</width>
+                    <height>41</height>
+                   </rect>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>Comic Sans MS</family>
+                    <pointsize>10</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">border-color: rgb(255, 255, 255);</string>
+                  </property>
+                  <property name="text">
+                   <string>ID:</string>
+                  </property>
+                 </widget>
+                 <widget class="QLabel" name="textoEmpleado">
+                  <property name="geometry">
+                   <rect>
+                    <x>10</x>
+                    <y>60</y>
+                    <width>91</width>
+                    <height>41</height>
+                   </rect>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>Comic Sans MS</family>
+                    <pointsize>10</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">border-color: rgb(255, 255, 255);</string>
+                  </property>
+                  <property name="text">
+                   <string>Empleado:</string>
+                  </property>
+                 </widget>
+                 <widget class="QLabel" name="textoHora">
+                  <property name="geometry">
+                   <rect>
+                    <x>10</x>
+                    <y>100</y>
+                    <width>91</width>
+                    <height>41</height>
+                   </rect>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>Comic Sans MS</family>
+                    <pointsize>10</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">border-color: rgb(255, 255, 255);</string>
+                  </property>
+                  <property name="text">
+                   <string>Hora:</string>
+                  </property>
+                 </widget>
+                 <widget class="QLabel" name="textoActividad">
+                  <property name="geometry">
+                   <rect>
+                    <x>10</x>
+                    <y>140</y>
+                    <width>101</width>
+                    <height>41</height>
+                   </rect>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>Comic Sans MS</family>
+                    <pointsize>10</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">border-color: rgb(255, 255, 255);</string>
+                  </property>
+                  <property name="text">
+                   <string>Actividad:</string>
+                  </property>
+                 </widget>
+                 <widget class="QLabel" name="textoDescripcion">
+                  <property name="geometry">
+                   <rect>
+                    <x>10</x>
+                    <y>180</y>
+                    <width>111</width>
+                    <height>41</height>
+                   </rect>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>Comic Sans MS</family>
+                    <pointsize>10</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">border-color: rgb(255, 255, 255);</string>
+                  </property>
+                  <property name="text">
+                   <string>Descripción:</string>
+                  </property>
+                 </widget>
+                 <widget class="QLabel" name="llenartextoActividad">
+                  <property name="geometry">
+                   <rect>
+                    <x>120</x>
+                    <y>140</y>
+                    <width>441</width>
+                    <height>41</height>
+                   </rect>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>Comic Sans MS</family>
+                    <pointsize>10</pointsize>
+                    <weight>50</weight>
+                    <bold>false</bold>
+                   </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">border-color: rgb(255, 255, 255);</string>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                 </widget>
+                 <widget class="QLabel" name="llenartextoDescripcion">
+                  <property name="geometry">
+                   <rect>
+                    <x>120</x>
+                    <y>180</y>
+                    <width>441</width>
+                    <height>41</height>
+                   </rect>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>Comic Sans MS</family>
+                    <pointsize>10</pointsize>
+                    <weight>50</weight>
+                    <bold>false</bold>
+                   </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">border-color: rgb(255, 255, 255);</string>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                 </widget>
+                 <widget class="QLabel" name="llenartextoHora">
+                  <property name="geometry">
+                   <rect>
+                    <x>120</x>
+                    <y>100</y>
+                    <width>441</width>
+                    <height>41</height>
+                   </rect>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>Comic Sans MS</family>
+                    <pointsize>10</pointsize>
+                    <weight>50</weight>
+                    <bold>false</bold>
+                   </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">border-color: rgb(255, 255, 255);</string>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                 </widget>
+                 <widget class="QLabel" name="llenartextoEmpleado">
+                  <property name="geometry">
+                   <rect>
+                    <x>120</x>
+                    <y>60</y>
+                    <width>441</width>
+                    <height>41</height>
+                   </rect>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>Comic Sans MS</family>
+                    <pointsize>10</pointsize>
+                    <weight>50</weight>
+                    <bold>false</bold>
+                   </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">border-color: rgb(255, 255, 255);</string>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                 </widget>
+                 <widget class="QLabel" name="llenartextoID">
+                  <property name="geometry">
+                   <rect>
+                    <x>120</x>
+                    <y>20</y>
+                    <width>441</width>
+                    <height>41</height>
+                   </rect>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>Comic Sans MS</family>
+                    <pointsize>10</pointsize>
+                    <weight>50</weight>
+                    <bold>false</bold>
+                   </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">border-color: rgb(255, 255, 255);</string>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                 </widget>
+                </widget>
+               </widget>
               </widget>
              </widget>
              <widget class="QWidget" name="Compras">
@@ -1285,6 +1535,195 @@ QPushButton:hover {
     padding: 10px;
 }</string>
                </property>
+               <widget class="QLabel" name="LlenartextoUsuario">
+                <property name="geometry">
+                 <rect>
+                  <x>170</x>
+                  <y>90</y>
+                  <width>271</width>
+                  <height>61</height>
+                 </rect>
+                </property>
+                <property name="font">
+                 <font>
+                  <family>Comic Sans MS</family>
+                  <pointsize>14</pointsize>
+                  <weight>50</weight>
+                  <bold>false</bold>
+                 </font>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">border-color: rgb(253, 229, 212);</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                </property>
+               </widget>
+               <widget class="QLabel" name="LlenartextoProductos">
+                <property name="geometry">
+                 <rect>
+                  <x>170</x>
+                  <y>150</y>
+                  <width>271</width>
+                  <height>61</height>
+                 </rect>
+                </property>
+                <property name="font">
+                 <font>
+                  <family>Comic Sans MS</family>
+                  <pointsize>14</pointsize>
+                  <weight>50</weight>
+                  <bold>false</bold>
+                 </font>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">border-color: rgb(253, 229, 212);</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                </property>
+               </widget>
+               <widget class="QLabel" name="textoProductos">
+                <property name="geometry">
+                 <rect>
+                  <x>10</x>
+                  <y>150</y>
+                  <width>171</width>
+                  <height>61</height>
+                 </rect>
+                </property>
+                <property name="font">
+                 <font>
+                  <family>Comic Sans MS</family>
+                  <pointsize>16</pointsize>
+                  <weight>75</weight>
+                  <bold>true</bold>
+                 </font>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">border-color: rgb(253, 229, 212);</string>
+                </property>
+                <property name="text">
+                 <string>Productos:</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                </property>
+               </widget>
+               <widget class="QLabel" name="textoTotal">
+                <property name="geometry">
+                 <rect>
+                  <x>10</x>
+                  <y>210</y>
+                  <width>161</width>
+                  <height>61</height>
+                 </rect>
+                </property>
+                <property name="font">
+                 <font>
+                  <family>Comic Sans MS</family>
+                  <pointsize>16</pointsize>
+                  <weight>75</weight>
+                  <bold>true</bold>
+                 </font>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">border-color: rgb(253, 229, 212);</string>
+                </property>
+                <property name="text">
+                 <string>Total:</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                </property>
+               </widget>
+               <widget class="QLabel" name="soloTextoCompra">
+                <property name="geometry">
+                 <rect>
+                  <x>90</x>
+                  <y>10</y>
+                  <width>261</width>
+                  <height>81</height>
+                 </rect>
+                </property>
+                <property name="font">
+                 <font>
+                  <family>Comic Sans MS</family>
+                  <pointsize>20</pointsize>
+                  <weight>75</weight>
+                  <bold>true</bold>
+                 </font>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">border-color: rgb(253, 229, 212);</string>
+                </property>
+                <property name="text">
+                 <string>Compra</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+               </widget>
+               <widget class="QLabel" name="textoUsuario">
+                <property name="geometry">
+                 <rect>
+                  <x>10</x>
+                  <y>90</y>
+                  <width>131</width>
+                  <height>61</height>
+                 </rect>
+                </property>
+                <property name="font">
+                 <font>
+                  <family>Comic Sans MS</family>
+                  <pointsize>16</pointsize>
+                  <weight>75</weight>
+                  <bold>true</bold>
+                 </font>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">border-color: rgb(253, 229, 212);</string>
+                </property>
+                <property name="text">
+                 <string>Usuario:</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                </property>
+               </widget>
+               <widget class="QLabel" name="LlenartextoTotal">
+                <property name="geometry">
+                 <rect>
+                  <x>170</x>
+                  <y>210</y>
+                  <width>271</width>
+                  <height>61</height>
+                 </rect>
+                </property>
+                <property name="font">
+                 <font>
+                  <family>Comic Sans MS</family>
+                  <pointsize>14</pointsize>
+                  <weight>50</weight>
+                  <bold>false</bold>
+                 </font>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">border-color: rgb(253, 229, 212);</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                </property>
+               </widget>
               </widget>
               <widget class="QPushButton" name="go_login_compras">
                <property name="geometry">
@@ -1393,6 +1832,43 @@ QPushButton:hover {
                </property>
                <property name="text">
                 <string>Denegar</string>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>30</width>
+                 <height>30</height>
+                </size>
+               </property>
+              </widget>
+              <widget class="QPushButton" name="bt_compras_actualizar">
+               <property name="geometry">
+                <rect>
+                 <x>490</x>
+                 <y>180</y>
+                 <width>191</width>
+                 <height>51</height>
+                </rect>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QPushButton {
+    background-color: #FBE692;
+    border: 2px solid #F0C348; 
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px;
+	border-top-left-radius:20px;
+	border-bottom-left-radius:20px;
+
+}
+
+QPushButton:hover {
+    background-color:#F0C348; 
+    border: 2px solid #F0C348; 
+}</string>
+               </property>
+               <property name="text">
+                <string>Actualizar</string>
                </property>
                <property name="iconSize">
                 <size>

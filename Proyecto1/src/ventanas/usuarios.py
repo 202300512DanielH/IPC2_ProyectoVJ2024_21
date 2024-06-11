@@ -22,13 +22,23 @@ sys.path.append(os.path.join(parent_dir, 'models'))
 
 from pila import pila
 from carrito_compras import carrito_compras
+from compras import Compras
+from cola import cola
 
 class Ui_Form(QtCore.QObject):
         
     #Creando pila para el carrito 
     lista_carrito = pila()
-        
-    verificador = QtCore.pyqtSignal(str)  # inicializando la señal verificador como una señal de tipo str
+    
+    cola_compras = cola()
+    
+    #constructor de la clase para que acepte la instancia de la clase login
+    def __init__(self, login_window, ui_login):
+        super().__init__()  # Llamada al constructor de la superclase
+        self.login_window = login_window
+        self.ui_login = ui_login
+        #conectando la señal id_user de la clase login a la funcion comprar
+        self.ui_login.id_user.connect(self.aux_id_user)           
         
     def setupUi(self, Form):
         Form.setObjectName("Form")
@@ -367,9 +377,67 @@ class Ui_Form(QtCore.QObject):
         #conectando el boton de ver carrito para graficar el carrito
         self.ver_carrito_button.clicked.connect(lambda: self.graficar_carrito())
         
+        #conectando el boton de comprar
+        self.comprar_button.clicked.connect(lambda: self.comprar())
+        
+        #haciendo una instancia de la clase login 
+        self.ui_login_Form = ui_login_Form()
+        
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
     
+    #funcion para obtener el id del usuario que ha iniciado sesion
+    def aux_id_user(self, id_user):
+        self.id_user = id_user
+    
+    #funcion para comprar los productos del carrito
+    def comprar(self) :
+        
+        global lista_carrito
+        
+        global cola_compras
+        
+        #obteniendo la lista de la carga masiva de usuarios
+        self.carga_masiva_usuarios = cargaMasivaUsuarios()
+        #llamando a la lista de usuarios en la carga masiva 
+        self.lista_usuarios = self.carga_masiva_usuarios.lista_usuarios
+       
+        #obteniendo el id del usuario que ha iniciado sesion
+        nombre_usuario = self.lista_usuarios.buscar(self.id_user).nombre
+        
+        # Haciendo una copia de la lista del carrito
+        self.lista_carrito_copia = pila() 
+        self.lista_auxiliar = pila()
+        for i in range(self.lista_carrito.get_size()):
+                producto = self.lista_carrito.obtener()
+                self.lista_carrito_copia.push(producto)
+                self.lista_auxiliar.push(producto)
+        
+        # regresando los productos de la lista auxiliar a la lista original
+        for i in range(self.lista_auxiliar.get_size()):
+                producto = self.lista_auxiliar.obtener()
+                self.lista_carrito.push(producto)
+        
+        #obteniendo el precio total de la compra tomando en cuenta que los productos se encuentran en una pila y esta no es iterable 
+        nombres_productos = " "
+        total = 0 
+        for i in range(self.lista_carrito_copia.get_size()):
+                producto = self.lista_carrito_copia.obtener()
+                total += float(producto.producto.precio) * producto.cantidad
+                nombres_productos += producto.producto.nombre + ", "
+                
+        try: 
+                #creando una nueva compra 
+                self.compra = Compras(self.id_user, nombre_usuario, nombres_productos, total)
+        
+                # colocando la compra en la cola
+                self.cola_compras.push(self.compra)
+                
+                #imprimiendo la cola 
+                self.cola_compras.imprimir()
+        except:
+                messagebox("Error", "No se ha podido realizar la compra")
+        
     #funcion para agregar un producto al carrito con la cantidad seleccionada
     def agregar_carrito(self):
         
@@ -463,44 +531,9 @@ class Ui_Form(QtCore.QObject):
         print("Regresando al login")
         # Cerrando la ventana del usuario
         self.Form.close()
-    
-        # Creando la ventana del login
-        self.login_window = QtWidgets.QWidget()
-        self.ui_login = ui_login_Form()
-        self.ui_login.setupUi(self.login_window)
-        self.ui_login.verificador.connect(lambda: self.iniciar_sesion(self.ui_login, self.login_window))
+        #Regresando a la ventana de login
         self.login_window.show()
-        
-    #funcion para iniciar sesion
-    def iniciar_sesion(self, ui_login, login_window):
-        # Obtener los datos del usuario
-        username = self.ui_login.user_name_label.text()
-        password = self.ui_login.password_label.text()
-        
-        #recorriendo la lista de usuarios 
-        usuario_encontrado = False
-        #llamando a la lista de usuarios en la carga masiva
-        self.carga_masiva_usuarios = cargaMasivaUsuarios()
-        usuario = self.carga_masiva_usuarios.lista_usuarios.buscar(username)
-        usuario_encontrado = False
-
-        if usuario is not None and usuario.id == username and usuario.password == password:
-            usuario_encontrado = True        
-
-        # validacion del login, si los datos son correctos devuelve True y si no False
-        if username == "1" and password == "1":
-            self.verificador.emit("admin") #enviando la señal de que el login fue exitoso
-            #Cerrando la ventana del login
-            self.login_window.close()
-        elif usuario_encontrado:
-            self.verificador.emit("usuario") #enviando la señal de que el login fue exitoso
-            #Cerrando la ventana del login
-            self.login_window.close()
-        else:
-            self.verificador.emit("error") #enviando la señal de que el login fue incorrecto
-            username = self.ui_login.user_name_label.setText("")
-            password = self.ui_login.password_label.setText("")
-
+    
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
         Form.setWindowTitle(_translate("Form", "Form"))

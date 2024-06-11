@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <usuarios>
-    <usuario id="" password="qwerty123">
+    <usuario id="6" password="qwerty123">
         <nombre>Gabriela Muñoz</nombre>
         <edad>26</edad>
         <email>gabriela.munoz@example.com</email>
@@ -15,19 +15,19 @@
     <usuario id="7" password="zxcvbn789">
         <nombre>Patricia Castillo</nombre>
         <edad>41</edad>
-        <email>patricia.castillo@example.com</email>
+        <email>Hola</email>
         <telefono>74174174</telefono>
     </usuario>
     <usuario id="8" password="pass654">
         <nombre>Fernando Silva</nombre>
         <edad>48</edad>
         <email>fernando.silva@example.com</email>
-        <telefono>85252852</telefono>
+        <telefono>8525285452</telefono>
     </usuario>
     <usuario id="9" password="mnbvcx987">
-        <nombre>Silvia Gomez</nombre>
-        <edad>36</edad>
-        <email>silvia.gomez@example.com</email>
+        <nombre>Guerrero Dragón</nombre>
+        <edad>28</edad>
+        <email>tecnica.skindush@example.com</email>
         <telefono>96363963</telefono>
     </usuario>
 </usuarios>

@@ -21,7 +21,7 @@ class pila:
             actual.siguiente = nuevo_nodo
             self.size += 1
     
-    # Método para eliminar un nodo de la pila
+    # Método para eliminar el nodo que está en la cima de la pila
     def pop(self):
         actual = self.head
         anterior = None
@@ -38,6 +38,28 @@ class pila:
             anterior.siguiente = actual.siguiente
             self.size -= 1
             return True
+        
+    # Método para retornar el valor que está en la cima de la pila y eliminarlo para posteriormente extraer el siguiente valor
+    def obtener(self):
+        actual = self.head
+        anterior = None
+        while actual.siguiente:
+            anterior = actual
+            actual = actual.siguiente
+        if actual is None:
+            return False
+        elif anterior is None:
+            self.head = actual.siguiente
+            self.size -= 1
+            return actual.dato
+        else:
+            anterior.siguiente = actual.siguiente
+            self.size -= 1
+            return actual.dato
+    
+    # Método para obtener el tamaño de la pila 
+    def get_size(self):
+        return self.size
     
     # Método para graficar la pila con Graphviz
     def graficar(self):
