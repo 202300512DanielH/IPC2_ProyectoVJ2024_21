@@ -1472,6 +1472,7 @@ class Ui_MainWindow(QtCore.QObject):
                 print("No se seleccionó ningún archivo.")
 
 
+
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
