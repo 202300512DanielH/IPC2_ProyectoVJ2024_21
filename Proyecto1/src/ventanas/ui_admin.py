@@ -1462,6 +1462,7 @@ class Ui_MainWindow(QtCore.QObject):
                 self.carga_masiva_empleados.lista_empleados.graficar()
         elif tipo_reporte == "Cola":
                 print("Mostrando reporte de cola.")
+                self.obtener_cola_compras().graficar()
         else:
                 print("No se ha seleccionado un tipo de reporte válido.")
 

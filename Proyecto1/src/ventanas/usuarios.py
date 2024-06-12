@@ -441,6 +441,7 @@ class Ui_Form(QtCore.QObject):
                 
                 # mostrando un mensaje de exito
                 messagebox.showinfo("Compra realizada", "Esperando que el administrador apruebe la compra")
+                self.lista_carrito = pila()
         except:
                 messagebox("Error", "No se ha podido realizar la compra")
 
@@ -490,37 +491,41 @@ class Ui_Form(QtCore.QObject):
     
     #funcion para mostrar la informacion del producto seleccionado
     def mostrar_producto(self):
-        #Obteniendo el nombre del producto seleccionado
-        nombre_producto = self.productos_combobox.currentText()
-        
-        #Obteniendo la lista de productos 
-        self.carga_masiva_productos = CargaMasivaProducto()
-        self.lista_productos = self.carga_masiva_productos.lista_productos
-        
-        #obteniendo el producto seleccionado de la lista de productos
-        producto = self.lista_productos.buscar(nombre_producto)
-        
-        #insertando la informacion del producto en los labels correspondientes
-        self.nombre.setText(producto.nombre)
-        self.precio.setText(producto.precio)
-        self.descripcion.setText(producto.descripcion)
-        self.categoria.setText(producto.categoria)
-        self.cantidad.setText(producto.cantidad)
-        
-        #mostrando la imagen del producto en el label de la imagen
-        self.label.setStyleSheet(f"image:url(:/images/{producto.imagen});\n"
-"background-color:rgb(198, 198, 198);")
-        
-        #si no se ha seleccionado ningun producto se muestra un mensaje de error
-        if nombre_producto == "Seleccionar Producto":
+        try:
+            # Obteniendo el nombre del producto seleccionado
+            nombre_producto = self.productos_combobox.currentText()
+
+            # Obteniendo la lista de productos
+            self.carga_masiva_productos = CargaMasivaProducto()
+            self.lista_productos = self.carga_masiva_productos.lista_productos
+
+            # obteniendo el producto seleccionado de la lista de productos
+            producto = self.lista_productos.buscar(nombre_producto)
+
+            # insertando la informacion del producto en los labels correspondientes
+            self.nombre.setText(producto.nombre)
+            self.precio.setText(producto.precio)
+            self.descripcion.setText(producto.descripcion)
+            self.categoria.setText(producto.categoria)
+            self.cantidad.setText(producto.cantidad)
+
+            # mostrando la imagen del producto en el label de la imagen
+            self.label.setStyleSheet(f"image:url(:/images/{producto.imagen});\n"
+                                     "background-color:rgb(198, 198, 198);")
+
+            # si no se ha seleccionado ningun producto se muestra un mensaje de error
+            if nombre_producto == "Seleccionar Producto":
                 messagebox.showerror("Error", "No se ha seleccionado ningun producto")
-        
-        #modificando el spinbox para que tenga un maximo de la cantidad del producto
-        self.cantidad_producto.setMaximum(int(producto.cantidad))
-        
-        # mostrando un mensaje de maximo alcanzado si la cantidad seleccionada es igual a la cantidad del producto
-        if self.cantidad_producto.value() > int(producto.cantidad):
-                messagebox.showinfo("Maximo alcanzado", "La cantidad seleccionada es mayor a la cantidad disponible del producto")
+
+            # modificando el spinbox para que tenga un maximo de la cantidad del producto
+            self.cantidad_producto.setMaximum(int(producto.cantidad))
+
+            # mostrando un mensaje de maximo alcanzado si la cantidad seleccionada es igual a la cantidad del producto
+            if self.cantidad_producto.value() > int(producto.cantidad):
+                messagebox.showinfo("Maximo alcanzado",
+                                    "La cantidad seleccionada es mayor a la cantidad disponible del producto")
+        except Exception as e:
+            messagebox.showerror("Error", f"POR FAVOR SELECCIONE UN PRODUCTO")
     
     #funcion para actualizar el combobox
     def actualizar_combobox(self):
