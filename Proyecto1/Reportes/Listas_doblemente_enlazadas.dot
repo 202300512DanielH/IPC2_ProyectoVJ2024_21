@@ -1,0 +1,25 @@
+digraph G {
+        rankdir=LR;
+        node [shape = record, height = .1]node0 [label = "{<f1>| ID: 1\nNombre: Juan Perez\nEdad: 30\nEmail: juan.perez@example.com\nTelefono: 12345678|<f2>}"];
+node1 [label = "{<f1>| ID: 2\nNombre: Maria Lopez\nEdad: 25\nEmail: maria.lopez@example.com\nTelefono: 87654321|<f2>}"];
+node2 [label = "{<f1>| ID: 3\nNombre: Carlos Martinez\nEdad: 28\nEmail: carlos.martinez@example.com\nTelefono: 23456789|<f2>}"];
+node3 [label = "{<f1>| ID: 4\nNombre: Laura Fernandez\nEdad: 32\nEmail: laura.fernandez@example.com\nTelefono: 34567890|<f2>}"];
+node4 [label = "{<f1>| ID: 5\nNombre: Pedro Gonzalez\nEdad: 40\nEmail: pedro.gonzalez@example.com\nTelefono: 45678901|<f2>}"];
+node5 [label = "{<f1>| ID: 6\nNombre: Lucia Ramirez\nEdad: 22\nEmail: lucia.ramirez@example.com\nTelefono: 56789012|<f2>}"];
+node6 [label = "{<f1>| ID: 7\nNombre: Jorge Herrera\nEdad: 35\nEmail: jorge.herrera@example.com\nTelefono: 67890123|<f2>}"];
+node7 [label = "{<f1>| ID: 8\nNombre: Sofia Ortega\nEdad: 29\nEmail: sofia.ortega@example.com\nTelefono: 78901234|<f2>}"];
+node0:f2 -> node1:f1;
+node1:f1 -> node0:f2;
+node1:f2 -> node2:f1;
+node2:f1 -> node1:f2;
+node2:f2 -> node3:f1;
+node3:f1 -> node2:f2;
+node3:f2 -> node4:f1;
+node4:f1 -> node3:f2;
+node4:f2 -> node5:f1;
+node5:f1 -> node4:f2;
+node5:f2 -> node6:f1;
+node6:f1 -> node5:f2;
+node6:f2 -> node7:f1;
+node7:f1 -> node6:f2;
+}

@@ -13,10 +13,8 @@ class pila:
         if self.head is None:
             self.head = nuevo_nodo
         else:
-            actual = self.head
-            while actual.siguiente:
-                actual = actual.siguiente
-            actual.siguiente = nuevo_nodo
+            nuevo_nodo.siguiente = self.head
+            self.head = nuevo_nodo
         self.size += 1
     
     # Método para eliminar el nodo que está en la cima de la pila
@@ -66,7 +64,7 @@ class pila:
         contador_nodos = 0
         while actual:
             # Solo graficar el nombre del producto y la cantidad seleccionada por el usuario
-            codigo_dot += f'nodo{contador_nodos} [label="Nombre de producto: {actual.dato.producto.nombre}: \nCantidad seleccionada: {actual.dato.cantidad}"];\n'
+            codigo_dot += f'nodo{contador_nodos} [label="ID del producto: {actual.dato.producto.id}: \nNombre de producto: {actual.dato.producto.nombre}: \nCantidad seleccionada: {actual.dato.cantidad}"];\n'
             if actual.siguiente:
                 codigo_dot += f'nodo{contador_nodos} -> nodo{contador_nodos + 1};\n'
             actual = actual.siguiente
