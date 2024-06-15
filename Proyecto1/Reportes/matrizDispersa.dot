@@ -16,9 +16,19 @@ Columna23 -> NodoF2_C23[dir=""];
 Columna7 -> Columna23;
 
 	{rank = same; Columna7; Columna23; }
-	NodoF1_C7[style="filled" label = "Actividad(101, Reunión de Ventas, Reunión mensual del equipo de ventas, 001, 1, 7)" group = 7];
+	NodoF1_C7[style="filled" label = "Actividad: 101, 
+Reunión de Ventas, 
+Reunión mensual del equipo de ventas, 
+ID empleado: 001, 
+Día: 1, 
+Hora: 7" group = 7];
 	Fila1 -> NodoF1_C7[dir=""];
-	NodoF2_C23[style="filled" label = "Actividad(102, Capacitación, Capacitación sobre nuevos productos, 002, 2, 23)" group = 23];
+	NodoF2_C23[style="filled" label = "Actividad: 102, 
+Capacitación, 
+Capacitación sobre nuevos productos, 
+ID empleado: 002, 
+Día: 2, 
+Hora: 23" group = 23];
 	Fila2 -> NodoF2_C23[dir=""];
 	{ rank = same; Fila1; NodoF1_C7; }
 	{ rank = same; Fila2; NodoF2_C23; }
