@@ -26,7 +26,6 @@ class cargaMasivaEmpleados:
         # Leer el archivo XML y obtener la raíz
         arbol = ET.parse(self.archivo_xml)
         raiz = arbol.getroot()
-        codigos_existentes = set()
 
         # Iterar sobre cada elemento 'empleado' en la raíz
         for elemento_empleado in raiz.findall('empleado'):
@@ -35,13 +34,12 @@ class cargaMasivaEmpleados:
             nombre = elemento_empleado.find('nombre').text
             puesto = elemento_empleado.find('puesto').text
             empleado = Empleado(codigo, nombre, puesto)
-            
-            # Verificar si el código ya existe
-            if codigo in codigos_existentes:
+        
+            # Verificar si el código ya existe utilizando el método buscar de la lista
+            if self.lista_empleados.buscar(codigo) is not None:
                 print(f"Error: El código {codigo} ya existe. No se puede agregar el empleado {nombre}.")
                 messagebox.showerror("Error de código", f"El código {codigo} ya existe. No se puede agregar el empleado {nombre}.")
-            else:
-                codigos_existentes.add(codigo)   
+            else:   
                 self.lista_empleados.insertar(empleado)
 
         return self.lista_empleados

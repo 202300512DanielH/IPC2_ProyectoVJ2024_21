@@ -1,18 +1,11 @@
 digraph G {
         rankdir=LR;
-        node [shape = record, height = .1];node0 [label = "{<f1>| ID: 3\nNombre: Laptop DEF\nPrecio: 750.00\nDescripción: Laptop DEF de alta gama\nCategoría: Electrónica\nCantidad: 8\nImagen: imagen3.jpg|<f2>}"];
-node1 [label = "{<f1>| ID: 5\nNombre: Auriculares GHI\nPrecio: 50.25\nDescripción: Auriculares inalámbricos GHI\nCategoría: Electrónica\nCantidad: 15\nImagen: imagen4.jpg|<f2>}"];
-node2 [label = "{<f1>| ID: 1\nNombre: Smartphone XYZ\nPrecio: 100.50\nDescripción: Smartphone XYZ\nCategoría: Electrónica\nCantidad: 10\nImagen: carretilla.png|<f2>}"];
-node3 [label = "{<f1>| ID: 3\nNombre: Laptop DEF\nPrecio: 750.00\nDescripción: Laptop DEF de alta gama\nCategoría: Electrónica\nCantidad: 8\nImagen: imagen3.jpg|<f2>}"];
-node4 [label = "{<f1>| ID: 5\nNombre: Auriculares GHI\nPrecio: 50.25\nDescripción: Auriculares inalámbricos GHI\nCategoría: Electrónica\nCantidad: 15\nImagen: imagen4.jpg|<f2>}"];
+        node [shape = record, height = .1]node0 [label = "{<f1>| ID: 3\nNombre: Laptop DEF\nPrecio: 750.00\nDescripción: Laptop DEF de alta gama\nCategoría: Electrónica\nCantidad: 8|<f2>}"];
+node1 [label = "{<f1>| ID: 5\nNombre: Auriculares GHI\nPrecio: 50.25\nDescripción: Auriculares inalámbricos GHI\nCategoría: Electrónica\nCantidad: 15|<f2>}"];
 node0:f2 -> node1:f1;
 node1:f1 -> node0:f2;
+node2 [label = "{<f1>| ID: 6\nNombre: Monitor JKL\nPrecio: 300.75\nDescripción: Monitor JKL de 27 pulgadas\nCategoría: Electrónica\nCantidad: 6|<f2>}"];
 node1:f2 -> node2:f1;
 node2:f1 -> node1:f2;
-node2:f2 -> node3:f1;
-node3:f1 -> node2:f2;
-node3:f2 -> node4:f1;
-node4:f1 -> node3:f2;
-node4:f2 -> node0:f1;
-node0:f1 -> node4:f2;
+node2:f2 -> node0:f1 [dir=both, arrowhead=normal, arrowtail=normal];
 }
