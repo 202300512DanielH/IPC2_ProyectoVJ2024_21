@@ -4,14 +4,12 @@
         <nombre>Reunión de Ventas</nombre>
         <descripcion>Reunión mensual del equipo de ventas</descripcion>
         <empleado>001</empleado> <!-- Código del empleado responsable -->
-        <dia>Lunes</dia>
-        <hora>10:00</hora>
+        <dia hora="7">1</dia>
     </actividad>
     <actividad id="102">
         <nombre>Capacitación</nombre>
         <descripcion>Capacitación sobre nuevos productos</descripcion>
         <empleado>002</empleado>
-        <dia>Miércoles</dia>
-        <hora>14:00</hora>
+        <dia hora="23">2</dia>
     </actividad>
 </actividades>
