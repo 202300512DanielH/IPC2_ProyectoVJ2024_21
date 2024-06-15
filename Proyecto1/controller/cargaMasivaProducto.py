@@ -13,18 +13,15 @@ from circularDoblementeEnlazada import ListaCircularDoblementeEnlazada
 from producto import Producto
 
 class CargaMasivaProducto:
-    
-    # Crear una nueva lista circular doblemente enlazada 
     lista_productos = ListaCircularDoblementeEnlazada()
     
-    def __init__(self, archivo_xml= None):
+    def __init__(self, archivo_xml=None):
         self.archivo_xml = archivo_xml
 
     def cargar_xml(self):
         try:
             arbol = ET.parse(self.archivo_xml)
             raiz = arbol.getroot()
-            ids_productos = set()  # Paso 1: Crear un conjunto para almacenar los IDs
             for elemento_producto in raiz.findall('producto'):
                 id = elemento_producto.get('id')
                 nombre = elemento_producto.find('nombre').text
@@ -34,12 +31,12 @@ class CargaMasivaProducto:
                 cantidad = elemento_producto.find('cantidad').text
                 imagen = elemento_producto.find('imagen').text
                 producto = Producto(id, nombre, precio, descripcion, categoria, cantidad, imagen)
-                if id in ids_productos:  # Paso 2: Verificar si el ID ya existe
+                
+                if self.lista_productos.buscar(id) is not None:
                     print(f"Error: El ID {id} ya existe. El producto no se agregará.")
                     messagebox.showerror("Error de ID", f"El ID {id} ya existe. El producto no se agregará.")
                 elif producto.validar_precio() and producto.validar_cantidad():
-                    ids_productos.add(id)  # Agregar el ID al conjunto si el producto es válido y se va a insertar
-                    self.lista_productos.insertar(producto)
+                    self.lista_productos.insertar(producto)  # Insert the 'producto' object
                 else:
                     print(f"El producto {producto.id} no pasó la validación.")
                     messagebox.showerror("Error", "Producto(s) no válidos en el archivo XML. Los productos que sí son válidos se han cargado.")

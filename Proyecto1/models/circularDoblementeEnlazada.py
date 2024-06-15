@@ -43,14 +43,14 @@ class ListaCircularDoblementeEnlazada:
     def imprimir(self):
         if self.primero is None:
             print("La lista está vacía")
-            return
+            return None
 
         actual = self.primero
         while True:
-            producto = actual.producto  # Accede al atributo 'producto' del nodo actual
+            producto = actual.producto  # Access the 'producto' attribute inside the 'Nodo'
             print(f"ID: {producto.id},\n Nombre: {producto.nombre},\n Precio: {producto.precio},\n Descripción: {producto.descripcion},\n Categoría: {producto.categoria},\n Cantidad: {producto.cantidad},\n Imagen: {producto.imagen}")
             actual = actual.siguiente
-            if actual == self.primero:  # Si hemos vuelto al principio, termina el bucle
+            if actual == self.primero:
                 break
     
     #Metodo para verificar si la lista esta vacia
@@ -70,6 +70,7 @@ class ListaCircularDoblementeEnlazada:
                 actual = actual.siguiente
                 if actual == self.primero:
                     break
+        return None # Si no se encontró el producto
 
     # Método para iterar sobre la lista circular doblemente enlazada
     def __iter__(self):
@@ -86,34 +87,34 @@ class ListaCircularDoblementeEnlazada:
     
     def graficar(self):
         codigo_dot = ''
+        # Crear la carpeta Reportes si no existe
         carpeta_reportes = 'Reportes'
         if not os.path.exists(carpeta_reportes):
             os.makedirs(carpeta_reportes)
-
+        
+        contador_nodos = 0
+        
+        # Crear el archivo .dot
         archivo = open(os.path.join(carpeta_reportes, 'ListaCircularDoblementeEnlazada.dot'), 'w')
         codigo_dot += '''digraph G {
         rankdir=LR;
-        node [shape = record, height = .1];'''
+        node [shape = record, height = .1]'''
 
-        # Crear los nodos
-        contador_nodos = 0
         actual = self.primero
-        nodos = []
         if actual is not None:
             while True:
                 producto = actual.producto
                 codigo_dot += f'node{contador_nodos} [label = "{{<f1>| ID: {producto.id}\\nNombre: {producto.nombre}\\nPrecio: {producto.precio}\\nDescripción: {producto.descripcion}\\nCategoría: {producto.categoria}\\nCantidad: {producto.cantidad}|<f2>}}"];\n'
-                nodos.append(f'node{contador_nodos}')
+                if contador_nodos > 0:  # Agregar relaciones desde el segundo nodo en adelante
+                    codigo_dot += f'node{contador_nodos - 1}:f2 -> node{contador_nodos}:f1;\n'
+                    codigo_dot += f'node{contador_nodos}:f1 -> node{contador_nodos - 1}:f2;\n'
                 contador_nodos += 1
                 actual = actual.siguiente
                 if actual == self.primero:
                     break
-
-            # Hacer las relaciones
-            for i in range(contador_nodos):
-                siguiente = (i + 1) % contador_nodos
-                codigo_dot += f'{nodos[i]}:f2 -> {nodos[siguiente]}:f1;\n'
-                codigo_dot += f'{nodos[siguiente]}:f1 -> {nodos[i]}:f2;\n'
+            # Cerrar el círculo si hay más de un nodo
+            if contador_nodos > 1:
+                codigo_dot += f'node{contador_nodos - 1}:f2 -> node0:f1 [dir=both, arrowhead=normal, arrowtail=normal];\n'# Relación del último nodo con el primero
 
         codigo_dot += '}'
 
