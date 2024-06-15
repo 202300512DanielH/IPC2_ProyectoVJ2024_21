@@ -10,4 +10,4 @@ class Actividad:
         self.hora = hora
 
     def __str__(self):
-        return f"Actividad({self.id}, {self.nombre}, {self.descripcion}, {self.empleado}, {self.dia}, {self.hora})"
+        return f"Actividad: {self.id}, \n{self.nombre}, \n{self.descripcion}, \nID empleado: {self.empleado}, \nDía: {self.dia}, \nHora: {self.hora}"

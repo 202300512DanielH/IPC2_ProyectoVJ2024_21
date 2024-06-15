@@ -1,7 +1,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import QPropertyAnimation
 import sys, os, res
-from PyQt5.QtWidgets import QFileDialog
+from PyQt5.QtWidgets import QFileDialog, QFrame, QVBoxLayout, QLabel, QMessageBox
 from tkinter import messagebox
 
 # agregando la carpeta ventanas al path de python
@@ -19,6 +19,7 @@ sys.path.append(os.path.join(parent_dir, 'controller'))
 from cargaMasivaEmpleados import cargaMasivaEmpleados
 from cargaMasivaProducto import CargaMasivaProducto
 from cargaMasivaUsuarios import cargaMasivaUsuarios
+from cargaMasivaActividades import CargaMasivaActividades
 
 sys.path.append(os.path.join(parent_dir, 'models'))
 
@@ -1376,6 +1377,8 @@ class Ui_MainWindow(QtCore.QObject):
         #conectando el boton de rechazar en la pestaña de compras
         self.bt_compras_no.clicked.connect(self.rechazar_compra)
 
+        self.bt_menu_actividades.clicked.connect(self.mostrar_actividades)
+
         self.retranslateUi(MainWindow)
         self.stackedWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
@@ -1453,6 +1456,8 @@ class Ui_MainWindow(QtCore.QObject):
                 self.carga_masiva_producto.lista_productos.graficar()
         elif tipo_reporte == "Actividades":
                 print("Mostrando reporte de actividades.")
+                self.carga_masiva_actividades = CargaMasivaActividades()
+                self.carga_masiva_actividades.lista_actividades.graficar()
         elif tipo_reporte == "Compras":
                 print("Mostrando reporte de compras.")
                 self.lista_compras_aceptadas.graficar()
@@ -1521,8 +1526,76 @@ class Ui_MainWindow(QtCore.QObject):
                         self.cargaMasivaProducto = CargaMasivaProducto(file_name)
                         self.cargaMasivaProducto.cargar_xml()
                         print(self.cargaMasivaProducto.lista_productos.imprimir())
+
+                elif tipo_archivo == "Actividades":
+                        #se manda a llamar a la funcion que carga las actividades en la clase cargaMasivaActividades
+                        self.cargaMasivaActividades = CargaMasivaActividades(file_name)
+                        self.cargaMasivaActividades.cargar_xml()
+                        print(self.cargaMasivaActividades.lista_actividades.imprimir())
         else:
                 print("No se seleccionó ningún archivo.")
+
+    def mostrar_actividades(self):
+            try:
+                    self.listaActividades = self.cargaMasivaActividades.lista_actividades
+                    self.listaEmpleados = self.cargaMasivaEmpleados.lista_empleados
+
+                    if self.listaActividades is None or self.listaEmpleados is None:
+                            raise ValueError("Empleados o Actividades no cargados")
+
+                    # Obtiene el día de la semana actual (1 para lunes, 2 para martes, etc.)
+                    from datetime import datetime
+                    dia_actual = datetime.today().isoweekday()
+
+                    # Diccionario para convertir números a días de la semana
+                    dias_semana = {
+                            1: "Lunes",
+                            2: "Martes",
+                            3: "Miércoles",
+                            4: "Jueves",
+                            5: "Viernes",
+                            6: "Sábado",
+                            7: "Domingo"
+                    }
+
+                    layout = QVBoxLayout(self.scrollAreaDeActividades)
+
+                    for actividad in self.listaActividades.iterar_todos():
+                            # Filtra actividades para mostrar solo las del día actual
+                            if int(actividad.dia) == dia_actual:
+                                    empleado = self.listaEmpleados.buscar(actividad.empleado)
+                                    if empleado:
+                                            actividad_frame = QFrame(self.scrollAreaDeActividades)
+                                            actividad_layout = QVBoxLayout(actividad_frame)
+                                            actividad_frame.setFrameShape(QFrame.StyledPanel)
+                                            actividad_frame.setFrameShadow(QFrame.Raised)
+
+                                            llenartextoID = QLabel(f"ID: {actividad.id}", actividad_frame)
+                                            llenartextoEmpleado = QLabel(f"Empleado: {empleado.nombre}",
+                                                                         actividad_frame)
+                                            llenartextoDia = QLabel(f"Día: {dias_semana[int(actividad.dia)]}",
+                                                                    actividad_frame)
+                                            llenartextoHora = QLabel(f"Hora: {actividad.hora}", actividad_frame)
+                                            llenartextoDescripcion = QLabel(f"Descripción: {actividad.descripcion}",
+                                                                            actividad_frame)
+                                            llenartextoActividad = QLabel(f"Actividad: {actividad.nombre}",
+                                                                          actividad_frame)
+
+                                            actividad_layout.addWidget(llenartextoID)
+                                            actividad_layout.addWidget(llenartextoEmpleado)
+                                            actividad_layout.addWidget(llenartextoDia)
+                                            actividad_layout.addWidget(llenartextoHora)
+                                            actividad_layout.addWidget(llenartextoDescripcion)
+                                            actividad_layout.addWidget(llenartextoActividad)
+
+                                            layout.addWidget(actividad_frame)
+
+                    self.scrollAreaDeActividades.setLayout(layout)
+            except ValueError as e:
+                    QMessageBox.warning(None, "Advertencia",
+                                        "Por favor sube los empleados y las actividades antes de ingresar a esta pestaña.")
+            except Exception as e:
+                    print(f"Error inesperado: {e}")
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
