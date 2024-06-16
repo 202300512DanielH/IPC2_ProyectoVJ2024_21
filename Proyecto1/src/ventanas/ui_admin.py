@@ -1535,6 +1535,25 @@ class Ui_MainWindow(QtCore.QObject):
         else:
                 print("No se seleccionó ningún archivo.")
 
+
+
+    def numero_a_dia(self, numero):
+            if numero == 1:
+                    return "Lunes"
+            elif numero == 2:
+                    return "Martes"
+            elif numero == 3:
+                    return "Miércoles"
+            elif numero == 4:
+                    return "Jueves"
+            elif numero == 5:
+                    return "Viernes"
+            elif numero == 6:
+                    return "Sábado"
+            elif numero == 7:
+                    return "Domingo"
+            else:
+                    raise ValueError("Número de día no válido")
     def mostrar_actividades(self):
             try:
                     self.listaActividades = self.cargaMasivaActividades.lista_actividades
@@ -1546,17 +1565,6 @@ class Ui_MainWindow(QtCore.QObject):
                     # Obtiene el día de la semana actual (1 para lunes, 2 para martes, etc.)
                     from datetime import datetime
                     dia_actual = datetime.today().isoweekday()
-
-                    # Diccionario para convertir números a días de la semana
-                    dias_semana = {
-                            1: "Lunes",
-                            2: "Martes",
-                            3: "Miércoles",
-                            4: "Jueves",
-                            5: "Viernes",
-                            6: "Sábado",
-                            7: "Domingo"
-                    }
 
                     layout = QVBoxLayout(self.scrollAreaDeActividades)
 
@@ -1573,8 +1581,7 @@ class Ui_MainWindow(QtCore.QObject):
                                             llenartextoID = QLabel(f"ID: {actividad.id}", actividad_frame)
                                             llenartextoEmpleado = QLabel(f"Empleado: {empleado.nombre}",
                                                                          actividad_frame)
-                                            llenartextoDia = QLabel(f"Día: {dias_semana[int(actividad.dia)]}",
-                                                                    actividad_frame)
+                                            llenartextoDia = QLabel(f"Día: {self.numero_a_dia(int(actividad.dia))}", actividad_frame)
                                             llenartextoHora = QLabel(f"Hora: {actividad.hora}", actividad_frame)
                                             llenartextoDescripcion = QLabel(f"Descripción: {actividad.descripcion}",
                                                                             actividad_frame)

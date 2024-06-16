@@ -58,12 +58,11 @@ class pila:
         return self.size
     
     # Método para graficar la pila con Graphviz
-    def graficar(self):
+    def graficar(self, user_id):
         codigo_dot = 'digraph G {\n'
         actual = self.head
         contador_nodos = 0
         while actual:
-            # Solo graficar el nombre del producto y la cantidad seleccionada por el usuario
             codigo_dot += f'nodo{contador_nodos} [label="ID del producto: {actual.dato.producto.id}: \nNombre de producto: {actual.dato.producto.nombre}: \nCantidad seleccionada: {actual.dato.cantidad}"];\n'
             if actual.siguiente:
                 codigo_dot += f'nodo{contador_nodos} -> nodo{contador_nodos + 1};\n'
@@ -71,8 +70,10 @@ class pila:
             contador_nodos += 1
         codigo_dot += '}'
 
-        with open("pila.dot", "w") as file:
+        filename = f"Pila#{user_id}.dot"
+        with open(filename, "w") as file:
             file.write(codigo_dot)
 
-        os.system("dot -Tpng pila.dot -o pila.png")
-        os.system("pila.png")
+        output_filename = f"Pila{user_id}Usuario.png"
+        os.system(f"dot -Tpng {filename} -o {output_filename}")
+        os.system(f"{output_filename}")
