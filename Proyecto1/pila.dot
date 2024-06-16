@@ -1,9 +1,0 @@
-digraph G {
-nodo0 [label="ID del producto: 6: 
-Nombre de producto: Monitor JKL: 
-Cantidad seleccionada: 1"];
-nodo0 -> nodo1;
-nodo1 [label="ID del producto: 5: 
-Nombre de producto: Auriculares GHI: 
-Cantidad seleccionada: 1"];
-}

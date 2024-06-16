@@ -199,7 +199,7 @@ class ListaOrtogonal:
         if not os.path.exists(carpeta_reportes):
             os.makedirs(carpeta_reportes)
 
-        archivo = open(os.path.join(carpeta_reportes, 'matrizDispersa.dot'), 'w')
+        archivo = open(os.path.join(carpeta_reportes, 'ListaOrtogonal.dot'), 'w')
         codigodot = '''digraph G {
     graph [pad=\"0.5\", nodesep=\"1\", ranksep=\"1\"];
     label=\"Matriz Dispersa\"
@@ -277,8 +277,8 @@ class ListaOrtogonal:
         archivo.close()
 
         #Generamos la imagen
-        ruta_dot = 'Reportes/matrizDispersa.dot'
-        ruta_reporte = 'Reportes/matrizDispersa.png'
+        ruta_dot = 'Reportes/ListaOrtogonal.dot'
+        ruta_reporte = 'Reportes/ListaOrtogonal.png'
 
         comando = 'dot -Tpng '+ruta_dot+' -o '+ruta_reporte
         os.system(comando)
