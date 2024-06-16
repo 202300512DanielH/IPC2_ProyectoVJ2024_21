@@ -62,7 +62,7 @@ class ListaDoblementeEnlazada:
             os.makedirs(carpeta_reportes)
 
         # Crear el archivo .dot
-        archivo = open(os.path.join(carpeta_reportes, 'Listas_doblemente_enlazadas.dot'), 'w')
+        archivo = open(os.path.join(carpeta_reportes, 'ListaUsuarios.dot'), 'w')
         codigo_dot += '''digraph G {
         rankdir=LR;
         node [shape = record, height = .1]'''
@@ -92,8 +92,8 @@ class ListaDoblementeEnlazada:
         archivo.close()
 
         # Generar la imagen y abrir el reporte
-        ruta_dot = 'Reportes/Listas_doblemente_enlazadas.dot'
-        ruta_imagen = 'Reportes/Listas_doblemente_enlazadas.png'
+        ruta_dot = 'Reportes/ListaUsuarios.dot'
+        ruta_imagen = 'Reportes/ListaUsuarios.png'
         comando = 'dot -Tpng ' + ruta_dot + ' -o ' + ruta_imagen
         os.system(comando)
 

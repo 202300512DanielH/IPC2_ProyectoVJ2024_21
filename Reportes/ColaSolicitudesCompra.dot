@@ -1,0 +1,12 @@
+digraph G {
+    rankdir="RL";
+    label="Cola";
+    node[shape=box];
+Nodo0 [label="ID Usuario: 2\nNombre Usuario: Maria Lopez\nProductos:  Laptop DEF, Auriculares GHI, \nTotal: 1600.5"];
+Nodo1 [label="ID Usuario: 2\nNombre Usuario: Maria Lopez\nProductos:  Monitor JKL, \nTotal: 601.5"];
+Nodo2 [label="ID Usuario: 2\nNombre Usuario: Maria Lopez\nProductos:  Laptop DEF, Auriculares GHI, \nTotal: 1600.5"];
+
+Nodo1 -> Nodo0;
+Nodo2 -> Nodo1;
+
+}
