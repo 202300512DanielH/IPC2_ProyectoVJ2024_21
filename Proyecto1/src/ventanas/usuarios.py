@@ -6,7 +6,6 @@ from tkinter import messagebox
 # agregando la carpeta ventanas al path de python
 script_dir = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(os.path.join(script_dir, 'ventanas'))
-
 from login import Ui_Form as ui_login_Form #importando la clase Ui_Form de login.py en la carpeta ventanas
 
 # subiendo dos niveles para acceder a la carpeta que contiene la carpeta controller
@@ -14,6 +13,9 @@ parent_dir = os.path.dirname(os.path.dirname(script_dir))
 
 # Navega a la carpeta controller y agrega la ruta al path de python
 sys.path.append(os.path.join(parent_dir, 'controller'))
+
+#Navega a la carpeta data y agrega la ruta al path de python
+sys.path.append(os.path.join(parent_dir, 'data'))
 
 from cargaMasivaUsuarios import cargaMasivaUsuarios
 from cargaMasivaProducto import CargaMasivaProducto
@@ -486,9 +488,16 @@ class Ui_Form(QtCore.QObject):
     
     #funcion para graficar el carrito
     def graficar_carrito(self):
-        global lista_carrito
-        self.lista_carrito.graficar()
-    
+        if hasattr(self, 'id_user'):
+            self.lista_carrito.graficar(self.id_user)
+        else:
+            messagebox.showerror("Error", "El ID del usuario no está disponible.")
+
+    def obtener_ruta_relativa(ruta_relativa):
+        # Ruta base donde se encuentra el proyecto
+        script_dir = os.path.dirname(os.path.abspath(__file__))  # Directorio donde está el script
+        return os.path.join(script_dir, ruta_relativa)  # Construye la ruta absoluta
+
     #funcion para mostrar la informacion del producto seleccionado
     def mostrar_producto(self):
         try:
@@ -509,9 +518,15 @@ class Ui_Form(QtCore.QObject):
             self.categoria.setText(producto.categoria)
             self.cantidad.setText(producto.cantidad)
 
-            # mostrando la imagen del producto en el label de la imagen
-            self.label.setStyleSheet(f"image:url(:/images/{producto.imagen});\n"
-                                     "background-color:rgb(198, 198, 198);")
+            # Construir la ruta absoluta de la imagen
+            ruta_relativa_imagen = os.path.join(os.path.dirname(__file__), '..', '..', 'data', producto.imagen)
+            ruta_absoluta_imagen = os.path.abspath(ruta_relativa_imagen).replace("\\", "/")
+
+            # Cargar la imagen en el QLabel y escalarla al tamaño del QLabel
+            pixmap = QtGui.QPixmap(ruta_absoluta_imagen)
+            pixmap_scaled = pixmap.scaled(self.label.size(), QtCore.Qt.KeepAspectRatio)
+            self.label.setPixmap(pixmap_scaled)
+            self.label.setAlignment(QtCore.Qt.AlignCenter)
 
             # si no se ha seleccionado ningun producto se muestra un mensaje de error
             if nombre_producto == "Seleccionar Producto":
@@ -526,7 +541,7 @@ class Ui_Form(QtCore.QObject):
                                     "La cantidad seleccionada es mayor a la cantidad disponible del producto")
         except Exception as e:
             messagebox.showerror("Error", f"POR FAVOR SELECCIONE UN PRODUCTO")
-    
+
     #funcion para actualizar el combobox
     def actualizar_combobox(self):
         #Eliminando items innecesarios del combobox
