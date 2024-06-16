@@ -1,6 +1,5 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 import res
-from PIL import Image
 import sys, os
 from tkinter import messagebox
 
@@ -519,11 +518,15 @@ class Ui_Form(QtCore.QObject):
             self.categoria.setText(producto.categoria)
             self.cantidad.setText(producto.cantidad)
 
-            # mostrando la imagen del producto en el label de la imagen
-            ruta_imagen_relativa = producto.imagen  # La ruta ahora debe ser relativa
-            ruta_imagen_absoluta = os.path.join(os.path.dirname(__file__), '..', '..', ruta_imagen_relativa)
-            self.label.setStyleSheet(f"image:url({ruta_imagen_absoluta});\n"
-                                     "background-color: rgb(198, 198, 198);")
+            # Construir la ruta absoluta de la imagen
+            ruta_relativa_imagen = os.path.join(os.path.dirname(__file__), '..', '..', 'data', producto.imagen)
+            ruta_absoluta_imagen = os.path.abspath(ruta_relativa_imagen).replace("\\", "/")
+
+            # Cargar la imagen en el QLabel y escalarla al tamaño del QLabel
+            pixmap = QtGui.QPixmap(ruta_absoluta_imagen)
+            pixmap_scaled = pixmap.scaled(self.label.size(), QtCore.Qt.KeepAspectRatio)
+            self.label.setPixmap(pixmap_scaled)
+            self.label.setAlignment(QtCore.Qt.AlignCenter)
 
             # si no se ha seleccionado ningun producto se muestra un mensaje de error
             if nombre_producto == "Seleccionar Producto":
