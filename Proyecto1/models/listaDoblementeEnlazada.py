@@ -8,28 +8,25 @@ class ListaDoblementeEnlazada:
     def __init__(self):
         self.primero = None
         self.ultimo = None
-        self.ids = set() # Conjunto para almacenar los IDs de los usuarios
 
     # Metodo para insertar un usuario en la lista
     def insertar(self, nodo):
         usuario = nodo.usuario
         # Validar que el ID no exista en la lista
-        if usuario.id in self.ids:
-            raise ValueError("El ID ya existe en la lista")
+        actual = self.primero
+        while actual is not None: 
+            if actual.usuario.id == usuario.id:
+                raise ValueError("El ID ya existe en la lista")
+            actual = actual.siguiente
         # Validar que el email y el teléfono sean válidos
         if not usuario.validar_email():
             raise ValueError("El email no es válido")
         if not usuario.validar_telefono():
             raise ValueError("El teléfono no es válido")
-
-        # Agregar el ID al conjunto de IDs
-        self.ids.add(usuario.id)
-
         # Si la lista está vacía, se inserta el usuario como el primero y último
         if self.primero is None:
             self.primero = nodo
             self.ultimo = nodo
-        # Si la lista no está vacía, se inserta el usuario al final de la lista
         else:
             self.ultimo.siguiente = nodo
             nodo.anterior = self.ultimo
@@ -65,7 +62,7 @@ class ListaDoblementeEnlazada:
             os.makedirs(carpeta_reportes)
 
         # Crear el archivo .dot
-        archivo = open(os.path.join(carpeta_reportes, 'Listas_doblemente_enlazadas.dot'), 'w')
+        archivo = open(os.path.join(carpeta_reportes, 'ListaUsuarios.dot'), 'w')
         codigo_dot += '''digraph G {
         rankdir=LR;
         node [shape = record, height = .1]'''
@@ -95,8 +92,8 @@ class ListaDoblementeEnlazada:
         archivo.close()
 
         # Generar la imagen y abrir el reporte
-        ruta_dot = 'Reportes/Listas_doblemente_enlazadas.dot'
-        ruta_imagen = 'Reportes/Listas_doblemente_enlazadas.png'
+        ruta_dot = 'Reportes/ListaUsuarios.dot'
+        ruta_imagen = 'Reportes/ListaUsuarios.png'
         comando = 'dot -Tpng ' + ruta_dot + ' -o ' + ruta_imagen
         os.system(comando)
 

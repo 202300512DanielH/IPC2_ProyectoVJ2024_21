@@ -58,7 +58,7 @@ class cola:
         if not os.path.exists(carpeta_reportes):
             os.makedirs(carpeta_reportes)
 
-        archivo = open(os.path.join(carpeta_reportes, 'reporteCola.dot'), 'w')
+        archivo = open(os.path.join(carpeta_reportes, 'ColaSolicitudesCompra.dot'), 'w')
         codigodot += '''digraph G {
     rankdir="RL";
     label="Cola";
@@ -80,8 +80,8 @@ class cola:
         archivo.write(codigodot)
         archivo.close()
 
-        ruta_dot = 'Reportes/reporteCola.dot'
-        ruta_salida = 'Reportes/reporteCola.png'
+        ruta_dot = 'Reportes/ColaSolicitudesCompra.dot'
+        ruta_salida = 'Reportes/ColaSolicitudesCompra.png'
         comando = 'dot -Tpng ' + ruta_dot + ' -o ' + ruta_salida
         os.system(comando)
 

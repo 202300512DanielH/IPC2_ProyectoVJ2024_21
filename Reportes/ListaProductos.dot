@@ -1,0 +1,11 @@
+digraph G {
+        rankdir=LR;
+        node [shape = record, height = .1]node0 [label = "{<f1>| ID: 3\nNombre: Laptop DEF\nPrecio: 750.00\nDescripción: Laptop DEF de alta gama\nCategoría: Electrónica\nCantidad: 8|<f2>}"];
+node1 [label = "{<f1>| ID: 5\nNombre: Auriculares GHI\nPrecio: 50.25\nDescripción: Auriculares inalámbricos GHI\nCategoría: Electrónica\nCantidad: 15|<f2>}"];
+node0:f2 -> node1:f1;
+node1:f1 -> node0:f2;
+node2 [label = "{<f1>| ID: 6\nNombre: Monitor JKL\nPrecio: 300.75\nDescripción: Monitor JKL de 27 pulgadas\nCategoría: Electrónica\nCantidad: 6|<f2>}"];
+node1:f2 -> node2:f1;
+node2:f1 -> node1:f2;
+node2:f2 -> node0:f1 [dir=both, arrowhead=normal, arrowtail=normal];
+}

@@ -63,54 +63,62 @@ class ListaCircularSimpleEnlazada:
                 break
         print()
     
+    #Funcion para obtener el tamaño de la lista
+    def tamanio(self):
+        contador = 0
+        if self.primero is None:
+            return contador
+        actual = self.primero
+        contador += 1
+        actual = actual.siguiente
+        while actual != self.primero:
+            contador += 1
+            actual = actual.siguiente
+        return contador
+    
     def graficar(self):
         if self.primero is None:
             print("La lista está vacía, no hay nada que graficar.")
             return
 
-        codigo_dot = ''
-        carpeta_reportes = 'Reportes'
-        if not os.path.exists(carpeta_reportes):
-            os.makedirs(carpeta_reportes)
-
-        archivo = open(os.path.join(carpeta_reportes, 'ListaCircularSimpleEnlazada.dot'), 'w')
-        codigo_dot += '''digraph G {
+        codigo_dot = '''digraph G {
         rankdir=LR;
         node [shape = record, style=filled, fillcolor=lightblue, fontname="Arial"];
         edge [fontname="Arial"];'''
 
-        # Crear los nodos
         contador_nodos = 0
         actual = self.primero
-        nodos = []
+        nodo_anterior = None
+
         while True:
             empleado = actual.empleado
-            codigo_dot += f'node{contador_nodos} [label = "{{ Código: {empleado.codigo}\\nNombre: {empleado.nombre}\\nPuesto: {empleado.puesto}|<f2>}}"];\n'
-            nodos.append(f'node{contador_nodos}')
+            codigo_dot += f'node{contador_nodos} [label = "{{<f1> Código: {empleado.codigo}\\nNombre: {empleado.nombre}\\nPuesto: {empleado.puesto}|<f2>}}"];\n'
+            if nodo_anterior is not None:
+                codigo_dot += f'{nodo_anterior}:f2 -> node{contador_nodos}:f1;\n'
+            nodo_anterior = f'node{contador_nodos}'
             contador_nodos += 1
             actual = actual.siguiente
             if actual == self.primero:
                 break
 
-        # Hacer las relaciones
-        for i in range(contador_nodos):
-            siguiente = (i + 1) % contador_nodos
-            codigo_dot += f'{nodos[i]} -> {nodos[siguiente]};\n'
-
+        # Conectar el último nodo con el primero
+        codigo_dot += f'{nodo_anterior}:f2 -> node0:f1;\n'
         codigo_dot += '}'
 
+        carpeta_reportes = 'Reportes'
+        if not os.path.exists(carpeta_reportes):
+            os.makedirs(carpeta_reportes)
+
+        archivo = open(os.path.join(carpeta_reportes, 'ListaVendedores.dot'), 'w')
         archivo.write(codigo_dot)
         archivo.close()
 
-        # Imprimir el contenido del archivo .dot para depuración
         print("Contenido del archivo .dot:")
         print(codigo_dot)
 
-        # Generar la imagen y abrir el reporte
-        ruta_dot = os.path.join(carpeta_reportes, 'ListaCircularSimpleEnlazada.dot')
-        ruta_imagen = os.path.join(carpeta_reportes, 'ListaCircularSimpleEnlazada.png')
+        ruta_dot = os.path.join(carpeta_reportes, 'ListaVendedores.dot')
+        ruta_imagen = os.path.join(carpeta_reportes, 'ListaVendedores.png')
         comando = f'dot -Tpng {ruta_dot} -o {ruta_imagen}'
-        print(f"Ejecutando comando: {comando}")
         os.system(comando)
 
         ruta_abrir_reporte = os.path.abspath(ruta_imagen)

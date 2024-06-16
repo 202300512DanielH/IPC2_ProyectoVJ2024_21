@@ -1,8 +1,0 @@
-digraph G {
-    rankdir="RL";
-    label="Cola";
-    node[shape=box];
-Nodo0 [label="ID Usuario: 1\nNombre Usuario: Juan Perez\nProductos:  Auriculares GHI, Monitor JKL, \nTotal: 351.0"];
-
-
-}

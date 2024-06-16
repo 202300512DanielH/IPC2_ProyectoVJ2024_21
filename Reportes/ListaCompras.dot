@@ -1,0 +1,6 @@
+digraph G {
+        rankdir=LR;
+        node [shape = record, height = .1]node0 [label="{ID Usuario: 2\nNombre Usuario: Maria Lopez\nProductos:  Laptop DEF, Auriculares GHI, \nTotal: 1600.5|<f1>}"];
+node1 [label="{ID Usuario: 2\nNombre Usuario: Maria Lopez\nProductos:  Laptop DEF, Auriculares GHI, \nTotal: 1600.5|<f1>}"];
+node0-> node1;
+}
