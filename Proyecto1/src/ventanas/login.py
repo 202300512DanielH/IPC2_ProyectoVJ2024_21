@@ -178,7 +178,7 @@ class Ui_Form(QtCore.QObject):  # poniendo QtCore.QObject como clase padre para 
             usuario_encontrado = True        
 
         # validacion del login, si los datos son correctos devuelve True y si no False
-        if username == "1" and password == "1":
+        if username == "AdminIPC2" and password == "IPC2VJ2024":
             self.verificador.emit("admin") #enviando la señal de que el login fue exitoso
             #limpiando los campos de texto
             self.user_name_label.setText("")

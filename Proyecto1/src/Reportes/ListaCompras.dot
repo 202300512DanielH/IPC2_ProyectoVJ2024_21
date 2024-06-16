@@ -1,0 +1,6 @@
+digraph G {
+        rankdir=LR;
+        node [shape = record, height = .1]node0 [label="{ID Usuario: IPC2-25\nNombre Usuario: Joseph Walter\nProductos:  Televisor, Auriculares, Pesas, \nTotal: 2968.8300000000004|<f1>}"];
+node1 [label="{ID Usuario: IPC2-01\nNombre Usuario: Monica Deleon\nProductos:  Auriculares, Queso, Diario de Anne Frank, \nTotal: 13428.75|<f1>}"];
+node0-> node1;
+}
