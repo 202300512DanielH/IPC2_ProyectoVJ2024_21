@@ -109,15 +109,15 @@ class ListaCircularSimpleEnlazada:
         if not os.path.exists(carpeta_reportes):
             os.makedirs(carpeta_reportes)
 
-        archivo = open(os.path.join(carpeta_reportes, 'ListaCircularSimpleEnlazada.dot'), 'w')
+        archivo = open(os.path.join(carpeta_reportes, 'ListaVendedores.dot'), 'w')
         archivo.write(codigo_dot)
         archivo.close()
 
         print("Contenido del archivo .dot:")
         print(codigo_dot)
 
-        ruta_dot = os.path.join(carpeta_reportes, 'ListaCircularSimpleEnlazada.dot')
-        ruta_imagen = os.path.join(carpeta_reportes, 'ListaCircularSimpleEnlazada.png')
+        ruta_dot = os.path.join(carpeta_reportes, 'ListaVendedores.dot')
+        ruta_imagen = os.path.join(carpeta_reportes, 'ListaVendedores.png')
         comando = f'dot -Tpng {ruta_dot} -o {ruta_imagen}'
         os.system(comando)
 

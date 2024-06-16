@@ -64,7 +64,7 @@ class Lista_simplemente_enlazada:
             os.makedirs(carpeta_reportes)
         
         # Crear el archivo .dot
-        archivo = open(os.path.join(carpeta_reportes, 'Listas_simplemente_enlazadas.dot'), 'w')
+        archivo = open(os.path.join(carpeta_reportes, 'ListaCompras.dot'), 'w')
         codigodot += '''digraph G {
         rankdir=LR;
         node [shape = record, height = .1]'''
@@ -91,8 +91,8 @@ class Lista_simplemente_enlazada:
         archivo.close()
 
         #Generamos la imagen
-        ruta_dot = 'Reportes/Listas_simplemente_enlazadas.dot'
-        ruta_reporte = 'Reportes/Listas_simplemente_enlazadas.png'
+        ruta_dot = 'Reportes/ListaCompras.dot'
+        ruta_reporte = 'Reportes/ListaCompras.png'
         comando = 'dot -Tpng '+ruta_dot+' -o '+ruta_reporte
         os.system(comando)
         

@@ -95,7 +95,7 @@ class ListaCircularDoblementeEnlazada:
         contador_nodos = 0
         
         # Crear el archivo .dot
-        archivo = open(os.path.join(carpeta_reportes, 'ListaCircularDoblementeEnlazada.dot'), 'w')
+        archivo = open(os.path.join(carpeta_reportes, 'ListaProductos.dot'), 'w')
         codigo_dot += '''digraph G {
         rankdir=LR;
         node [shape = record, height = .1]'''
@@ -122,8 +122,8 @@ class ListaCircularDoblementeEnlazada:
         archivo.close()
 
         # Generar la imagen y abrir el reporte
-        ruta_dot = os.path.join(carpeta_reportes, 'ListaCircularDoblementeEnlazada.dot')
-        ruta_imagen = os.path.join(carpeta_reportes, 'ListaCircularDoblementeEnlazada.png')
+        ruta_dot = os.path.join(carpeta_reportes, 'ListaProductos.dot')
+        ruta_imagen = os.path.join(carpeta_reportes, 'ListaProductos.png')
         comando = f'dot -Tpng {ruta_dot} -o {ruta_imagen}'
         os.system(comando)
 
