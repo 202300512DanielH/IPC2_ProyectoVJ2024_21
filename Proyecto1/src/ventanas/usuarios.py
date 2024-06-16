@@ -1,6 +1,5 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 import res
-from PIL import Image
 import sys, os
 from tkinter import messagebox
 
@@ -15,8 +14,14 @@ parent_dir = os.path.dirname(os.path.dirname(script_dir))
 # Navega a la carpeta controller y agrega la ruta al path de python
 sys.path.append(os.path.join(parent_dir, 'controller'))
 
-#Navega a la carpeta data y agrega la ruta al path de python
-sys.path.append(os.path.join(parent_dir, 'data'))
+# Ruta base donde se encuentra el script actual
+base_path = os.path.dirname(os.path.abspath(__file__))
+
+# Subiendo dos niveles
+project_root = os.path.dirname(os.path.dirname(base_path))
+
+# Ruta a la carpeta donde se encuentran las imágenes
+images_path = os.path.join(project_root, 'data', 'CalificacionIPC2')
 
 from cargaMasivaUsuarios import cargaMasivaUsuarios
 from cargaMasivaProducto import CargaMasivaProducto
@@ -494,10 +499,6 @@ class Ui_Form(QtCore.QObject):
         else:
             messagebox.showerror("Error", "El ID del usuario no está disponible.")
 
-    def obtener_ruta_relativa(ruta_relativa):
-        # Ruta base donde se encuentra el proyecto
-        script_dir = os.path.dirname(os.path.abspath(__file__))  # Directorio donde está el script
-        return os.path.join(script_dir, ruta_relativa)  # Construye la ruta absoluta
 
     #funcion para mostrar la informacion del producto seleccionado
     def mostrar_producto(self):
@@ -519,11 +520,15 @@ class Ui_Form(QtCore.QObject):
             self.categoria.setText(producto.categoria)
             self.cantidad.setText(producto.cantidad)
 
-            # mostrando la imagen del producto en el label de la imagen
-            ruta_imagen_relativa = producto.imagen  # La ruta ahora debe ser relativa
-            ruta_imagen_absoluta = os.path.join(os.path.dirname(__file__), '..', '..', ruta_imagen_relativa)
-            self.label.setStyleSheet(f"image:url({ruta_imagen_absoluta});\n"
-                                     "background-color: rgb(198, 198, 198);")
+            # Construir la ruta absoluta de la imagen
+            ruta_relativa_imagen = os.path.join(os.path.dirname(__file__), '..', '..', 'data', producto.imagen)
+            ruta_absoluta_imagen = os.path.abspath(ruta_relativa_imagen).replace("\\", "/")
+
+            # Cargar la imagen en el QLabel y escalarla al tamaño del QLabel
+            pixmap = QtGui.QPixmap(ruta_absoluta_imagen)
+            pixmap_scaled = pixmap.scaled(self.label.size(), QtCore.Qt.KeepAspectRatio)
+            self.label.setPixmap(pixmap_scaled)
+            self.label.setAlignment(QtCore.Qt.AlignCenter)
 
             # si no se ha seleccionado ningun producto se muestra un mensaje de error
             if nombre_producto == "Seleccionar Producto":
