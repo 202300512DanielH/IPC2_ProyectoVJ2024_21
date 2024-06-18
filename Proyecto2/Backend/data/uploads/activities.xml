@@ -1,0 +1,13 @@
+<activities><actividad id="101">
+        <nombre>Reuni&#243;n de Ventas</nombre>
+        <descripcion>Reuni&#243;n mensual del equipo de ventas</descripcion>
+        <empleado>001</empleado>
+        <dia hora="7">1</dia>
+    </actividad>
+    <actividad id="102">
+        <nombre>Capacitaci&#243;n</nombre>
+        <descripcion>Capacitaci&#243;n sobre nuevos productos</descripcion>
+        <empleado>002</empleado>
+        <dia hora="23">2</dia>
+    </actividad>
+</activities>
