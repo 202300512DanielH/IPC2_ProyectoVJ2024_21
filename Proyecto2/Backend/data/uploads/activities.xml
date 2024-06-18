@@ -3,13 +3,13 @@
         <nombre>Recepción de mercancía</nombre>
         <descripcion>Recepción y revisión de la mercancía entrante</descripcion>
         <empleado>1</empleado>
-        <dia hora="23">4</dia>
+        <dia hora="23">2</dia>
     </actividad>
     <actividad id="2">
         <nombre>Asesoría al cliente</nombre>
         <descripcion>Asesorar a los clientes sobre los productos</descripcion>
         <empleado>2</empleado>
-        <dia hora="20">4</dia>
+        <dia hora="20">2</dia>
     </actividad>
     <actividad id="3">
         <nombre>Asesoría al cliente</nombre>
