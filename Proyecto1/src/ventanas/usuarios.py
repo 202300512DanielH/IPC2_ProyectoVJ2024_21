@@ -14,8 +14,14 @@ parent_dir = os.path.dirname(os.path.dirname(script_dir))
 # Navega a la carpeta controller y agrega la ruta al path de python
 sys.path.append(os.path.join(parent_dir, 'controller'))
 
-#Navega a la carpeta data y agrega la ruta al path de python
-sys.path.append(os.path.join(parent_dir, 'data'))
+# Ruta base donde se encuentra el script actual
+base_path = os.path.dirname(os.path.abspath(__file__))
+
+# Subiendo dos niveles
+project_root = os.path.dirname(os.path.dirname(base_path))
+
+# Ruta a la carpeta donde se encuentran las imágenes
+images_path = os.path.join(project_root, 'data', 'CalificacionIPC2')
 
 from cargaMasivaUsuarios import cargaMasivaUsuarios
 from cargaMasivaProducto import CargaMasivaProducto
@@ -493,10 +499,6 @@ class Ui_Form(QtCore.QObject):
         else:
             messagebox.showerror("Error", "El ID del usuario no está disponible.")
 
-    def obtener_ruta_relativa(ruta_relativa):
-        # Ruta base donde se encuentra el proyecto
-        script_dir = os.path.dirname(os.path.abspath(__file__))  # Directorio donde está el script
-        return os.path.join(script_dir, ruta_relativa)  # Construye la ruta absoluta
 
     #funcion para mostrar la informacion del producto seleccionado
     def mostrar_producto(self):

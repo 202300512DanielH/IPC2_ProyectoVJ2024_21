@@ -1,9 +1,0 @@
-digraph G {
-nodo0 [label="ID del producto: IPCMK-5: 
-Nombre de producto: Pasta Spagetti: 
-Cantidad seleccionada: 4"];
-nodo0 -> nodo1;
-nodo1 [label="ID del producto: IPCMK-2: 
-Nombre de producto: Queso: 
-Cantidad seleccionada: 2"];
-}

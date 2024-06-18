@@ -59,21 +59,38 @@ class pila:
     
     # Método para graficar la pila con Graphviz
     def graficar(self, user_id):
-        codigo_dot = 'digraph G {\n'
+        # Crear la carpeta Reportes si no existe
+        base_path = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+        carpeta_reportes = os.path.join(base_path, 'Reportes')
+        if not os.path.exists(carpeta_reportes):
+            os.makedirs(carpeta_reportes)
+
+        # Crear el archivo .dot
+        archivo_dot = os.path.join(carpeta_reportes, f'Pila{user_id}.dot')
+        archivo = open(archivo_dot, 'w')
+
+        codigo_dot = '''digraph G {
+    rankdir=TB;
+    node [shape = record, height = .1];\n'''
+
         actual = self.head
         contador_nodos = 0
         while actual:
-            codigo_dot += f'nodo{contador_nodos} [label="ID del producto: {actual.dato.producto.id}: \nNombre de producto: {actual.dato.producto.nombre}: \nCantidad seleccionada: {actual.dato.cantidad}"];\n'
-            if actual.siguiente:
-                codigo_dot += f'nodo{contador_nodos} -> nodo{contador_nodos + 1};\n'
-            actual = actual.siguiente
+            codigo_dot += f'Nodo{contador_nodos} [label="ID del producto: {actual.dato.producto.id}\\nNombre del producto: {actual.dato.producto.nombre}\\nCantidad: {actual.dato.cantidad}"];\n'
+            if contador_nodos > 0:
+                codigo_dot += f'Nodo{contador_nodos - 1} -> Nodo{contador_nodos};\n'
             contador_nodos += 1
+            actual = actual.siguiente
+
         codigo_dot += '}'
 
-        filename = f"Pila#{user_id}.dot"
-        with open(filename, "w") as file:
-            file.write(codigo_dot)
+        archivo.write(codigo_dot)
+        archivo.close()
 
-        output_filename = f"Pila{user_id}Usuario.png"
-        os.system(f"dot -Tpng {filename} -o {output_filename}")
-        os.system(f"{output_filename}")
+        # Generar la imagen y abrir el reporte
+        ruta_imagen = os.path.join(carpeta_reportes, f'Pila{user_id}.png')
+        comando = f'dot -Tpng {archivo_dot} -o {ruta_imagen}'
+        os.system(comando)
+
+        # Abrir el archivo .png generado
+        os.startfile(ruta_imagen)
