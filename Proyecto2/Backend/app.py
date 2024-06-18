@@ -24,14 +24,35 @@ for file in [USERS_FILE, PRODUCTS_FILE, EMPLOYEES_FILE, ACTIVITIES_FILE]:
         tree.write(file)
 
 # Usuarios estáticos para login (no me dejaron usar pandas pipipi)
-users = {
-    "1": "1",
-    "AdminIPC2": "IPC2VJ2024"
-}
+users = {}
+
+# Función para obtener los usuarios actualmente cargados en el sistema 
+def load_users():
+    global users
+    try:
+        tree = ET.parse(USERS_FILE)
+        root = tree.getroot()
+        # Limpiar el diccionario de usuarios
+        users = {}
+        # Quemando el admin
+        users["3"] = "3" #usuario rapido para pruebas
+        users["AdminIPC2"] = "IPC2VJ2024"
+        # Cargar los usuarios del archivo XML
+        for elemento_usuario in root.findall('usuario'):
+            id = elemento_usuario.get('id')
+            password = elemento_usuario.get('password')
+            users[id] = password
+        print("Usuarios cargados correctamente", users)
+    except Exception as e:
+        print(str(e))
+
+# Cargar los usuarios al iniciar la aplicación
+load_users()
 
 # Endpoint para login
 @app.route('/login', methods=['POST'])
 def login():
+    load_users()
     username = request.form.get('username')
     password = request.form.get('password')
     if username in users and users[username] == password:
@@ -46,10 +67,29 @@ def cargar_datos_masivos(file, file_path, tag_name):
         new_root = tree.getroot()
         existing_tree = ET.parse(file_path)
         existing_root = existing_tree.getroot()
+        contador = 0
+        usuarios_repetidos = []
         for elem in new_root.findall(tag_name):
-            existing_root.append(elem)
-        existing_tree.write(file_path)
-        return {"success": f"Archivo procesado y cargado correctamente todos los {tag_name} al xml de persistencia"}, 200
+            #verificando que el id no exista
+            if tag_name != 'empleado': 
+                if existing_root.find(f"{tag_name}[@id='{elem.get('id')}']") is not None:
+                    contador += 1
+                    usuarios_repetidos.append(elem.get('id'))
+                else: 
+                    existing_root.append(elem)
+            else:
+                #verificando que el codigo no exista
+                if existing_root.find(f"{tag_name}[@codigo='{elem.get('codigo')}']") is not None:
+                    contador += 1
+                    usuarios_repetidos.append(elem.get('codigo'))
+                else:
+                    existing_root.append(elem)
+        existing_tree.write(file_path, encoding="utf-8", xml_declaration=True)
+        load_users()
+        if contador == 0: 
+            return {"success": f"Archivo procesado y cargado correctamente todos los {tag_name} al xml de persistencia"}, 200
+        else: 
+            return {"error": (f"Error al cargar {contador} {tag_name} al XML de persistencia. IDs de {tag_name} repetidos: {usuarios_repetidos}")}, 500
     except ET.ParseError:
         return {"error": "Error en el parseo del xml"}, 500
     except Exception as e:
@@ -99,7 +139,7 @@ def carga_masiva_productos():
         return jsonify({'error': 'No hay archivo para cargar'}), 400
     file = request.files['file']
     if file.filename == '':
-        return jsonify({'error': 'No se selecciono ningun archivo'}), 400
+        return jsonify({'error': 'No se seleccionó ningún archivo'}), 400
     response, status = cargar_datos_masivos(file, PRODUCTS_FILE, 'producto')
     return jsonify(response), status
 

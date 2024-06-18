@@ -1,5 +1,6 @@
-<?xml version='1.0' encoding='utf-8'?>
-<activities><actividad id="1">
+<?xml version='1.0' encoding='UTF-8'?>
+<actividades>
+    <actividad id="1">
         <nombre>Recepción de mercancía</nombre>
         <descripcion>Recepción y revisión de la mercancía entrante</descripcion>
         <empleado>1</empleado>
@@ -17,4 +18,4 @@
         <empleado>3</empleado>
         <dia hora="5">1</dia>
     </actividad>
-</activities>
+</actividades>
