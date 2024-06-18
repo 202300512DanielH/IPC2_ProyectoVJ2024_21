@@ -13,6 +13,7 @@ USERS_FILE = os.path.join(DATA_DIR, 'users.xml')
 PRODUCTS_FILE = os.path.join(DATA_DIR, 'products.xml')
 EMPLOYEES_FILE = os.path.join(DATA_DIR, 'employees.xml')
 ACTIVITIES_FILE = os.path.join(DATA_DIR, 'activities.xml')
+CART_FILE = os.path.join(DATA_DIR, 'cart.xml')
 
 # Asegura que el directorio exista
 os.makedirs(DATA_DIR, exist_ok=True)
@@ -267,6 +268,94 @@ def get_activities_today():
                 })
             print(dia_actual)
         return jsonify(actividades), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+# Función para añadir indentación al XML
+def indentar(elemento_identar, level=0):
+    i = "\n" + level*"  "
+    if len(elemento_identar):
+        # Si el elemento tiene hijos, añadir indentación
+        if not elemento_identar.text or not elemento_identar.text.strip():
+            elemento_identar.text = i + "   "
+        # Si el elemento tiene hijos, añadir indentación
+        if not elemento_identar.tail or not elem.tail.strip():
+            elemento_identar.tail = i
+        # Llamar recursivamente a los hijos del elemento para indentarlos
+        for elemento_identar in elemento_identar:
+            indent(elemento_identar, level+1)
+        # Si el último hijo no tiene tail, añadir indentación (tail: texto después del último hijo)
+        if not elemento_identar.tail or not elemento_identar.tail.strip():
+            elemento_identar.tail = i
+    else:
+        # Si el elemento no tiene hijos, añadir indentación al texto
+        if level and (not elemento_identar.tail or not elemento_identar.tail.strip()):
+            elemento_identar.tail = i
+
+# Endpoint para agregar productos al archivo xml que representa el carrito de compras 
+@app.route('/add_cart', methods=['POST'])
+def add_cart():
+    try:
+        # Obtener nombre del producto y cantidad desde el frontend
+        nombre_producto = request.json.get('nombre_producto')
+        cantidad = request.json.get('cantidad')
+        
+        if not nombre_producto or not cantidad:
+            return jsonify({"error": "Faltan datos obligatorios (nombre_producto o cantidad)"}), 400
+        
+        # Cargar el archivo de productos
+        tree_productos = ET.parse(PRODUCTS_FILE)
+        root_productos = tree_productos.getroot()
+        
+        # Buscar el producto por nombre
+        producto_encontrado = None
+        for producto in root_productos.findall('producto'):
+            nombre = producto.find('nombre').text
+            if nombre == nombre_producto:
+                producto_encontrado = producto
+                break
+        
+        if producto_encontrado is None:
+            return jsonify({"error": f"No se encontró el producto '{nombre_producto}'"}), 404
+        
+        # Obtener detalles del producto
+        id_producto = producto_encontrado.get('id')
+        nombre = producto_encontrado.find('nombre').text
+        
+        # Crear un elemento para el carrito de compras
+        carrito_element = ET.Element('producto')
+        carrito_element.set('id', id_producto)
+        
+        # Añadir subelementos al carrito de compras
+        ET.SubElement(carrito_element, 'nombre').text = nombre
+        ET.SubElement(carrito_element, 'cantidad').text = str(cantidad)
+        
+        # Añadir al archivo XML del carrito de compras de la misma forma que en carga_masiva
+        if not os.path.exists(CART_FILE):
+            root_carrito = ET.Element('cart')
+        else:
+            tree_carrito = ET.parse(CART_FILE)
+            root_carrito = tree_carrito.getroot()
+        
+        # Verificar si ya existe un producto con el mismo ID en el carrito
+        for elemento_carrito in root_carrito.findall('producto'):
+            if elemento_carrito.get('id') == id_producto:
+                # Si existe, aumentar la cantidad en lugar de agregar uno nuevo
+                cantidad_actual = int(elem.find('cantidad').text)
+                nueva_cantidad = cantidad_actual + int(cantidad)
+                elem.find('cantidad').text = str(nueva_cantidad)
+                break
+        else:
+            # Si no existe, agregar el nuevo producto al carrito
+            root_carrito.append(carrito_element)
+        
+        indentar(root_carrito)
+        # Escribir el archivo XML del carrito de compras
+        tree_carrito = ET.ElementTree(root_carrito)
+        tree_carrito.write(CART_FILE, encoding="utf-8", xml_declaration=True)
+        
+        return jsonify({"success": f"Producto '{nombre_producto}' añadido al carrito correctamente"}), 200
+    
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
