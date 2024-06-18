@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<productos>
+    <producto id="IPCMK-1">
+        <nombre>Televisor</nombre>
+        <precio>854.25</precio>
+        <descripcion>Illo harum vitae eligendi sed quasi fugiat deleniti sit.</descripcion>
+        <categoria>Tecnologia</categoria>
+        <cantidad>67</cantidad>
+        <imagen>https://fotografias.lasexta.com/clipping/cmsimages02/2022/05/12/AA51421D-2EA6-4935-9381-A1A163645556/convierte-viejo-televisor-inteligente_98.jpg?crop=1300,731,x0,y10&amp;width=1900&amp;height=1069&amp;optimize=high&amp;format=webply</imagen>
+    </producto>
+    <producto id="IPCMK-2">
+        <nombre>Queso</nombre>
+        <precio>6098.77</precio>
+        <descripcion>Quisquam ad voluptatem odit voluptatum laudantium sequi iste quidem reprehenderit harum perspiciatis aliquam exercitationem nam eum doloremque.</descripcion>
+        <categoria>Comida</categoria>
+        <cantidad>55</cantidad>
+        <imagen>https://cdn2.cocinadelirante.com/sites/default/files/images/2023/09/como-hacer-queso-con-1-litro-de-leche.jpg</imagen>
+    </producto>
+    <producto id="IPCMK-3">
+        <nombre>Mi Primer libro de Poesia</nombre>
+        <precio>8558.45</precio>
+        <descripcion>Et similique voluptatum at dolorem incidunt quisquam esse natus architecto nesciunt cumque magni alias odit eum eveniet at.</descripcion>
+        <categoria>Libros</categoria>
+        <cantidad>38</cantidad>
+        <imagen>https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRRfKTdeGGXxzJahlZYoXJcylgyw0d7gWbanA&amp;s</imagen>
+    </producto>
+</productos>
