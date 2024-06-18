@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS 
 import xml.etree.ElementTree as ET
 import os
+import datetime 
 
 app = Flask(__name__)
 CORS(app)
@@ -235,6 +236,36 @@ def get_activities():
                 'dia': dia,
                 'hora': hora,
             })
+        return jsonify(actividades), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+#Endpoint para obtener las actividades del dia actual
+@app.route('/get_activities_today', methods=['GET'])
+def get_activities_today():
+    try:
+        tree = ET.parse(ACTIVITIES_FILE)
+        root = tree.getroot()
+        actividades = []
+        for elemento_actividad in root.findall('actividad'):
+            id = elemento_actividad.get('id')
+            nombre = elemento_actividad.find('nombre').text if elemento_actividad.find('nombre') is not None else ""
+            descripcion = elemento_actividad.find('descripcion').text if elemento_actividad.find('descripcion') is not None else ""
+            empleado = elemento_actividad.find('empleado').text if elemento_actividad.find('empleado') is not None else ""
+            dia = elemento_actividad.find('dia').text if elemento_actividad.find('dia') is not None else ""
+            hora = elemento_actividad.get('hora', "")
+            #obteniendo el dia actual de la cumputadora
+            dia_actual = datetime.datetime.today().weekday() + 1
+            if int(dia) == dia_actual:
+                actividades.append({
+                    'id': id,
+                    'nombre': nombre,
+                    'descripcion': descripcion,
+                    'empleado': empleado,
+                    'dia': dia,
+                    'hora': hora,
+                })
+            print(dia_actual)
         return jsonify(actividades), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
