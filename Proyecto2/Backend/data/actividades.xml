@@ -1,15 +1,16 @@
-<?xml version='1.0' encoding='utf-8'?>
-<activities><actividad id="1">
+<?xml version='1.0' encoding='UTF-8'?>
+<actividades>
+    <actividad id="1">
         <nombre>Recepción de mercancía</nombre>
         <descripcion>Recepción y revisión de la mercancía entrante</descripcion>
         <empleado>1</empleado>
-        <dia hora="23">2</dia>
+        <dia hora="23">4</dia>
     </actividad>
     <actividad id="2">
         <nombre>Asesoría al cliente</nombre>
         <descripcion>Asesorar a los clientes sobre los productos</descripcion>
         <empleado>2</empleado>
-        <dia hora="20">2</dia>
+        <dia hora="20">4</dia>
     </actividad>
     <actividad id="3">
         <nombre>Asesoría al cliente</nombre>
@@ -17,4 +18,4 @@
         <empleado>3</empleado>
         <dia hora="5">1</dia>
     </actividad>
-</activities>
+</actividades>
