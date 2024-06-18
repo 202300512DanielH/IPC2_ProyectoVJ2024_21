@@ -1,20 +1,73 @@
+{%load static%}
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Login</title>
+    <title>{% block title %}Login{% endblock %}</title>
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    <link rel="stylesheet" type="text/css" href="{% static 'login.css' %}">
 </head>
 <body>
-    <h1>Login</h1>
-    <form method="post">
-        {% csrf_token %}
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username">
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password">
-        <button type="submit">Login</button>
-        {% if error %}
-            <p style="color: red;">{{ error }}</p>
-        {% endif %}
-    </form>
+    <section class="h-100 gradient-form" style="background-color: #eee;">
+        <div class="container py-5 h-100">
+          <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-xl-10">
+              <div class="card rounded-3 text-black">
+                <div class="row g-0">
+                  <div class="col-lg-6">
+                    <div class="card-body p-md-5 mx-md-4">
+      
+                      <div class="text-center">
+                        <img src="https://cdn-icons-png.flaticon.com/512/2203/2203183.png"
+                          style="width: 100px;" alt="logo">
+                        <h4 class="mt-1 mb-5 pb-1">IPCmarket - Online</h4>
+                      </div>
+      
+                      <form method="post">
+                        {% csrf_token %}
+                        <p>Por favor coloca tus credenciales</p>
+      
+                        <div data-mdb-input-init class="form-outline mb-4">
+                          <input type="text" id="username" class="form-control"
+                            placeholder="Ingresa tu ID" name="username" />
+                          <label class="form-label" for="username">ID</label>
+                        </div>
+      
+                        <div data-mdb-input-init class="form-outline mb-4">
+                          <input type="password" id="password" class="form-control"
+                            placeholder="****"  name="password"/>
+                          <label class="form-label" for="password">Contraseña</label>
+                        </div>
+      
+                        <div class="text-center pt-1 mb-5 pb-1">
+                          <button data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="submit">Log
+                            in</button>
+                        {% if error %}
+                            <p style="color: red;">{{ error }}</p>
+                        {% endif %}
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                  <div class="col-lg-6 d-flex align-items-center gradient-custom-2">
+                    <div class="text-white px-3 py-4 p-md-5 mx-md-4">
+                      <h4 class="mb-4">COMPRAS INTELIGENTES</h4>
+                      <p class="small mb-0">Descubre la diferencia con IPCmarket: desde frutas y verduras frescas hasta productos de despensa y más, todo a 
+                        solo unos clics de distancia. Navega por nuestro amplio catálogo, selecciona tus productos favoritos y disfruta de entregas rápidas 
+                        directamente a tu puerta.
+                        <br><br>
+                        ¿Listo para una experiencia de compra sin complicaciones? Visita IPCmarket hoy mismo y experimenta la conveniencia al alcance de 
+                        tu mano. ¡No te pierdas nuestras ofertas especiales y promociones exclusivas!</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    {% block content %}
+    {% endblock %}
 </body>
 </html>
