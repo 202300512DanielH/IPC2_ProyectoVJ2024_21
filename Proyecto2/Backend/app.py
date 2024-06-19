@@ -598,10 +598,10 @@ def dia_nombre(dia_num):
             }
             return dias.get(dia_num, "")
 
-@app.route('/protected', methods=['GET'])
+@app.route('/admin', methods=['GET'])
 def protected():
     # Aquí tenemos el recurso protegido
-    return jsonify({"msg": "Has accedido al recurso protegido"}), 200
+    return jsonify({"msg": "Has accedido al módulo de administrador"}), 200
 
 if __name__ == '__main__':
     app.run(debug=True)
