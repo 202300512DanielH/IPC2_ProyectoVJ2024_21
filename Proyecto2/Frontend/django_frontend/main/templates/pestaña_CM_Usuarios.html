@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carga de Usuarios - IPCmarket Admin</title>
+    {% load static %}
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    <link rel="stylesheet" href="{% static 'pestaña_CM.css' %}">
+</head>
+<body>
+    <!-- Navbar -->
+
+
+    <div class="container mt-4">
+        <h1>Carga de Usuarios</h1>
+        <p>Utiliza el siguiente formulario para cargar usuarios al sistema.</p>
+        <form>
+            <input type="file" class="form-control mb-3" id="fileInput">
+            <button type="button" class="btn btn-primary gradient-custom-2">Subir Archivo</button>
+        </form>
+    </div>
+
+    {% bootstrap_javascript %}
+</body>
+</html>

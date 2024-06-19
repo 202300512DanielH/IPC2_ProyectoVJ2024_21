@@ -1,0 +1,16 @@
+body {
+    background: linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593);
+    color: #fff;
+    font-family: 'Arial', sans-serif;
+}
+
+
+.xml-container {
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid #fff;
+    color: #fff;
+    padding: 10px;
+    margin-top: 20px;
+    height: 300px; /* O ajusta según la necesidad */
+    overflow: auto; /* Permite scroll si el contenido es muy grande */
+}
