@@ -1,2 +1,1 @@
-<?xml version='1.0' encoding='utf-8'?>
-<compras><compra numero="1"><usuario id="1">Rodrigo Hernández</usuario><Total>5000.00</Total><productos><producto id="1"><nombre>Computadora de Escritorio</nombre><cantidad>1</cantidad></producto><producto id="2"><nombre>Laptop</nombre><cantidad>1</cantidad></producto></productos></compra><compra numero="2"><usuario id="1">Rodrigo Hernández</usuario><Total>10.00</Total><productos><producto id="3"><nombre>Frijol</nombre><cantidad>2</cantidad></producto></productos></compra></compras>
+<purchases />
