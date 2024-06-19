@@ -18,3 +18,10 @@ def protected(request):
         return redirect('login')
     return render(request, 'protected.html')
 
+#vista para el catalogo de productos
+def productos_view(request):
+    response = requests.get('http://127.0.0.1:5000/get_products')
+    products = response.json()#obtenemos los productos en formato json desde el servidor
+    return render(request, 'catalogo.html', {'products': products})
+
+
