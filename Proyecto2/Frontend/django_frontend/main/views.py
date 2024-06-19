@@ -16,12 +16,37 @@ def login(request):
 def protected(request):
     if not request.session.get('logged_in'):
         return redirect('login')
-    return render(request, 'protected.html')
+    return render(request, 'admin.html')
 
+def carga_usuarios(request):
+    return render(request, 'pestaña_CM_Usuarios.html')
 #vista para el catalogo de productos
 def productos_view(request):
     response = requests.get('http://127.0.0.1:5000/get_products')
     products = response.json()#obtenemos los productos en formato json desde el servidor
     return render(request, 'catalogo.html', {'products': products})
 
+def carga_productos(request):
+    return render(request, 'pestaña_CM_Productos.html')
+
+def actividades(request):
+    return render(request, 'pestaña_CM_Actividades.html')
+
+def carga_empleados(request):
+    return render(request, 'pestaña_CM_Empleados.html')
+
+def estadisticas(request):
+    return render(request, 'estadisticas.html')
+
+def reportes_compras(request):
+    return render(request, 'reportes_compras.html')
+
+def reportes_actividades(request):
+    return render(request, 'reportes_actividades.html')
+
+def colaboradores(request):
+    return render(request, 'colaboradores.html')
+
+def docu(request):
+    return render(request, 'docu.html')
 
