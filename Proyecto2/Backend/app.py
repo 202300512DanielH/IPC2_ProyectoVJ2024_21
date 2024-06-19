@@ -1,8 +1,9 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, Response
 from flask_cors import CORS 
 import xml.etree.ElementTree as ET
 import os
-import datetime 
+import datetime
+import re
 
 app = Flask(__name__)
 CORS(app)
@@ -14,6 +15,7 @@ PRODUCTS_FILE = os.path.join(DATA_DIR, 'products.xml')
 EMPLOYEES_FILE = os.path.join(DATA_DIR, 'employees.xml')
 ACTIVITIES_FILE = os.path.join(DATA_DIR, 'activities.xml')
 CART_FILE = os.path.join(DATA_DIR, 'cart.xml')
+PURCHASES_FILE = os.path.join(DATA_DIR, 'purchases.xml')
 
 # Asegura que el directorio exista
 os.makedirs(DATA_DIR, exist_ok=True)
@@ -24,6 +26,12 @@ for file in [USERS_FILE, PRODUCTS_FILE, EMPLOYEES_FILE, ACTIVITIES_FILE]:
         root = ET.Element(os.path.splitext(os.path.basename(file))[0])
         tree = ET.ElementTree(root)
         tree.write(file)
+
+# Crea archivo XML de compras vacío si no existe
+if not os.path.exists(PURCHASES_FILE):
+    root = ET.Element('compras')
+    tree = ET.ElementTree(root)
+    tree.write(PURCHASES_FILE, encoding="utf-8", xml_declaration=True)
 
 # Usuarios estáticos para login (no me dejaron usar pandas pipipi)
 users = {}
@@ -104,11 +112,43 @@ def carga_masiva_usuarios():
         return jsonify({'error': 'No hay archivo para cargar'}), 400
     file = request.files['file']
     if file.filename == '':
-        return jsonify({'error': 'No se selecciono ningun archivo'}), 400
+        return jsonify({'error': 'No se seleccionó ningún archivo'}), 400
+
+    # Parsear el archivo XML cargado
+    try:
+        tree = ET.parse(file)
+        root = tree.getroot()
+        for usuario in root.findall('usuario'):
+            email = usuario.find('email').text if usuario.find('email') is not None else ""
+            telefono = usuario.find('telefono').text if usuario.find('telefono') is not None else ""
+
+            # Validar el email y el teléfono
+            if email and not validar_email(email):
+                return jsonify({"error": f"Email inválido en usuario: {email}"}), 400
+            if telefono and not validar_telefono(telefono):
+                return jsonify({"error": f"Teléfono inválido en usuario: {telefono}"}), 400
+
+    except ET.ParseError:
+        return jsonify({'error': 'Error en el parseo del xml'}), 500
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
     response, status = cargar_datos_masivos(file, USERS_FILE, 'usuario')
     return jsonify(response), status
 
-# Endpoint para obtener los usuarios del xml de usuarios
+
+# Función para validar el formato del correo electrónico
+def validar_email(email):
+    regex = r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'
+    return re.match(regex, email) is not None
+
+
+# Función para validar el formato del número de teléfono
+def validar_telefono(telefono):
+    return telefono.isdigit() and len(telefono) == 8
+
+
+# Modificación en el endpoint para obtener los usuarios del xml de usuarios con validación
 @app.route('/get_users', methods=['GET'])
 def get_users():
     try:
@@ -122,6 +162,13 @@ def get_users():
             email = elemento_usuario.find('email').text if elemento_usuario.find('email') is not None else ""
             telefono = elemento_usuario.find('telefono').text if elemento_usuario.find('telefono') is not None else ""
             password = elemento_usuario.get('password', "")
+
+            # Validar el email y el teléfono
+            if email and not validar_email(email):
+                return jsonify({"error": f"Email inválido: {email}"}), 400
+            if telefono and not validar_telefono(telefono):
+                return jsonify({"error": f"Teléfono inválido: {telefono}"}), 400
+
             usuarios.append({
                 'id': id,
                 'nombre': nombre,
@@ -134,6 +181,19 @@ def get_users():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+
+# Función para validar el formato del precio (debe contener decimales)
+def validar_precio(precio):
+    try:
+        float(precio)
+        return '.' in precio
+    except ValueError:
+        return False
+
+# Función para validar el formato de la cantidad (debe ser un entero)
+def validar_cantidad(cantidad):
+    return cantidad.isdigit()
+
 # Endpoint para cargar masivamente productos al archivo xml de productos
 @app.route('/carga_masiva_productos', methods=['POST'])
 def carga_masiva_productos():
@@ -142,8 +202,40 @@ def carga_masiva_productos():
     file = request.files['file']
     if file.filename == '':
         return jsonify({'error': 'No se seleccionó ningún archivo'}), 400
-    response, status = cargar_datos_masivos(file, PRODUCTS_FILE, 'producto')
-    return jsonify(response), status
+
+    # Parsear el archivo XML cargado
+    try:
+        tree = ET.parse(file)
+        root = tree.getroot()
+        existing_tree = ET.parse(PRODUCTS_FILE)
+        existing_root = existing_tree.getroot()
+
+        # Verificar unicidad del ID
+        existing_ids = {producto.get('id') for producto in existing_root.findall('producto')}
+
+        for producto in root.findall('producto'):
+            id_producto = producto.get('id')
+            precio = producto.find('precio').text if producto.find('precio') is not None else ""
+            cantidad = producto.find('cantidad').text if producto.find('cantidad') is not None else ""
+
+            # Validar ID, precio y cantidad
+            if id_producto in existing_ids:
+                return jsonify({"error": f"ID repetido en producto: {id_producto}"}), 400
+            if not validar_precio(precio):
+                return jsonify({"error": f"Precio inválido en producto: {precio}"}), 400
+            if not validar_cantidad(cantidad):
+                return jsonify({"error": f"Cantidad inválida en producto: {cantidad}"}), 400
+
+            existing_root.append(producto)
+            existing_ids.add(id_producto)
+
+        existing_tree.write(PRODUCTS_FILE, encoding="utf-8", xml_declaration=True)
+        return jsonify({"success": "Productos cargados correctamente"}), 200
+
+    except ET.ParseError:
+        return jsonify({'error': 'Error en el parseo del xml'}), 500
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 # Endpoint para obtener los productos del xml de productos
 @app.route('/get_products', methods=['GET'])
@@ -153,15 +245,22 @@ def get_products():
         root = tree.getroot()
         productos = []
         for elemento_producto in root.findall('producto'):
-            id = elemento_producto.get('id')
+            id_producto = elemento_producto.get('id')
             nombre = elemento_producto.find('nombre').text if elemento_producto.find('nombre') is not None else ""
             precio = elemento_producto.find('precio').text if elemento_producto.find('precio') is not None else ""
             descripcion = elemento_producto.find('descripcion').text if elemento_producto.find('descripcion') is not None else ""
             categoria = elemento_producto.find('categoria').text if elemento_producto.find('categoria') is not None else ""
             cantidad = elemento_producto.find('cantidad').text if elemento_producto.find('cantidad') is not None else ""
             imagen = elemento_producto.find('imagen').text if elemento_producto.find('imagen') is not None else ""
+
+            # Validar Precio y cantidad
+            if not validar_precio(precio):
+                return jsonify({"error": f"Precio inválido en producto: {precio}"}), 400
+            if not validar_cantidad(cantidad):
+                return jsonify({"error": f"Cantidad inválida en producto: {cantidad}"}), 400
+
             productos.append({
-                'id': id,
+                'id': id_producto,
                 'nombre': nombre,
                 'precio': precio,
                 'descripcion': descripcion,
@@ -172,6 +271,7 @@ def get_products():
         return jsonify(productos), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
 
 # Endpoint para cargar masivamente empleados al archivo xml de empleados
 @app.route('/carga_masiva_empleados', methods=['POST'])
@@ -211,9 +311,35 @@ def carga_masiva_actividades():
         return jsonify({'error': 'No hay archivo para cargar'}), 400
     file = request.files['file']
     if file.filename == '':
-        return jsonify({'error': 'No se selecciono ningun archivo'}), 400
-    response, status = cargar_datos_masivos(file, ACTIVITIES_FILE, 'actividad')
-    return jsonify(response), status
+        return jsonify({'error': 'No se seleccionó ningún archivo'}), 400
+
+    # Parsear el archivo XML cargado
+    try:
+        tree = ET.parse(file)
+        root = tree.getroot()
+        existing_tree = ET.parse(ACTIVITIES_FILE)
+        existing_root = existing_tree.getroot()
+
+        # Verificar unicidad del ID
+        existing_ids = {actividad.get('id') for actividad in existing_root.findall('actividad')}
+
+        for actividad in root.findall('actividad'):
+            id_actividad = actividad.get('id')
+
+            # Validar ID
+            if id_actividad in existing_ids:
+                return jsonify({"error": f"ID repetido en actividad: {id_actividad}"}), 400
+
+            existing_root.append(actividad)
+            existing_ids.add(id_actividad)
+
+        existing_tree.write(ACTIVITIES_FILE, encoding="utf-8", xml_declaration=True)
+        return jsonify({"success": "Actividades cargadas correctamente"}), 200
+
+    except ET.ParseError:
+        return jsonify({'error': 'Error en el parseo del xml'}), 500
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 # Endpoint para obtener las actividades del xml de actividades
 @app.route('/get_activities', methods=['GET'])
@@ -223,14 +349,15 @@ def get_activities():
         root = tree.getroot()
         actividades = []
         for elemento_actividad in root.findall('actividad'):
-            id = elemento_actividad.get('id')
+            id_actividad = elemento_actividad.get('id')
             nombre = elemento_actividad.find('nombre').text if elemento_actividad.find('nombre') is not None else ""
             descripcion = elemento_actividad.find('descripcion').text if elemento_actividad.find('descripcion') is not None else ""
             empleado = elemento_actividad.find('empleado').text if elemento_actividad.find('empleado') is not None else ""
             dia = elemento_actividad.find('dia').text if elemento_actividad.find('dia') is not None else ""
             hora = elemento_actividad.get('hora', "")
+
             actividades.append({
-                'id': id,
+                'id': id_actividad,
                 'nombre': nombre,
                 'descripcion': descripcion,
                 'empleado': empleado,
@@ -240,6 +367,7 @@ def get_activities():
         return jsonify(actividades), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
 
 #Endpoint para obtener las actividades del dia actual
 @app.route('/get_activities_today', methods=['GET'])
@@ -356,6 +484,73 @@ def add_cart():
         
         return jsonify({"success": f"Producto '{nombre_producto}' añadido al carrito correctamente"}), 200
     
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+#Endpoint para generar reporte de compras
+def indent(elem, level=0):
+    i = "\n" + level*"  "
+    if len(elem):
+        if not elem.text or not elem.text.strip():
+            elem.text = i + "  "
+        if not elem.tail or not elem.tail.strip():
+            elem.tail = i
+        for elem in elem:
+            indent(elem, level+1)
+        if not elem.tail or not elem.tail.strip():
+            elem.tail = i
+    else:
+        if level and (not elem.tail or not elem.tail.strip()):
+            elem.tail = i
+
+@app.route('/compras', methods=['GET'])
+def generate_report():
+    try:
+        # Parsear las compras al  XML
+        tree = ET.parse(PURCHASES_FILE)
+        root = tree.getroot()
+
+        # Creando la ruta
+        report_root = ET.Element('compras')
+
+        # Iterando en las compras
+        for compra in root.findall('compra'):
+            compra_element = ET.Element('compra')
+            compra_element.set('numero', compra.get('numero'))
+
+            usuario = compra.find('usuario')
+            usuario_element = ET.SubElement(compra_element, 'usuario')
+            usuario_element.set('id', usuario.get('id'))
+            usuario_element.text = usuario.text
+
+            total_element = ET.SubElement(compra_element, 'Total')
+            total_element.text = compra.find('Total').text
+
+            productos_element = ET.SubElement(compra_element, 'productos')
+
+            for producto in compra.find('productos').findall('producto'):
+                producto_element = ET.SubElement(productos_element, 'producto')
+                producto_element.set('id', producto.get('id'))
+
+                nombre_element = ET.SubElement(producto_element, 'nombre')
+                nombre_element.text = producto.find('nombre').text
+
+                cantidad_element = ET.SubElement(producto_element, 'cantidad')
+                cantidad_element.text = producto.find('cantidad').text
+
+            report_root.append(compra_element)
+
+        # Indentar el reporte
+        indent(report_root)
+
+        # Convertir de ElementTree a string
+        report_tree = ET.ElementTree(report_root)
+        report_xml_str = ET.tostring(report_root, encoding='utf-8', xml_declaration=True)
+
+        # Retorna el reporte en formato XML
+        return Response(report_xml_str, mimetype='application/xml')
+
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
