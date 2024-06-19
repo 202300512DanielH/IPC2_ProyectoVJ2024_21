@@ -1,6 +1,6 @@
-<?xml version='1.0' encoding='utf-8'?>
-<employees>
-<empleado codigo="1">
+<?xml version='1.0' encoding='UTF-8'?>
+<empleados>
+    <empleado codigo="1">
         <nombre>Zacarías Garriga Cobo</nombre>
         <puesto>Vendedor</puesto>
     </empleado>
@@ -16,4 +16,4 @@
         <nombre>Juan Bautista Pascual Arellano Conde</nombre>
         <puesto>Gerente</puesto>
     </empleado>
-</employees>
+</empleados>
