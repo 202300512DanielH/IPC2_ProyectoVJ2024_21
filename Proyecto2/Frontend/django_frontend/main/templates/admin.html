@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administración - IPCmarket</title>
+    {% load static %}
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    <link rel="stylesheet" href="{% static 'admin.css' %}">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">IPCmarket Admin</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Cargas
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li><a class="dropdown-item" href="{% url 'carga_usuarios' %}">Carga de Usuarios</a></li>
+                            <li><a class="dropdown-item" href="{% url 'carga_productos' %}">Carga de Productos</a></li>
+                            <li><a class="dropdown-item" href="{% url 'carga_empleados' %}">Carga de Empleados</a></li>
+                            <li><a class="dropdown-item" href="{% url 'carga_actividades' %}">Carga de Actividades</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Productos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'estadisticas' %}">Estadísticas</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownReportLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Reportes
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownReportLink">
+                            <li><a class="dropdown-item" href="{% url 'reportes_compras' %}">Reporte de Compras</a></li>
+                            <li><a class="dropdown-item" href="{% url 'reportes_actividades' %}">Reporte de Actividades</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownHelpLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Ayuda
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownReportLink">
+                            <li><a class="dropdown-item" href="{% url 'colaboradores' %}">Colaboradores</a></li>
+                            <li><a class="dropdown-item" href="{% url 'docu' %}">Documentacion</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contenido principal aquí -->
+    <div class="container mt-4">
+        <h1>Bienvenido al Panel de Administración</h1>
+        <p>Selecciona una opción del menú para comenzar.</p>
+        <img src="https://cdn-icons-png.flaticon.com/512/7211/7211060.png">
+    </div>
+
+    {% bootstrap_javascript %}
+</body>
+</html>

@@ -1,0 +1,61 @@
+/* Estilos Generales */
+body {
+    background: linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593);
+    color: #fff;
+    font-family: 'Arial', sans-serif;
+}
+
+.navbar {
+    background-color: #333;
+}
+
+/* Logo y navegación */
+.navbar-brand {
+    color: #fccb90;
+    font-weight: bold;
+}
+
+.navbar-brand:hover {
+    color: #fff;
+}
+
+/* Links del menú */
+.nav-link {
+    color: #fccb90;
+    transition: color 0.3s ease-in-out;
+}
+
+.nav-link:hover {
+    color: #fff;
+}
+
+/* Dropdown Menus */
+.dropdown-menu {
+    background: #444; /* Slightly lighter than the navbar for contrast */
+}
+
+.dropdown-item {
+    color: #fccb90;
+}
+
+.dropdown-item:hover {
+    background-color: #555; /* Darker background on hover */
+    color: #fff;
+}
+
+/* Contenido principal */
+.container {
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 20px;
+    text-align: center;
+}
+
+h1 {
+    font-size: 2em;
+}
+
+p {
+    font-size: 1.2em;
+}
