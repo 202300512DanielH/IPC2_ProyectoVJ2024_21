@@ -16,22 +16,18 @@ EMPLOYEES_FILE = os.path.join(DATA_DIR, 'employees.xml')
 ACTIVITIES_FILE = os.path.join(DATA_DIR, 'activities.xml')
 CART_FILE = os.path.join(DATA_DIR, 'cart.xml')
 PURCHASES_FILE = os.path.join(DATA_DIR, 'purchases.xml')
+ACTIVITIES_TODAY_FILE = os.path.join(DATA_DIR, 'activities_today.xml')
 
 # Asegura que el directorio exista
 os.makedirs(DATA_DIR, exist_ok=True)
 
 # Crea archivos XML vacíos si no existen
-for file in [USERS_FILE, PRODUCTS_FILE, EMPLOYEES_FILE, ACTIVITIES_FILE]:
+for file in [USERS_FILE, PRODUCTS_FILE, EMPLOYEES_FILE, ACTIVITIES_FILE, CART_FILE, PURCHASES_FILE, ACTIVITIES_TODAY_FILE]:
     if not os.path.exists(file):
         root = ET.Element(os.path.splitext(os.path.basename(file))[0])
         tree = ET.ElementTree(root)
         tree.write(file)
 
-# Crea archivo XML de compras vacío si no existe
-if not os.path.exists(PURCHASES_FILE):
-    root = ET.Element('compras')
-    tree = ET.ElementTree(root)
-    tree.write(PURCHASES_FILE, encoding="utf-8", xml_declaration=True)
 
 # Usuarios estáticos para login (no me dejaron usar pandas pipipi)
 users = {}
@@ -369,39 +365,10 @@ def get_activities():
         return jsonify({"error": str(e)}), 500
 
 
-#Endpoint para obtener las actividades del dia actual
-@app.route('/get_activities_today', methods=['GET'])
-def get_activities_today():
-    try:
-        tree = ET.parse(ACTIVITIES_FILE)
-        root = tree.getroot()
-        actividades = []
-        for elemento_actividad in root.findall('actividad'):
-            id = elemento_actividad.get('id')
-            nombre = elemento_actividad.find('nombre').text if elemento_actividad.find('nombre') is not None else ""
-            descripcion = elemento_actividad.find('descripcion').text if elemento_actividad.find('descripcion') is not None else ""
-            empleado = elemento_actividad.find('empleado').text if elemento_actividad.find('empleado') is not None else ""
-            dia = elemento_actividad.find('dia').text if elemento_actividad.find('dia') is not None else ""
-            hora = elemento_actividad.get('hora', "")
-            #obteniendo el dia actual de la cumputadora
-            dia_actual = datetime.datetime.today().weekday() + 1
-            if int(dia) == dia_actual:
-                actividades.append({
-                    'id': id,
-                    'nombre': nombre,
-                    'descripcion': descripcion,
-                    'empleado': empleado,
-                    'dia': dia,
-                    'hora': hora,
-                })
-            print(dia_actual)
-        return jsonify(actividades), 200
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
 
 # Función para añadir indentación al XML
 def indentar(elemento_identar, level=0):
-    i = "\n" + level*"  "
+    i = "\n" + level * "  "
     if len(elemento_identar):
         # Si el elemento tiene hijos, añadir indentación
         if not elemento_identar.text or not elemento_identar.text.strip():
@@ -411,7 +378,7 @@ def indentar(elemento_identar, level=0):
             elemento_identar.tail = i
         # Llamar recursivamente a los hijos del elemento para indentarlos
         for elemento_identar in elemento_identar:
-            indent(elemento_identar, level+1)
+            indent(elemento_identar, level + 1)
         # Si el último hijo no tiene tail, añadir indentación (tail: texto después del último hijo)
         if not elemento_identar.tail or not elemento_identar.tail.strip():
             elemento_identar.tail = i
@@ -420,21 +387,22 @@ def indentar(elemento_identar, level=0):
         if level and (not elemento_identar.tail or not elemento_identar.tail.strip()):
             elemento_identar.tail = i
 
-# Endpoint para agregar productos al archivo xml que representa el carrito de compras 
+
+# Endpoint para agregar productos al archivo xml que representa el carrito de compras
 @app.route('/add_cart', methods=['POST'])
 def add_cart():
     try:
         # Obtener nombre del producto y cantidad desde el frontend
         nombre_producto = request.json.get('nombre_producto')
         cantidad = request.json.get('cantidad')
-        
+
         if not nombre_producto or not cantidad:
             return jsonify({"error": "Faltan datos obligatorios (nombre_producto o cantidad)"}), 400
-        
+
         # Cargar el archivo de productos
         tree_productos = ET.parse(PRODUCTS_FILE)
         root_productos = tree_productos.getroot()
-        
+
         # Buscar el producto por nombre
         producto_encontrado = None
         for producto in root_productos.findall('producto'):
@@ -442,29 +410,29 @@ def add_cart():
             if nombre == nombre_producto:
                 producto_encontrado = producto
                 break
-        
+
         if producto_encontrado is None:
             return jsonify({"error": f"No se encontró el producto '{nombre_producto}'"}), 404
-        
+
         # Obtener detalles del producto
         id_producto = producto_encontrado.get('id')
         nombre = producto_encontrado.find('nombre').text
-        
+
         # Crear un elemento para el carrito de compras
         carrito_element = ET.Element('producto')
         carrito_element.set('id', id_producto)
-        
+
         # Añadir subelementos al carrito de compras
         ET.SubElement(carrito_element, 'nombre').text = nombre
         ET.SubElement(carrito_element, 'cantidad').text = str(cantidad)
-        
+
         # Añadir al archivo XML del carrito de compras de la misma forma que en carga_masiva
         if not os.path.exists(CART_FILE):
             root_carrito = ET.Element('cart')
         else:
             tree_carrito = ET.parse(CART_FILE)
             root_carrito = tree_carrito.getroot()
-        
+
         # Verificar si ya existe un producto con el mismo ID en el carrito
         for elemento_carrito in root_carrito.findall('producto'):
             if elemento_carrito.get('id') == id_producto:
@@ -476,14 +444,14 @@ def add_cart():
         else:
             # Si no existe, agregar el nuevo producto al carrito
             root_carrito.append(carrito_element)
-        
+
         indentar(root_carrito)
         # Escribir el archivo XML del carrito de compras
         tree_carrito = ET.ElementTree(root_carrito)
         tree_carrito.write(CART_FILE, encoding="utf-8", xml_declaration=True)
-        
+
         return jsonify({"success": f"Producto '{nombre_producto}' añadido al carrito correctamente"}), 200
-    
+
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
@@ -553,6 +521,82 @@ def generate_report():
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+
+# Endpoint para obtener las actividades del dia actual
+@app.route('/get_activities_today', methods=['GET'])
+def get_activities_today():
+    try:
+        # Limpiar el archivo de actividades de hoy
+        tree_today = ET.parse(ACTIVITIES_TODAY_FILE)
+        root_today = tree_today.getroot()
+        root_today.clear()
+        tree_today.write(ACTIVITIES_TODAY_FILE, encoding="utf-8", xml_declaration=True)
+        # Parsear el archivo de actividades y empleados una sola vez
+        tree = ET.parse(ACTIVITIES_FILE)
+        root = tree.getroot()
+        tree_empleados = ET.parse(EMPLOYEES_FILE)
+        root_empleados = tree_empleados.getroot()
+
+        # Obtener el día actual
+        dia_actual = datetime.datetime.today().weekday() + 1
+        dia_actual_nombre = dia_nombre(dia_actual)
+
+        # Preparar el archivo de actividades de hoy
+        tree_today = ET.parse(ACTIVITIES_TODAY_FILE)
+        root_today = tree_today.getroot()
+
+        # Verificar si ya existe un elemento <dia> para el día actual
+        if not any(dia.text == dia_actual_nombre for dia in root_today.findall('dia')):
+            ET.SubElement(root_today, 'dia').text = dia_actual_nombre
+
+        for elemento_actividad in root.findall('actividad'):
+            dia = elemento_actividad.find('dia').text if elemento_actividad.find('dia') is not None else ""
+            if int(dia) == dia_actual:
+                id = elemento_actividad.get('id')
+                nombre = elemento_actividad.find('nombre').text if elemento_actividad.find('nombre') is not None else ""
+                descripcion = elemento_actividad.find('descripcion').text if elemento_actividad.find(
+                    'descripcion') is not None else ""
+                empleado_codigo = elemento_actividad.find('empleado').text if elemento_actividad.find(
+                    'empleado') is not None else ""
+                dia_element = elemento_actividad.find('dia')
+                hora = dia_element.get('hora', "") if dia_element is not None else ""
+
+                # Obtener el nombre del empleado
+                empleado_nombre = ""
+                for empleado in root_empleados.findall('empleado'):
+                    if empleado.get('codigo') == empleado_codigo:
+                        empleado_nombre = empleado.find('nombre').text
+                        break
+
+                # Crear y añadir la nueva actividad
+                actividad_element = ET.Element('actividad')
+                actividad_element.set('id', id)
+                ET.SubElement(actividad_element, 'nombre').text = nombre
+                ET.SubElement(actividad_element, 'descripcion').text = descripcion
+                ET.SubElement(actividad_element, 'empleado').text = empleado_nombre
+                ET.SubElement(actividad_element, 'hora').text = hora + ":00"
+
+                root_today.append(actividad_element)
+
+        indentar(root_today)
+        tree_today.write(ACTIVITIES_TODAY_FILE, encoding="utf-8", xml_declaration=True)
+        return jsonify({"success": f"Actividades del día {dia_actual_nombre} exportadas correctamente"}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+#Funcion para obtener el nombre del día
+def dia_nombre(dia_num):
+            dias = {
+                1: 'Lunes',
+                2: 'Martes',
+                3: 'Miércoles',
+                4: 'Jueves',
+                5: 'Viernes',
+                6: 'Sábado',
+                7: 'Domingo'
+            }
+            return dias.get(dia_num, "")
 
 @app.route('/protected', methods=['GET'])
 def protected():
