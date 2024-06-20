@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, Response
+from flask import Flask, request, jsonify, Response, send_file
 from flask_cors import CORS 
 import xml.etree.ElementTree as ET
 import os
@@ -393,10 +393,12 @@ def indentar(elemento_identar, level=0):
 def add_cart():
     try:
         # Obtener nombre del producto y cantidad desde el frontend
-        nombre_producto = request.json.get('nombre_producto')
-        cantidad = request.json.get('cantidad')
+        data = request.form  # Cambiado a form si los datos se envían como formulario
+        nombre_producto = data.get('nombre_producto')
+        cantidad = data.get('cantidad')
 
         if not nombre_producto or not cantidad:
+            print("Faltan datos obligatorios (nombre_producto o cantidad)")
             return jsonify({"error": "Faltan datos obligatorios (nombre_producto o cantidad)"}), 400
 
         # Cargar el archivo de productos
@@ -412,6 +414,7 @@ def add_cart():
                 break
 
         if producto_encontrado is None:
+            print(f"No se encontró el producto '{nombre_producto}'")
             return jsonify({"error": f"No se encontró el producto '{nombre_producto}'"}), 404
 
         # Obtener detalles del producto
@@ -437,15 +440,17 @@ def add_cart():
         for elemento_carrito in root_carrito.findall('producto'):
             if elemento_carrito.get('id') == id_producto:
                 # Si existe, aumentar la cantidad en lugar de agregar uno nuevo
-                cantidad_actual = int(elem.find('cantidad').text)
+                cantidad_actual = int(elemento_carrito.find('cantidad').text)
                 nueva_cantidad = cantidad_actual + int(cantidad)
-                elem.find('cantidad').text = str(nueva_cantidad)
+                elemento_carrito.find('cantidad').text = str(nueva_cantidad)
                 break
         else:
             # Si no existe, agregar el nuevo producto al carrito
             root_carrito.append(carrito_element)
 
+        # Indentar el XML (es opcional pero útil para legibilidad)
         indentar(root_carrito)
+        
         # Escribir el archivo XML del carrito de compras
         tree_carrito = ET.ElementTree(root_carrito)
         tree_carrito.write(CART_FILE, encoding="utf-8", xml_declaration=True)
@@ -453,7 +458,14 @@ def add_cart():
         return jsonify({"success": f"Producto '{nombre_producto}' añadido al carrito correctamente"}), 200
 
     except Exception as e:
+        print(f"Error: {str(e)}")
         return jsonify({"error": str(e)}), 500
+    
+# Endpoint para obtener los productos del carrito de compras
+@app.route('/descarga_carrito', methods=['GET'])
+def download_file():
+    file_path = CART_FILE 
+    return send_file(file_path, as_attachment=True) #descarga el archivo
 
 
 #Endpoint para generar reporte de compras
@@ -521,7 +533,6 @@ def generate_report():
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
-
 
 # Endpoint para obtener las actividades del dia actual
 @app.route('/get_activities_today', methods=['GET'])

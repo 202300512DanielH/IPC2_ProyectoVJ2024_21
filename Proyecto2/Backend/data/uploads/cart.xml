@@ -1,7 +1,15 @@
 <?xml version='1.0' encoding='utf-8'?>
 <cart>
-  <producto id="IPCMK-2">
+   <producto id="IPCMK-2">
     <nombre>Queso</nombre>
-    <cantidad>3</cantidad>
+    <cantidad>26</cantidad>
+  </producto>
+  <producto id="IPCMK-3">
+    <nombre>Mi Primer libro de Poesia</nombre>
+    <cantidad>1</cantidad>
+  </producto>
+  <producto id="IPCMK-1">
+    <nombre>Televisor</nombre>
+    <cantidad>1</cantidad>
   </producto>
 </cart>
