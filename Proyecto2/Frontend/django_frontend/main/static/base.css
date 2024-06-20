@@ -1,0 +1,120 @@
+/*formateando margenes y paddig de toda la pagina*/
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: "Kalam", cursive;
+}
+
+/*ajustando el header para */
+.header {
+    width: 100%;
+    background-color: rgb(255, 189, 150); 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
+}
+
+.main-content {
+    margin-top: 100px;
+    position: relative;
+    z-index: 1; /* Para que el contenido no se superponga con el header */
+}
+
+.footer {
+    background-color: rgb(255, 189, 150);
+    padding: 20px 0;
+    text-align: center;
+}
+
+.background-image {
+    margin: 0;
+    background-image: url("https://novedadesgt.wordpress.com/wp-content/uploads/2020/01/1.jpg");
+    background-size: cover;
+    background-position: top;
+    height: 500px; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-align: center;
+    position: relative;
+}
+
+.background-image h1 {
+    font-size: 50px;
+    font-weight: 700;
+    font-family: "Kalam", cursive;
+    /*ajustando las coordenadas de posicion*/
+    position: absolute;
+    top: 87%;
+    left: 15%;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 50px;
+}
+
+.navbar-brand img {
+    height: 80px;
+    margin-right: -155px;
+}
+
+.navbar-menu {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar-item {
+    margin: 0 15px;
+}
+
+.navbar-item a {
+    text-decoration: none;
+    color: black;
+    font-size: 22px;
+}
+
+.navbar-item a:hover {
+    color: #f8f8f8;
+    font-size: 24px;
+    text-decoration: underline;
+    transition: font-size 0.5s;
+}
+
+.navbar-icons .icon {
+    margin: 0 10px;
+    font-size: 20px;
+    text-decoration: none;
+    color: black;
+}
+
+.navbar-icons .icon:hover {
+    font-size: 25px;
+    transition: font-size 0.5s;
+}
+
+/*css del tipo de letra, Google-Fonts*/
+.kalam-light {
+    font-family: "Kalam", cursive;
+    font-weight: 300;
+    font-style: normal;
+}
+
+.kalam-regular {
+    font-family: "Kalam", cursive;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.kalam-bold {
+    font-family: "Kalam", cursive;
+    font-weight: 700;
+    font-style: normal;
+}
