@@ -1,28 +1,10 @@
 <?xml version='1.0' encoding='utf-8'?>
 <activities_today>
-   <dia>Jueves</dia>
-  <actividad id="1">
-    <nombre>Capacitación</nombre>
-    <descripcion>Capacitación sobre nuevos productos</descripcion>
-    <empleado />
-    <hora>23:00</hora>
-  </actividad>
+   <dia>Viernes</dia>
   <actividad id="2">
     <nombre>Recepción de mercancía</nombre>
     <descripcion>Recepción y revisión de la mercancía entrante</descripcion>
     <empleado />
     <hora>23:00</hora>
-  </actividad>
-  <actividad id="4">
-    <nombre>Asesoría al cliente</nombre>
-    <descripcion>Asesorar a los clientes sobre los productos</descripcion>
-    <empleado />
-    <hora>20:00</hora>
-  </actividad>
-  <actividad id="3">
-    <nombre>Asesoría al cliente</nombre>
-    <descripcion>Asesorar a los clientes sobre los productos</descripcion>
-    <empleado />
-    <hora>5:00</hora>
   </actividad>
 </activities_today>

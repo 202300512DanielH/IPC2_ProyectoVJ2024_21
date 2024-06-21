@@ -2,34 +2,30 @@
 <purchases>
   <compra numero="1">
     <usuario id="1">Juan Perez</usuario>
-    <Total>167980.72000000003</Total>
+    <Total>33588.79</Total>
     <productos>
+      <producto id="IPCMK-1">
+        <nombre>Televisor</nombre>
+        <cantidad>3</cantidad>
+      </producto>
       <producto id="IPCMK-2">
         <nombre>Queso</nombre>
-        <cantidad>26</cantidad>
+        <cantidad>2</cantidad>
       </producto>
       <producto id="IPCMK-3">
         <nombre>Mi Primer libro de Poesia</nombre>
-        <cantidad>1</cantidad>
+        <cantidad>2</cantidad>
       </producto>
-      <producto id="IPCMK-1">
-        <nombre>Televisor</nombre>
-        <cantidad>1</cantidad>
+      <producto id="IPCMK-5">
+        <nombre>Camara</nombre>
+        <cantidad>2</cantidad>
       </producto>
     </productos>
   </compra>
   <compra numero="2">
-    <usuario id="1">Juan Perez</usuario>
-    <Total>174079.49000000002</Total>
+    <usuario id="2">Maria Lopez</usuario>
+    <Total>854.25</Total>
     <productos>
-      <producto id="IPCMK-2">
-        <nombre>Queso</nombre>
-        <cantidad>27</cantidad>
-      </producto>
-      <producto id="IPCMK-3">
-        <nombre>Mi Primer libro de Poesia</nombre>
-        <cantidad>1</cantidad>
-      </producto>
       <producto id="IPCMK-1">
         <nombre>Televisor</nombre>
         <cantidad>1</cantidad>
@@ -38,19 +34,11 @@
   </compra>
   <compra numero="3">
     <usuario id="1">Juan Perez</usuario>
-    <Total>174079.49000000002</Total>
+    <Total>51255.0</Total>
     <productos>
-      <producto id="IPCMK-2">
-        <nombre>Queso</nombre>
-        <cantidad>27</cantidad>
-      </producto>
-      <producto id="IPCMK-3">
-        <nombre>Mi Primer libro de Poesia</nombre>
-        <cantidad>1</cantidad>
-      </producto>
       <producto id="IPCMK-1">
         <nombre>Televisor</nombre>
-        <cantidad>1</cantidad>
+        <cantidad>60</cantidad>
       </producto>
     </productos>
   </compra>
