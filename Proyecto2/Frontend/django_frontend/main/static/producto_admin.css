@@ -1,0 +1,31 @@
+.producto {
+    border: 1px solid #ddd;
+    padding: 10px;
+    width: auto;
+    box-sizing: border-box;
+}
+
+.producto img {
+    height: 300px;
+    width: auto;
+}
+
+.producto-detalle img {
+    max-height: 100%;
+    width: auto;
+}
+
+.producto-detalle {
+    margin-top: 30px;
+    margin-left: 15px;
+}
+
+.detalles {
+    margin-top: 100px;
+    margin-left: 15px;
+}
+
+.detalles p {
+    font-size: 20px;
+    text-align: left;
+}

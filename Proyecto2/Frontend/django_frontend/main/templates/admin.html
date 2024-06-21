@@ -3,16 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panel de Administración - IPCmarket</title>
+    <title>{% block title %}Panel de Administración - IPCmarket{% endblock %}</title>
     {% load static %}
     {% load bootstrap5 %}
     {% bootstrap_css %}
     <link rel="stylesheet" href="{% static 'admin.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'catalogo.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'producto_admin.css' %}">
+    {% block extra_css %}{% endblock %}
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">IPCmarket Admin</a>
+            <a class="navbar-brand" href="{% url 'protected' %}">IPCmarket Admin</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -30,19 +33,13 @@
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Productos</a>
+                        <a class="nav-link" href="{% url 'productos_admin' %}">Productos</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'estadisticas' %}">Estadísticas</a>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownReportLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Reportes
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownReportLink">
-                            <li><a class="dropdown-item" href="{% url 'reportes_compras' %}">Reporte de Compras</a></li>
-                            <li><a class="dropdown-item" href="{% url 'reportes_actividades' %}">Reporte de Actividades</a></li>
-                        </ul>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'reportes' %}">Reportes</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownHelpLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -53,16 +50,21 @@
                             <li><a class="dropdown-item" href="{% url 'docu' %}">Documentacion</a></li>
                         </ul>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login' %}">Salir</a>
+                    </li>
                 </ul>
             </div>
         </div>
     </nav>
 
     <!-- Contenido principal aquí -->
-    <div class="container mt-4">
+    <div class="container mt-4 container_admin">
+        {% block content %}
         <h1>Bienvenido al Panel de Administración</h1>
         <p>Selecciona una opción del menú para comenzar.</p>
         <img src="https://cdn-icons-png.flaticon.com/512/7211/7211060.png">
+        {% endblock %}
     </div>
 
     {% bootstrap_javascript %}

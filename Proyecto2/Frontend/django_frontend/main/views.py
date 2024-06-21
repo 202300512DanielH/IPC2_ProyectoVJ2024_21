@@ -21,14 +21,43 @@ def protected(request):
         return redirect('login')
     return render(request, 'admin.html')
 
+
+from django.shortcuts import render
+from django.core.files.storage import FileSystemStorage
+import requests
+
+
 def carga_usuarios(request):
+    if request.method == 'POST':
+        file = request.FILES.get('file')
+        if file:
+            fs = FileSystemStorage()
+            filename = fs.save(file.name, file)
+            file_path = fs.url(filename)
+
+            # Prepara los archivos para la solicitud
+            files = {'file': (file.name, open(fs.path(filename), 'rb'))}
+            response = requests.post('http://127.0.0.1:5000/carga_masiva_usuarios', files=files)
+
+            if response.status_code == 200:
+                return render(request, 'pestaña_CM_Usuarios.html', {'success': 'Usuarios cargados correctamente'})
+            else:
+                return render(request, 'pestaña_CM_Usuarios.html', {'error': 'Error al cargar usuarios'})
+        else:
+            return render(request, 'pestaña_CM_Usuarios.html', {'error': 'No se seleccionó ningún archivo'})
     return render(request, 'pestaña_CM_Usuarios.html')
+
 
 #vista para el catalogo de productos
 def productos_view(request):
     response = requests.get('http://127.0.0.1:5000/get_products')
     products = response.json()#obtenemos los productos en formato json desde el servidor
     return render(request, 'catalogo.html', {'products': products})
+
+def productos_view_admin(request):
+    response = requests.get('http://127.0.0.1:5000/get_products')
+    products = response.json()#obtenemos los productos en formato json desde el servidor
+    return render(request, 'catalogo_admin.html', {'products': products})
 
 #vista para los detalles de un producto
 def producto_detalle_view(request, producto_id):
@@ -38,7 +67,6 @@ def producto_detalle_view(request, producto_id):
         if producto['id'] == producto_id:
             producto_encontrado = producto
             break
-
     if request.method == 'POST':
         nombre_producto = producto_encontrado['nombre']
         cantidad = request.POST['cantidad']
@@ -65,6 +93,16 @@ def producto_detalle_view(request, producto_id):
     
     return render(request, 'producto.html', {'producto': producto_encontrado})
 
+#vista de detalle del producto desde el admin
+def producto_detalle_view_admin(request, producto_id):
+    response = requests.get('http://127.0.0.1:5000/get_products')
+    producto_encontrado = None
+    for producto in response.json():
+        if producto['id'] == producto_id:
+            producto_encontrado = producto
+            break
+    return render(request, 'detalles_admin.html', {'producto': producto_encontrado})
+
 #vista para descargar el carrito de compras
 def descarga_carrito(request):
     flask_download_url = 'http://localhost:5000/descarga_carrito'
@@ -76,22 +114,78 @@ def descarga_compras(request):
     return redirect(flask_download_url)
 
 def carga_productos(request):
+    if request.method == 'POST':
+        file = request.FILES.get('file')
+        if file:
+            fs = FileSystemStorage()
+            filename = fs.save(file.name, file)
+            file_path = fs.url(filename)
+
+            # Prepara los archivos para la solicitud
+            files = {'file': (file.name, open(fs.path(filename), 'rb'))}
+            response = requests.post('http://127.0.0.1:5000/carga_masiva_productos', files=files)
+
+            if response.status_code == 200:
+                return render(request, 'pestaña_CM_Productos.html', {'success': 'Productos cargados correctamente'})
+            else:
+                return render(request, 'pestaña_CM_Productos.html', {'error': 'Error al cargar productos'})
+        else:
+            return render(request, 'pestaña_CM_Productos.html', {'error': 'No se seleccionó ningún archivo'})
     return render(request, 'pestaña_CM_Productos.html')
 
 def actividades(request):
+    if request.method == 'POST':
+        file = request.FILES.get('file')
+        if file:
+            fs = FileSystemStorage()
+            filename = fs.save(file.name, file)
+            file_path = fs.url(filename)
+
+            # Prepara los archivos para la solicitud
+            files = {'file': (file.name, open(fs.path(filename), 'rb'))}
+            response = requests.post('http://127.0.0.1:5000/carga_masiva_actividades', files=files)
+
+            if response.status_code == 200:
+                return render(request, 'pestaña_CM_Actividades.html', {'success': 'Actividades cargadas correctamente'})
+            else:
+                return render(request, 'pestaña_CM_Actividades.html', {'error': 'Error al cargar actividades'})
+        else:
+            return render(request, 'pestaña_CM_Actividades.html', {'error': 'No se seleccionó ningún archivo'})
     return render(request, 'pestaña_CM_Actividades.html')
 
 def carga_empleados(request):
+    if request.method == 'POST':
+        file = request.FILES.get('file')
+        if file:
+            fs = FileSystemStorage()
+            filename = fs.save(file.name, file)
+            file_path = fs.url(filename)
+
+            # Prepara los archivos para la solicitud
+            files = {'file': (file.name, open(fs.path(filename), 'rb'))}
+            response = requests.post('http://127.0.0.1:5000/carga_masiva_empleados', files=files)
+
+            if response.status_code == 200:
+                return render(request, 'pestaña_CM_Empleados.html', {'success': 'Empleados cargados correctamente'})
+            else:
+                return render(request, 'pestaña_CM_Empleados.html', {'error': 'Error al cargar empleados'})
+        else:
+            return render(request, 'pestaña_CM_Empleados.html', {'error': 'No se seleccionó ningún archivo'})
     return render(request, 'pestaña_CM_Empleados.html')
 
 def estadisticas(request):
     return render(request, 'estadisticas.html')
 
-def reportes_compras(request):
-    return render(request, 'reportes_compras.html')
-
-def reportes_actividades(request):
-    return render(request, 'reportes_actividades.html')
+def reportes(request):
+    if request.method == 'POST':
+        action = request.POST['action']
+        if action == "compras":
+            flask_download_url = 'http://localhost:5000/descarga_compras'
+            return redirect(flask_download_url)
+        elif action == "actividades": 
+            flask_download_url = 'http://localhost:5000/descarga_actividades_hoy'
+            return redirect(flask_download_url)
+    return render(request, 'reportes.html')
 
 def colaboradores(request):
     return render(request, 'colaboradores.html')

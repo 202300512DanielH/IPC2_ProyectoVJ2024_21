@@ -1,6 +1,12 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <actividades>
     <actividad id="1">
+        <nombre>Capacitación</nombre>
+        <descripcion>Capacitación sobre nuevos productos</descripcion>
+        <empleado>002</empleado>
+        <dia hora="23">2</dia>
+    </actividad>
+    <actividad id="1">
         <nombre>Recepción de mercancía</nombre>
         <descripcion>Recepción y revisión de la mercancía entrante</descripcion>
         <empleado>1</empleado>

@@ -44,12 +44,19 @@ body {
 }
 
 /* Contenido principal */
-.container {
+.container_admin {
     background-color: rgba(0, 0, 0, 0.8);
     padding: 20px;
     border-radius: 8px;
     margin-top: 20px;
     text-align: center;
+}
+
+.colum img {
+    width: 73%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 20px;
 }
 
 h1 {
@@ -59,3 +66,5 @@ h1 {
 p {
     font-size: 1.2em;
 }
+
+

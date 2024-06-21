@@ -1,0 +1,19 @@
+<div class="p-4">
+    <div class="contenedor-productos ml-5">
+        {% for product in products %}
+            <div class="tarjeta">
+                    {% if path == user %}
+                        <a href="{% url 'producto_detalle' product.id %}">
+                            <img src="{{ product.imagen }}" alt="{{ product.nombre }}">
+                        </a>
+                    {% else %}
+                        <a href="{% url 'producto_detalle_admin' product.id %}">
+                            <img src="{{ product.imagen }}" alt="{{ product.nombre }}">
+                        </a>
+                    {% endif %}
+                <h2>{{ product.nombre }}</h2>
+                <p class="precio">Q{{ product.precio }}</p>
+            </div>
+        {% endfor %}
+    </div>
+</div>
