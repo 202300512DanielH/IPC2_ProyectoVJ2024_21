@@ -31,7 +31,7 @@ for file in [USERS_FILE, PRODUCTS_FILE, EMPLOYEES_FILE, ACTIVITIES_FILE, CART_FI
 
 # Usuarios estáticos para login (no me dejaron usar pandas pipipi)
 users = {}
-username = "1"
+username = " "
 
 # Función para obtener los usuarios actualmente cargados en el sistema 
 def load_users():
@@ -644,8 +644,6 @@ def descarga_compras():
     file_path = PURCHASES_FILE
     return send_file(file_path, as_attachment=True)
 
-# Endpoint para obtener las actividades del dia actual
-@app.route('/get_activities_today', methods=['GET'])
 def get_activities_today():
     try:
         # Limpiar el archivo de actividades de hoy
@@ -705,6 +703,15 @@ def get_activities_today():
         return jsonify({"success": f"Actividades del día {dia_actual_nombre} exportadas correctamente"}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+    
+#Endpoint para descargar el archivo de actividades del dia actual
+@app.route('/descarga_actividades_hoy', methods=['GET'])
+def descarga_actividades_hoy():
+    #actualizar el archivo de actividades del dia antes de la descarga 
+    get_activities_today()
+    #descargar el archivo
+    file_path = ACTIVITIES_TODAY_FILE
+    return send_file(file_path, as_attachment=True)
 
 #Funcion para obtener el nombre del día
 def dia_nombre(dia_num):
