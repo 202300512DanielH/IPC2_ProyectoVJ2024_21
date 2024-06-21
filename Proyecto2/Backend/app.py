@@ -117,29 +117,42 @@ def carga_masiva_usuarios():
         return jsonify({'error': 'No hay archivo para cargar'}), 400
     file = request.files['file']
     if file.filename == '':
-        return jsonify({'error': 'No se seleccionó ningún archivo'}), 400
+        return jsonify({'error': 'No se seleccionó ningún archivo'}), 401
 
-    # Parsear el archivo XML cargado
     try:
         tree = ET.parse(file)
         root = tree.getroot()
+        existing_tree = ET.parse(USERS_FILE)
+        existing_root = existing_tree.getroot()
+
+        existing_ids = {usuario.get('id') for usuario in existing_root.findall('usuario')}
+        errors = []
         for usuario in root.findall('usuario'):
+            id_usuario = usuario.get('id')
             email = usuario.find('email').text if usuario.find('email') is not None else ""
             telefono = usuario.find('telefono').text if usuario.find('telefono') is not None else ""
 
-            # Validar el email y el teléfono
+            if id_usuario in existing_ids:
+                errors.append(f"ID repetido: {id_usuario}")
+                continue
             if email and not validar_email(email):
-                return jsonify({"error": f"Email inválido en usuario: {email}"}), 400
+                errors.append(f"Email inválido: {email} en usuario ID: {id_usuario}")
+                continue
             if telefono and not validar_telefono(telefono):
-                return jsonify({"error": f"Teléfono inválido en usuario: {telefono}"}), 400
+                errors.append(f"Teléfono inválido: {telefono} en usuario ID: {id_usuario}")
+                continue
 
+            existing_root.append(usuario)
+            existing_ids.add(id_usuario)
+
+        existing_tree.write(USERS_FILE, encoding="utf-8", xml_declaration=True)
+        if errors:
+            return jsonify({"success": "Algunos usuarios cargados correctamente", "errors": errors}), 207
+        return jsonify({"success": "Todos los usuarios cargados correctamente"}), 200
     except ET.ParseError:
         return jsonify({'error': 'Error en el parseo del xml'}), 500
     except Exception as e:
         return jsonify({'error': str(e)}), 500
-
-    response, status = cargar_datos_masivos(file, USERS_FILE, 'usuario')
-    return jsonify(response), status
 
 
 # Función para validar el formato del correo electrónico
@@ -207,7 +220,6 @@ def carga_masiva_productos():
     file = request.files['file']
     if file.filename == '':
         return jsonify({'error': 'No se seleccionó ningún archivo'}), 400
-
     # Parsear el archivo XML cargado
     try:
         tree = ET.parse(file)
@@ -217,6 +229,7 @@ def carga_masiva_productos():
 
         # Verificar unicidad del ID
         existing_ids = {producto.get('id') for producto in existing_root.findall('producto')}
+        errors = []  # Lista para acumular errores
 
         for producto in root.findall('producto'):
             id_producto = producto.get('id')
@@ -225,22 +238,29 @@ def carga_masiva_productos():
 
             # Validar ID, precio y cantidad
             if id_producto in existing_ids:
-                return jsonify({"error": f"ID repetido en producto: {id_producto}"}), 400
+                errors.append(f"ID repetido en producto: {id_producto}")
+                continue  # Saltar al siguiente producto sin añadir este
             if not validar_precio(precio):
-                return jsonify({"error": f"Precio inválido en producto: {precio}"}), 400
+                errors.append(f"Precio inválido: {precio} en producto ID: {id_producto}")
+                continue
             if not validar_cantidad(cantidad):
-                return jsonify({"error": f"Cantidad inválida en producto: {cantidad}"}), 400
+                errors.append(f"Cantidad inválida: {cantidad} en producto ID: {id_producto}")
+                continue
 
             existing_root.append(producto)
             existing_ids.add(id_producto)
 
         existing_tree.write(PRODUCTS_FILE, encoding="utf-8", xml_declaration=True)
-        return jsonify({"success": "Productos cargados correctamente"}), 200
+
+        if errors:
+            return jsonify({"success": "Algunos productos cargados correctamente", "errors": errors}), 207
+        return jsonify({"success": "Todos los productos cargados correctamente"}), 200
 
     except ET.ParseError:
         return jsonify({'error': 'Error en el parseo del xml'}), 500
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+
 
 # Endpoint para obtener los productos del xml de productos
 @app.route('/get_products', methods=['GET'])
@@ -285,8 +305,41 @@ def carga_masiva_empleados():
     file = request.files['file']
     if file.filename == '':
         return jsonify({'error': 'No se selecciono ningun archivo'}), 400
-    response, status = cargar_datos_masivos(file, EMPLOYEES_FILE, 'empleado')
-    return jsonify(response), status
+
+    try:
+        tree = ET.parse(file)
+        root = tree.getroot()
+        existing_tree = ET.parse(EMPLOYEES_FILE)
+        existing_root = existing_tree.getroot()
+
+        # Verificar unicidad del código
+        existing_codigos = {empleado.get('codigo') for empleado in existing_root.findall('empleado')}
+        errors = []  # Lista para acumular errores
+
+        for empleado in root.findall('empleado'):
+            codigo_empleado = empleado.get('codigo')
+            nombre = empleado.find('nombre').text if empleado.find('nombre') is not None else ""
+            puesto = empleado.find('puesto').text if empleado.find('puesto') is not None else ""
+
+            # Validar código
+            if codigo_empleado in existing_codigos:
+                errors.append(f"Código repetido en empleado: {codigo_empleado}")
+                continue  # Saltar al siguiente empleado sin añadir este
+
+            existing_root.append(empleado)
+            existing_codigos.add(codigo_empleado)
+
+        existing_tree.write(EMPLOYEES_FILE, encoding="utf-8", xml_declaration=True)
+
+        if errors:
+            return jsonify({"success": "Algunos empleados cargados correctamente", "errors": errors}), 207
+        return jsonify({"success": "Todos los empleados cargados correctamente"}), 200
+
+    except ET.ParseError:
+        return jsonify({'error': 'Error en el parseo del xml'}), 500
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
 
 # Endpoint para obtener las actividades del xml de actividades
 @app.route('/get_employees', methods=['GET'])
@@ -317,33 +370,37 @@ def carga_masiva_actividades():
     if file.filename == '':
         return jsonify({'error': 'No se seleccionó ningún archivo'}), 400
 
-    # Parsear el archivo XML cargado
     try:
         tree = ET.parse(file)
         root = tree.getroot()
         existing_tree = ET.parse(ACTIVITIES_FILE)
         existing_root = existing_tree.getroot()
 
-        # Verificar unicidad del ID
         existing_ids = {actividad.get('id') for actividad in existing_root.findall('actividad')}
+        errors = []  # Lista para acumular errores
 
         for actividad in root.findall('actividad'):
             id_actividad = actividad.get('id')
 
             # Validar ID
             if id_actividad in existing_ids:
-                return jsonify({"error": f"ID repetido en actividad: {id_actividad}"}), 400
+                errors.append(f"ID repetido en actividad: {id_actividad}")
+                continue  # Saltar al siguiente actividad sin añadir esta
 
             existing_root.append(actividad)
             existing_ids.add(id_actividad)
 
         existing_tree.write(ACTIVITIES_FILE, encoding="utf-8", xml_declaration=True)
-        return jsonify({"success": "Actividades cargadas correctamente"}), 200
+
+        if errors:
+            return jsonify({"success": "Algunas actividades cargadas correctamente", "errors": errors}), 207
+        return jsonify({"success": "Todas las actividades cargadas correctamente"}), 200
 
     except ET.ParseError:
         return jsonify({'error': 'Error en el parseo del xml'}), 500
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+
 
 # Endpoint para obtener las actividades del xml de actividades
 @app.route('/get_activities', methods=['GET'])

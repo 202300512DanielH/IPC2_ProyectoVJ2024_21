@@ -1,26 +1,23 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Carga de Productos - IPCmarket Admin</title>
-    {% load static %}
-    {% load bootstrap5 %}
-    {% bootstrap_css %}
-    <link rel="stylesheet" href="{% static 'pestaña_CM.css' %}">
-</head>
-<body>
-    <!-- Navbar -->
+{% extends 'admin.html' %}  <!-- Asegúrate de que el path a admin.html sea correcto -->
 
-    <div class="container mt-4">
-        <h1>Carga de Productos</h1>
-        <p>Utiliza el siguiente formulario para cargar productos al sistema.</p>
-        <form>
-            <input type="file" class="form-control mb-3" id="fileInput">
-            <button type="button" class="btn btn-primary gradient-custom-2">Subir Archivo</button>
-        </form>
+{% block title %}Carga de Productos - IPCmarket Admin{% endblock %}
+
+{% block content %}
+    <h1>Carga de Productos</h1>
+    <p>Utiliza el siguiente formulario para cargar productos al sistema.</p>
+    <form method="post" action="{% url 'carga_productos' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="file" class="form-control mb-3" id="fileInput" name="file">
+        <button type="submit" class="btn btn-primary gradient-custom-2">Subir Archivo</button>
+    </form>
+    {% if success %}
+    <div class="alert alert-success" role="alert">
+        {{ success }}
     </div>
-
-    {% bootstrap_javascript %}
-</body>
-</html>
+    {% endif %}
+    {% if error %}
+    <div class="alert alert-danger" role="alert">
+        {{ error }}
+    </div>
+    {% endif %}
+{% endblock %}
