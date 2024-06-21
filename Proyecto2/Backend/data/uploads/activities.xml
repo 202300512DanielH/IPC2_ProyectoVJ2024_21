@@ -10,7 +10,7 @@
         <nombre>Recepción de mercancía</nombre>
         <descripcion>Recepción y revisión de la mercancía entrante</descripcion>
         <empleado>1</empleado>
-        <dia hora="23">4</dia>
+        <dia hora="23">5</dia>
     </actividad>
     <actividad id="4">
         <nombre>Asesoría al cliente</nombre>

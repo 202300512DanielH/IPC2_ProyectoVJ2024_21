@@ -580,6 +580,12 @@ def comprar():
                 if producto_xml.find('nombre').text == nombre_producto:
                     precio = float(producto_xml.find('precio').text)
                     total += precio * cantidad
+                    #restando la cantidad comprada al xml de productos
+                    cantidad_actual = int(producto_xml.find('cantidad').text)
+                    producto_xml.find('cantidad').text = str(cantidad_actual - cantidad)
+                    #guardando los cambios 
+                    tree_productos.write(PRODUCTS_FILE, encoding="utf-8", xml_declaration=True)
+                    #agregando el producto a la lista de productos                    
                     productos.append({
                         'id': producto_xml.get('id'),
                         'nombre': nombre_producto,
