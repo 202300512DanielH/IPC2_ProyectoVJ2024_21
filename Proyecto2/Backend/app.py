@@ -31,6 +31,7 @@ for file in [USERS_FILE, PRODUCTS_FILE, EMPLOYEES_FILE, ACTIVITIES_FILE, CART_FI
 
 # Usuarios estáticos para login (no me dejaron usar pandas pipipi)
 users = {}
+username = "1"
 
 # Función para obtener los usuarios actualmente cargados en el sistema 
 def load_users():
@@ -58,9 +59,17 @@ load_users()
 # Endpoint para login
 @app.route('/login', methods=['POST'])
 def login():
+    global username, users
     load_users()
     username = request.form.get('username')
     password = request.form.get('password')
+    
+    #limpiando el carrito de compras
+    tree_carrito = ET.parse(CART_FILE)
+    root_carrito = tree_carrito.getroot()
+    root_carrito.clear()
+    tree_carrito.write(CART_FILE)
+    
     if username in users and users[username] == password:
         return jsonify({"msg": "Login Exitoso"}), 200
     else:
@@ -268,7 +277,6 @@ def get_products():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-
 # Endpoint para cargar masivamente empleados al archivo xml de empleados
 @app.route('/carga_masiva_empleados', methods=['POST'])
 def carga_masiva_empleados():
@@ -364,8 +372,6 @@ def get_activities():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-
-
 # Función para añadir indentación al XML
 def indentar(elemento_identar, level=0):
     i = "\n" + level * "  "
@@ -386,7 +392,6 @@ def indentar(elemento_identar, level=0):
         # Si el elemento no tiene hijos, añadir indentación al texto
         if level and (not elemento_identar.tail or not elemento_identar.tail.strip()):
             elemento_identar.tail = i
-
 
 # Endpoint para agregar productos al archivo xml que representa el carrito de compras
 @app.route('/add_cart', methods=['POST'])
@@ -463,12 +468,10 @@ def add_cart():
     
 # Endpoint para obtener los productos del carrito de compras
 @app.route('/descarga_carrito', methods=['GET'])
-def download_file():
+def descarga_carrito():
     file_path = CART_FILE 
     return send_file(file_path, as_attachment=True) #descarga el archivo
 
-
-#Endpoint para generar reporte de compras
 def indent(elem, level=0):
     i = "\n" + level*"  "
     if len(elem):
@@ -484,55 +487,105 @@ def indent(elem, level=0):
         if level and (not elem.tail or not elem.tail.strip()):
             elem.tail = i
 
-@app.route('/compras', methods=['GET'])
-def generate_report():
+@app.route('/comprar', methods=['POST'])
+def comprar():
+    global username
     try:
-        # Parsear las compras al  XML
+        #leyendo el Purchases_file para saber el numero de compra que se va a realizar
         tree = ET.parse(PURCHASES_FILE)
         root = tree.getroot()
+        num_compra = str(len(root.findall('compra')) + 1)
+        
+        id_usuario = username
+        
+        #buscando el nombre del usuario en el archivo de usuarios
+        tree_usuarios = ET.parse(USERS_FILE)
+        root_usuarios = tree_usuarios.getroot()
+        nombre_usuario = ""
+        for usuario in root_usuarios.findall('usuario'):
+            if usuario.get('id') == id_usuario:
+                nombre_usuario = usuario.find('nombre').text
+                break
+        
+        #leyendo el archivo del carrito de compras para obtener los productos y la cantidad 
+        tree_carrito = ET.parse(CART_FILE)
+        root_carrito = tree_carrito.getroot()
+        productos = []
+        total = 0
+        for producto in root_carrito.findall('producto'):
+            #obteniendo el nombre del producto y la cantidad 
+            nombre_producto = producto.find('nombre').text
+            cantidad = int(producto.find('cantidad').text)
+            #buscando el producto en el archivo de productos
+            tree_productos = ET.parse(PRODUCTS_FILE)
+            root_productos = tree_productos.getroot()
+            for producto_xml in root_productos.findall('producto'):
+                if producto_xml.find('nombre').text == nombre_producto:
+                    precio = float(producto_xml.find('precio').text)
+                    total += precio * cantidad
+                    productos.append({
+                        'id': producto_xml.get('id'),
+                        'nombre': nombre_producto,
+                        'cantidad': str(cantidad)
+                    })
+                    break
+                
+        if not all([num_compra, id_usuario, nombre_usuario, total, productos]):
+            return jsonify({"error": "Faltan datos obligatorios"}), 400
 
-        # Creando la ruta
-        report_root = ET.Element('compras')
+        # Crear el elemento de la compra
+        compra_element = ET.Element('compra')
+        compra_element.set('numero', num_compra)
 
-        # Iterando en las compras
-        for compra in root.findall('compra'):
-            compra_element = ET.Element('compra')
-            compra_element.set('numero', compra.get('numero'))
+        usuario_element = ET.SubElement(compra_element, 'usuario')
+        usuario_element.set('id', id_usuario)
+        usuario_element.text = nombre_usuario
 
-            usuario = compra.find('usuario')
-            usuario_element = ET.SubElement(compra_element, 'usuario')
-            usuario_element.set('id', usuario.get('id'))
-            usuario_element.text = usuario.text
+        total_element = ET.SubElement(compra_element, 'Total')
+        total_element.text = str(total)
 
-            total_element = ET.SubElement(compra_element, 'Total')
-            total_element.text = compra.find('Total').text
+        productos_element = ET.SubElement(compra_element, 'productos')
 
-            productos_element = ET.SubElement(compra_element, 'productos')
+        for producto in productos:
+            producto_element = ET.SubElement(productos_element, 'producto')
+            producto_element.set('id', producto.get('id'))
 
-            for producto in compra.find('productos').findall('producto'):
-                producto_element = ET.SubElement(productos_element, 'producto')
-                producto_element.set('id', producto.get('id'))
+            nombre_element = ET.SubElement(producto_element, 'nombre')
+            nombre_element.text = producto.get('nombre')
 
-                nombre_element = ET.SubElement(producto_element, 'nombre')
-                nombre_element.text = producto.find('nombre').text
+            cantidad_element = ET.SubElement(producto_element, 'cantidad')
+            cantidad_element.text = str(producto.get('cantidad'))
 
-                cantidad_element = ET.SubElement(producto_element, 'cantidad')
-                cantidad_element.text = producto.find('cantidad').text
+        # Parsear el archivo de compras
+        tree_compras = ET.parse(PURCHASES_FILE)
+        root_compras = tree_compras.getroot()
 
-            report_root.append(compra_element)
+        # Añadir la nueva compra al archivo XML
+        root_compras.append(compra_element)
 
-        # Indentar el reporte
-        indent(report_root)
+        # Indentar el XML
+        indent(root_compras)
 
-        # Convertir de ElementTree a string
-        report_tree = ET.ElementTree(report_root)
-        report_xml_str = ET.tostring(report_root, encoding='utf-8', xml_declaration=True)
+        # Escribir el archivo XML de compras
+        tree_compras = ET.ElementTree(root_compras)
+        tree_compras.write(PURCHASES_FILE, encoding="utf-8", xml_declaration=True)
+        
+        # Limpiar el archivo del carrito de compras
+        root_carrito.clear()
+        tree_carrito.write(CART_FILE, encoding="utf-8", xml_declaration=True)
+        
 
-        # Retorna el reporte en formato XML
-        return Response(report_xml_str, mimetype='application/xml')
+        return jsonify({"success": "Compra añadida correctamente"}), 200
 
     except Exception as e:
+        print(f"Error: {str(e)}")
         return jsonify({"error": str(e)}), 500
+
+#Endpoint para descargar el archivo de compras
+@app.route('/descarga_compras', methods=['GET'])
+def descarga_compras():
+    file_path = PURCHASES_FILE
+    return send_file(file_path, as_attachment=True)
 
 # Endpoint para obtener las actividades del dia actual
 @app.route('/get_activities_today', methods=['GET'])
