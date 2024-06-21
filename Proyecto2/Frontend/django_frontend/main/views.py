@@ -21,8 +21,32 @@ def protected(request):
         return redirect('login')
     return render(request, 'admin.html')
 
+
+from django.shortcuts import render
+from django.core.files.storage import FileSystemStorage
+import requests
+
+
 def carga_usuarios(request):
+    if request.method == 'POST':
+        file = request.FILES.get('file')
+        if file:
+            fs = FileSystemStorage()
+            filename = fs.save(file.name, file)
+            file_path = fs.url(filename)
+
+            # Prepara los archivos para la solicitud
+            files = {'file': (file.name, open(fs.path(filename), 'rb'))}
+            response = requests.post('http://127.0.0.1:5000/carga_masiva_usuarios', files=files)
+
+            if response.status_code == 200:
+                return render(request, 'pestaña_CM_Usuarios.html', {'success': 'Usuarios cargados correctamente'})
+            else:
+                return render(request, 'pestaña_CM_Usuarios.html', {'error': 'Error al cargar usuarios'})
+        else:
+            return render(request, 'pestaña_CM_Usuarios.html', {'error': 'No se seleccionó ningún archivo'})
     return render(request, 'pestaña_CM_Usuarios.html')
+
 
 #vista para el catalogo de productos
 def productos_view(request):
@@ -38,7 +62,6 @@ def producto_detalle_view(request, producto_id):
         if producto['id'] == producto_id:
             producto_encontrado = producto
             break
-
     if request.method == 'POST':
         nombre_producto = producto_encontrado['nombre']
         cantidad = request.POST['cantidad']
@@ -58,12 +81,63 @@ def descarga_carrito(request):
     return redirect(flask_download_url)
 
 def carga_productos(request):
+    if request.method == 'POST':
+        file = request.FILES.get('file')
+        if file:
+            fs = FileSystemStorage()
+            filename = fs.save(file.name, file)
+            file_path = fs.url(filename)
+
+            # Prepara los archivos para la solicitud
+            files = {'file': (file.name, open(fs.path(filename), 'rb'))}
+            response = requests.post('http://127.0.0.1:5000/carga_masiva_productos', files=files)
+
+            if response.status_code == 200:
+                return render(request, 'pestaña_CM_Productos.html', {'success': 'Productos cargados correctamente'})
+            else:
+                return render(request, 'pestaña_CM_Productos.html', {'error': 'Error al cargar productos'})
+        else:
+            return render(request, 'pestaña_CM_Productos.html', {'error': 'No se seleccionó ningún archivo'})
     return render(request, 'pestaña_CM_Productos.html')
 
 def actividades(request):
+    if request.method == 'POST':
+        file = request.FILES.get('file')
+        if file:
+            fs = FileSystemStorage()
+            filename = fs.save(file.name, file)
+            file_path = fs.url(filename)
+
+            # Prepara los archivos para la solicitud
+            files = {'file': (file.name, open(fs.path(filename), 'rb'))}
+            response = requests.post('http://127.0.0.1:5000/carga_masiva_actividades', files=files)
+
+            if response.status_code == 200:
+                return render(request, 'pestaña_CM_Actividades.html', {'success': 'Actividades cargadas correctamente'})
+            else:
+                return render(request, 'pestaña_CM_Actividades.html', {'error': 'Error al cargar actividades'})
+        else:
+            return render(request, 'pestaña_CM_Actividades.html', {'error': 'No se seleccionó ningún archivo'})
     return render(request, 'pestaña_CM_Actividades.html')
 
 def carga_empleados(request):
+    if request.method == 'POST':
+        file = request.FILES.get('file')
+        if file:
+            fs = FileSystemStorage()
+            filename = fs.save(file.name, file)
+            file_path = fs.url(filename)
+
+            # Prepara los archivos para la solicitud
+            files = {'file': (file.name, open(fs.path(filename), 'rb'))}
+            response = requests.post('http://127.0.0.1:5000/carga_masiva_empleados', files=files)
+
+            if response.status_code == 200:
+                return render(request, 'pestaña_CM_Empleados.html', {'success': 'Empleados cargados correctamente'})
+            else:
+                return render(request, 'pestaña_CM_Empleados.html', {'error': 'Error al cargar empleados'})
+        else:
+            return render(request, 'pestaña_CM_Empleados.html', {'error': 'No se seleccionó ningún archivo'})
     return render(request, 'pestaña_CM_Empleados.html')
 
 def estadisticas(request):

@@ -1,18 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <empleados>
-    <empleado codigo="1">
+    <empleado codigo="101">
         <nombre>Zacarías Garriga Cobo</nombre>
         <puesto>Vendedor</puesto>
     </empleado>
-    <empleado codigo="2">
+    <empleado codigo="101">
         <nombre>África Trini Lloret Puerta</nombre>
         <puesto>Administrador</puesto>
     </empleado>
-    <empleado codigo="3">
+    <empleado codigo="102">
         <nombre>Carlos Onofre Palmer Pagès</nombre>
         <puesto>Recepcionista</puesto>
     </empleado>
-    <empleado codigo="4">
+    <empleado codigo="103">
         <nombre>Juan Bautista Pascual Arellano Conde</nombre>
         <puesto>Gerente</puesto>
     </empleado>

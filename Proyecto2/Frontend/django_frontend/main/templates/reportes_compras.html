@@ -1,23 +1,10 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reporte de Compras - IPCmarket Admin</title>
-    {% load static %}
-    {% load bootstrap5 %}
-    {% bootstrap_css %}
-    <link rel="stylesheet" href="{% static 'reportes.css' %}">
-</head>
-<body>
+{% extends 'admin.html' %}
 
-    <div class="container mt-4">
-        <h1>Reporte de Compras</h1>
-        <div id="xmlReporteCompras" class="xml-container">
-            <p>XML de Reporte de Compras se mostrará aquí...</p>
-        </div>
+{% block title %}Reporte de Compras- IPCmarket Admin{% endblock %}
+
+{% block content %}
+    <h1>Reporte de Actividades</h1>
+    <div id="xmlReporteCompras" class="xml-container">
+        <p>XML de Reporte de Compras se mostrará aquí...</p>
     </div>
-
-    {% bootstrap_javascript %}
-</body>
-</html>
+{% endblock %}
