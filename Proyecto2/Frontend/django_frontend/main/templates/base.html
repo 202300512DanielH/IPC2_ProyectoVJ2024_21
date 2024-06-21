@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}IPCmarket{% endblock %}</title>
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    <link rel="stylesheet" type="text/css" href="{% static 'base.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'catalogo.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'producto.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <div class="navbar-brand">
+                <img src="{% static 'logo1.png' %}" alt="Logo">
+            </div>
+            <ul class="navbar-menu">
+                <li class="navbar-item"><a href="{% url 'productos' %}">Productos</a></li>
+                <li class="navbar-item"><a href="{% url 'login' %}">Log Out</a></li>
+            </ul>
+            <div class="navbar-icons">
+                <a href="{% url 'descarga_carrito' %}" class="icon">🛒</a>
+            </div>
+        </nav>
+    </header>
+    <main class="main-content">
+        {% block content %}
+        {% endblock %}
+    </main>
+    <footer class="footer">
+        <p>IPCmarket &copy; 2024</p>
+    </footer>
+</body>
+</html>

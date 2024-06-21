@@ -4,12 +4,18 @@
         <nombre>Juan Perez</nombre>
         <edad>30</edad>
         <email>juan@example.com</email>
-        <telefono>1234567890</telefono>
+        <telefono>12345678</telefono>
     </usuario>
     <usuario id="2" password="pass2">
         <nombre>Maria Lopez</nombre>
         <edad>25</edad>
         <email>maria@example.com</email>
-        <telefono>0987654321</telefono>
+        <telefono>09876543</telefono>
+    </usuario>
+    <usuario id="3" password="pass3">
+        <nombre>Carlos Ramirez</nombre>
+        <edad>35</edad>
+        <email>carlos@example.com</email>
+        <telefono>5432546541678</telefono>
     </usuario>
 </usuarios>

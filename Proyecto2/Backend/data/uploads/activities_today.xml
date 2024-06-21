@@ -1,1 +1,22 @@
-<activities_today />
+<?xml version='1.0' encoding='utf-8'?>
+<activities_today>
+   <dia>Martes</dia>
+  <actividad id="1">
+    <nombre>Recepción de mercancía</nombre>
+    <descripcion>Recepción y revisión de la mercancía entrante</descripcion>
+    <empleado>Zacarías Garriga Cobo</empleado>
+    <hora>23:00</hora>
+  </actividad>
+  <actividad id="2">
+    <nombre>Asesoría al cliente</nombre>
+    <descripcion>Asesorar a los clientes sobre los productos</descripcion>
+    <empleado>África Trini Lloret Puerta</empleado>
+    <hora>20:00</hora>
+  </actividad>
+  <actividad id="102">
+    <nombre>Capacitación</nombre>
+    <descripcion>Capacitación sobre nuevos productos</descripcion>
+    <empleado />
+    <hora>23:00</hora>
+  </actividad>
+</activities_today>
