@@ -145,6 +145,7 @@ def carga_masiva_usuarios():
             existing_root.append(usuario)
             existing_ids.add(id_usuario)
 
+        print("Guardando archivo en:", USERS_FILE)
         existing_tree.write(USERS_FILE, encoding="utf-8", xml_declaration=True)
         if errors:
             return jsonify({"success": "Algunos usuarios cargados correctamente", "errors": errors}), 207

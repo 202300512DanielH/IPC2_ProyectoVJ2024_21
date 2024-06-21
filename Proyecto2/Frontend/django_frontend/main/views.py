@@ -31,21 +31,20 @@ def carga_usuarios(request):
     if request.method == 'POST':
         file = request.FILES.get('file')
         if file:
-            fs = FileSystemStorage()
-            filename = fs.save(file.name, file)
-            file_path = fs.url(filename)
-
             # Prepara los archivos para la solicitud
-            files = {'file': (file.name, open(fs.path(filename), 'rb'))}
+            files = {'file': (file.name, file)}
             response = requests.post('http://127.0.0.1:5000/carga_masiva_usuarios', files=files)
 
             if response.status_code == 200:
                 return render(request, 'pestaña_CM_Usuarios.html', {'success': 'Usuarios cargados correctamente'})
             else:
-                return render(request, 'pestaña_CM_Usuarios.html', {'error': 'Error al cargar usuarios'})
+                # Podemos mejorar la gestión de errores mostrando los errores específicos desde Flask si es necesario
+                error_message = response.json().get('error', 'Algun error al cargar usuarios')
+                return render(request, 'pestaña_CM_Usuarios.html', {'error': error_message})
         else:
             return render(request, 'pestaña_CM_Usuarios.html', {'error': 'No se seleccionó ningún archivo'})
     return render(request, 'pestaña_CM_Usuarios.html')
+
 
 
 #vista para el catalogo de productos
@@ -102,61 +101,56 @@ def carga_productos(request):
     if request.method == 'POST':
         file = request.FILES.get('file')
         if file:
-            fs = FileSystemStorage()
-            filename = fs.save(file.name, file)
-            file_path = fs.url(filename)
-
             # Prepara los archivos para la solicitud
-            files = {'file': (file.name, open(fs.path(filename), 'rb'))}
+            files = {'file': (file.name, file)}
             response = requests.post('http://127.0.0.1:5000/carga_masiva_productos', files=files)
 
             if response.status_code == 200:
                 return render(request, 'pestaña_CM_Productos.html', {'success': 'Productos cargados correctamente'})
             else:
-                return render(request, 'pestaña_CM_Productos.html', {'error': 'Error al cargar productos'})
+                # Mejora en el manejo de errores para obtener un mensaje más específico del servidor
+                error_message = response.json().get('error', 'Algun error al cargar productos')
+                return render(request, 'pestaña_CM_Productos.html', {'error': error_message})
         else:
             return render(request, 'pestaña_CM_Productos.html', {'error': 'No se seleccionó ningún archivo'})
     return render(request, 'pestaña_CM_Productos.html')
+
 
 def actividades(request):
     if request.method == 'POST':
         file = request.FILES.get('file')
         if file:
-            fs = FileSystemStorage()
-            filename = fs.save(file.name, file)
-            file_path = fs.url(filename)
-
             # Prepara los archivos para la solicitud
-            files = {'file': (file.name, open(fs.path(filename), 'rb'))}
+            files = {'file': (file.name, file)}
             response = requests.post('http://127.0.0.1:5000/carga_masiva_actividades', files=files)
 
             if response.status_code == 200:
                 return render(request, 'pestaña_CM_Actividades.html', {'success': 'Actividades cargadas correctamente'})
             else:
-                return render(request, 'pestaña_CM_Actividades.html', {'error': 'Error al cargar actividades'})
+                error_message = response.json().get('error', 'Algun error al cargar actividades')
+                return render(request, 'pestaña_CM_Actividades.html', {'error': error_message})
         else:
             return render(request, 'pestaña_CM_Actividades.html', {'error': 'No se seleccionó ningún archivo'})
     return render(request, 'pestaña_CM_Actividades.html')
+
 
 def carga_empleados(request):
     if request.method == 'POST':
         file = request.FILES.get('file')
         if file:
-            fs = FileSystemStorage()
-            filename = fs.save(file.name, file)
-            file_path = fs.url(filename)
-
             # Prepara los archivos para la solicitud
-            files = {'file': (file.name, open(fs.path(filename), 'rb'))}
+            files = {'file': (file.name, file)}
             response = requests.post('http://127.0.0.1:5000/carga_masiva_empleados', files=files)
 
             if response.status_code == 200:
                 return render(request, 'pestaña_CM_Empleados.html', {'success': 'Empleados cargados correctamente'})
             else:
-                return render(request, 'pestaña_CM_Empleados.html', {'error': 'Error al cargar empleados'})
+                error_message = response.json().get('error', 'Algun error al cargar empleados')
+                return render(request, 'pestaña_CM_Empleados.html', {'error': error_message})
         else:
             return render(request, 'pestaña_CM_Empleados.html', {'error': 'No se seleccionó ningún archivo'})
     return render(request, 'pestaña_CM_Empleados.html')
+
 
 def estadisticas(request):
     return render(request, 'estadisticas.html')
