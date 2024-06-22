@@ -1,0 +1,20 @@
+{% extends 'admin.html' %}
+
+{% block title %}Documentación - IPCmarket Admin{% endblock %}
+
+{% block content %}
+    <h1>{{ producto.nombre }}</h1>
+    <div class="container producto-detalle">
+        <div class="row">
+            <div class="col-md-6 producto">
+                <img src="{{ producto.imagen }}" alt="{{ producto.nombre }}">
+            </div>
+            <div class="col-md-6 detalles">
+                <p>{{ producto.descripcion }}</p>
+                <p>Precio: {{ producto.precio }}</p>
+                <p>Existencias: {{ producto.cantidad }}</p>
+            </div>
+        </div>
+    </div>
+    
+{% endblock %}

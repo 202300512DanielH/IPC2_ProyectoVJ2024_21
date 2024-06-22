@@ -53,6 +53,11 @@ def productos_view(request):
     products = response.json()#obtenemos los productos en formato json desde el servidor
     return render(request, 'catalogo.html', {'products': products})
 
+def productos_view_admin(request):
+    response = requests.get('http://127.0.0.1:5000/get_products')
+    products = response.json()#obtenemos los productos en formato json desde el servidor
+    return render(request, 'catalogo_admin.html', {'products': products})
+
 #vista para los detalles de un producto
 def producto_detalle_view(request, producto_id):
     response = requests.get('http://127.0.0.1:5000/get_products')
@@ -86,6 +91,16 @@ def producto_detalle_view(request, producto_id):
                 return render(request, 'producto.html', {'producto': producto_encontrado, 'error': 'No se pudo realizar la compra'})
     
     return render(request, 'producto.html', {'producto': producto_encontrado})
+
+#vista de detalle del producto desde el admin
+def producto_detalle_view_admin(request, producto_id):
+    response = requests.get('http://127.0.0.1:5000/get_products')
+    producto_encontrado = None
+    for producto in response.json():
+        if producto['id'] == producto_id:
+            producto_encontrado = producto
+            break
+    return render(request, 'detalles_admin.html', {'producto': producto_encontrado})
 
 #vista para descargar el carrito de compras
 def descarga_carrito(request):
@@ -155,15 +170,24 @@ def carga_empleados(request):
 def estadisticas(request):
     return render(request, 'estadisticas.html')
 
-def reportes_compras(request):
-    return render(request, 'reportes_compras.html')
-
-def reportes_actividades(request):
-    return render(request, 'reportes_actividades.html')
+def reportes(request):
+    if request.method == 'POST':
+        action = request.POST['action']
+        if action == "compras":
+            flask_download_url = 'http://localhost:5000/descarga_compras'
+            return redirect(flask_download_url)
+        elif action == "actividades": 
+            flask_download_url = 'http://localhost:5000/descarga_actividades_hoy'
+            return redirect(flask_download_url)
+    return render(request, 'reportes.html')
 
 def colaboradores(request):
     return render(request, 'colaboradores.html')
 
 def docu(request):
     return render(request, 'docu.html')
+
+def estadisticas(request):
+    return render(request, 'estadisticas.html')
+
 

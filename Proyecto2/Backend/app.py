@@ -4,6 +4,7 @@ import xml.etree.ElementTree as ET
 import os
 import datetime
 import re
+from collections import Counter
 
 app = Flask(__name__)
 CORS(app)
@@ -31,7 +32,7 @@ for file in [USERS_FILE, PRODUCTS_FILE, EMPLOYEES_FILE, ACTIVITIES_FILE, CART_FI
 
 # Usuarios estáticos para login (no me dejaron usar pandas pipipi)
 users = {}
-username = "1"
+username = " "
 
 # Función para obtener los usuarios actualmente cargados en el sistema 
 def load_users():
@@ -581,6 +582,12 @@ def comprar():
                 if producto_xml.find('nombre').text == nombre_producto:
                     precio = float(producto_xml.find('precio').text)
                     total += precio * cantidad
+                    #restando la cantidad comprada al xml de productos
+                    cantidad_actual = int(producto_xml.find('cantidad').text)
+                    producto_xml.find('cantidad').text = str(cantidad_actual - cantidad)
+                    #guardando los cambios 
+                    tree_productos.write(PRODUCTS_FILE, encoding="utf-8", xml_declaration=True)
+                    #agregando el producto a la lista de productos                    
                     productos.append({
                         'id': producto_xml.get('id'),
                         'nombre': nombre_producto,
@@ -645,8 +652,6 @@ def descarga_compras():
     file_path = PURCHASES_FILE
     return send_file(file_path, as_attachment=True)
 
-# Endpoint para obtener las actividades del dia actual
-@app.route('/get_activities_today', methods=['GET'])
 def get_activities_today():
     try:
         # Limpiar el archivo de actividades de hoy
@@ -706,6 +711,15 @@ def get_activities_today():
         return jsonify({"success": f"Actividades del día {dia_actual_nombre} exportadas correctamente"}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+    
+#Endpoint para descargar el archivo de actividades del dia actual
+@app.route('/descarga_actividades_hoy', methods=['GET'])
+def descarga_actividades_hoy():
+    #actualizar el archivo de actividades del dia antes de la descarga 
+    get_activities_today()
+    #descargar el archivo
+    file_path = ACTIVITIES_TODAY_FILE
+    return send_file(file_path, as_attachment=True)
 
 #Funcion para obtener el nombre del día
 def dia_nombre(dia_num):
@@ -724,6 +738,43 @@ def dia_nombre(dia_num):
 def protected():
     # Aquí tenemos el recurso protegido
     return jsonify({"msg": "Has accedido al módulo de administrador"}), 200
+
+
+@app.route('/categorias_estadisticas', methods=['GET'])
+def categorias_estadisticas():
+    try:
+        tree = ET.parse(PRODUCTS_FILE)  # Asegúrate de que PRODUCTS_FILE esté correctamente definido
+        root = tree.getroot()
+        categorias = [prod.find('categoria').text for prod in root.findall('producto') if
+                      prod.find('categoria') is not None]
+        categoria_count = Counter(categorias)
+
+        # Selecciona las tres categorías con más productos
+        top_categorias = categoria_count.most_common(3)
+        top_categorias_dict = {categoria: count for categoria, count in top_categorias}
+
+        return jsonify(top_categorias_dict), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route('/productos_con_mas_cantidad', methods=['GET'])
+def productos_con_mas_cantidad():
+    try:
+        tree = ET.parse(PRODUCTS_FILE)  # Asegúrate de que PRODUCTS_FILE esté correctamente definido
+        root = tree.getroot()
+
+        productos = [(prod.find('nombre').text, int(prod.find('cantidad').text)) for prod in root.findall('producto')]
+        producto_count = Counter(dict(productos))
+
+        # Selecciona los tres productos con más cantidad
+        top_productos = producto_count.most_common(3)
+        top_productos_dict = {producto: cantidad for producto, cantidad in top_productos}
+
+        return jsonify(top_productos_dict), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 
 if __name__ == '__main__':
     app.run(debug=True)

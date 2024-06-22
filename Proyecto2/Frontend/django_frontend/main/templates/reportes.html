@@ -1,0 +1,26 @@
+{% extends 'admin.html' %}
+
+{% block title %}Reporte de Compras- IPCmarket Admin{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 colum">
+            <h1>Reporte de Compras</h1>
+            <img src="https://cdn-icons-png.flaticon.com/512/2471/2471859.png" alt="Reporte de Compras" class="img-fluid">
+            <form method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-primary" name="action" value="compras">Descargar Reporte</button>
+            </form>
+        </div>
+        <div class="col-md-6 colum">
+            <h1>Reporte de Actividades</h1>
+            <img src="https://cdn-icons-png.flaticon.com/512/2977/2977690.png" alt="Reporte de Actividades" class="img-fluid">
+            <form method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-primary" name="action" value="actividades">Descargar Reporte</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

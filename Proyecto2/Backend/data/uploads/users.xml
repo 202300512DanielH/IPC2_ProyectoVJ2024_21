@@ -1,3 +1,15 @@
 <?xml version='1.0' encoding='utf-8'?>
 <users>
+    <usuario id="1" password="pass1">
+        <nombre>Juan Perez</nombre>
+        <edad>30</edad>
+        <email>juan@example.com</email>
+        <telefono>12345678</telefono>
+    </usuario>
+    <usuario id="2" password="pass2">
+        <nombre>Maria Lopez</nombre>
+        <edad>25</edad>
+        <email>maria@example.com</email>
+        <telefono>09876543</telefono>
+    </usuario>
 </users>
