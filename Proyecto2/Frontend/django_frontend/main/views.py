@@ -187,3 +187,7 @@ def colaboradores(request):
 def docu(request):
     return render(request, 'docu.html')
 
+def estadisticas(request):
+    return render(request, 'estadisticas.html')
+
+

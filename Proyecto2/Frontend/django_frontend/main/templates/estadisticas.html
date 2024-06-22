@@ -1,21 +1,102 @@
 {% extends 'admin.html' %}
 
-{% block title %}Estadísticas - IPCmarket Admin{% endblock %}
+{% block title %}
+Estadísticas - IPCmarket Admin
+{% endblock %}
+
+{% block head %}
+<!-- Cargar Chart.js sincrónicamente para asegurar que esté disponible cuando se necesite -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{% endblock %}
 
 {% block content %}
-    <h1>Estadísticas</h1>
-    <div class="row">
-        <div class="col-md-6">
-            <div id="grafica1" style="width: 100%; height: 400px;">
-                <!-- Contenedor para la gráfica 1 -->
-                <p>Gráfica 1 próximamente...</p>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div id="grafica2" style="width: 100%; height: 400px;">
-                <!-- Contenedor para la gráfica 2 -->
-                <p>Gráfica 2 próximamente...</p>
-            </div>
-        </div>
+<h1>Estadísticas</h1>
+<div class="row">
+    <div class="col-md-6">
+        <!-- Contenedor para la gráfica de categorías -->
+        <canvas id="categoryChart" style="width: 100%; height: 400px;"></canvas>
     </div>
+    <div class="col-md-6">
+        <canvas id="inventoryChart" style="width: 100%; height: 400px;"></canvas>
+    </div>
+</div>
+<script>
+initChart();
+initInventoryChart();
+function initChart() {
+    fetch('http://127.0.0.1:5000/categorias_estadisticas')
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        var ctx = document.getElementById('categoryChart').getContext('2d');
+        // Definir colores para las barras
+        var barColors = ['rgba(255, 99, 132, 0.5)', 'rgba(54, 162, 235, 0.5)', 'rgba(255, 206, 86, 0.5)'];
+
+        var categoryChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: Object.keys(data),
+                datasets: [{
+                    label: 'Top 3 categorías con más productos',
+                    data: Object.values(data),
+                    backgroundColor: barColors, // Aplicar los colores definidos
+                    borderColor: barColors.map(color => color.replace('0.5', '1')), // Hacer el borde más sólido
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    })
+    .catch(error => {
+        console.error('Error fetching data:', error);
+    });
+}
+
+function initInventoryChart() {
+    fetch('http://127.0.0.1:5000/productos_con_mas_cantidad')
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        var ctx = document.getElementById('inventoryChart').getContext('2d');
+        var inventoryChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: Object.keys(data),
+                datasets: [{
+                    label: 'Top 3 productos más abundantes',
+                    data: Object.values(data),
+                    backgroundColor: ['rgba(75, 192, 192, 0.2)', 'rgba(153, 102, 255, 0.2)', 'rgba(255, 159, 64, 0.2)'],
+                    borderColor: ['rgba(75, 192, 192, 1)', 'rgba(153, 102, 255, 1)', 'rgba(255, 159, 64, 1)'],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    })
+    .catch(error => {
+        console.error('Error fetching data:', error);
+    });
+}
+</script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 {% endblock %}
