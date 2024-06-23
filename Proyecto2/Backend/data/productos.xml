@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <productos>
-    <producto id="IPCMK-2">
+    <producto id="IPCMK-1">
         <nombre>Televisor</nombre>
         <precio>854.25</precio>
         <descripcion>Illo harum vitae eligendi sed quasi fugiat deleniti sit.</descripcion>
@@ -18,7 +18,7 @@
     </producto>
     <producto id="IPCMK-3">
         <nombre>Mi Primer libro de Poesia</nombre>
-        <precio>8558</precio>
+        <precio>8558.00</precio>
         <descripcion>Et similique voluptatum at dolorem incidunt quisquam esse natus architecto nesciunt cumque magni alias odit eum eveniet at.</descripcion>
         <categoria>Libros</categoria>
         <cantidad>38</cantidad>
@@ -29,7 +29,7 @@
         <precio>8558.45</precio>
         <descripcion>Et similique voluptatum at dolorem incidunt quisquam esse natus architecto nesciunt cumque magni alias odit eum eveniet at.</descripcion>
         <categoria>Tecnologia</categoria>
-        <cantidad>38.1</cantidad>
+        <cantidad>38</cantidad>
         <imagen>https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRRfKTdeGGXxzJahlZYoXJcylgyw0d7gWbanA&amp;s</imagen>
     </producto>
     <producto id="IPCMK-5">
