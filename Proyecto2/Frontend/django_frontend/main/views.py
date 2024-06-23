@@ -31,20 +31,27 @@ def carga_usuarios(request):
     if request.method == 'POST':
         file = request.FILES.get('file')
         if file:
-            # Prepara los archivos para la solicitud
+            # Preparar los archivos para la solicitud
             files = {'file': (file.name, file)}
             response = requests.post('http://127.0.0.1:5000/carga_masiva_usuarios', files=files)
 
+            # Verificar si la carga fue exitosa o si hubo errores
             if response.status_code == 200:
-                return render(request, 'pestaña_CM_Usuarios.html', {'success': 'Usuarios cargados correctamente'})
+                return render(request, 'pestaña_CM_Usuarios.html', {'success': response.json().get('success')})
             else:
-                # Podemos mejorar la gestión de errores mostrando los errores específicos desde Flask si es necesario
-                error_message = response.json().get('error', 'Algun error al cargar usuarios')
+                # Mejor manejo de errores detallando los problemas específicos
+                if response.status_code == 207:
+                    # Si se cargaron algunos usuarios pero con errores
+                    errors = response.json().get('errors', [])
+                    error_message = "Errores encontrados:\n" + "\n".join(errors)
+                else:
+                    # Para otros errores de HTTP
+                    error_message = response.json().get('error', 'Algún error al cargar usuarios')
+
                 return render(request, 'pestaña_CM_Usuarios.html', {'error': error_message})
         else:
             return render(request, 'pestaña_CM_Usuarios.html', {'error': 'No se seleccionó ningún archivo'})
     return render(request, 'pestaña_CM_Usuarios.html')
-
 
 
 #vista para el catalogo de productos
@@ -71,6 +78,10 @@ def producto_detalle_view(request, producto_id):
         cantidad = request.POST['cantidad']
         action = request.POST['action']
         
+        nueva_cantidad = int(producto_encontrado['cantidad']) - int(cantidad)
+        #agregando la nueva cantidad y el producto encontrado a un diccionario 
+        producto_encontrado['cantidad'] = nueva_cantidad
+        
         if action == "add_cart": 
             response = requests.post('http://127.0.0.1:5000/add_cart', data={'nombre_producto': nombre_producto, 'cantidad': cantidad})
             if response.status_code == 200:
@@ -85,8 +96,10 @@ def producto_detalle_view(request, producto_id):
                 # Podrías añadir un mensaje de éxito si lo deseas
                 return render(request, 'producto.html', {'producto': producto_encontrado, 'success': 'Compra realizada exitosamente.'})
             elif response.status_code == 400:
+                # Obteniendo el mensaje de error del servidor
+                error_message = response.json().get('error', 'No se pudo realizar la compra')
                 # Mostrar mensaje de error
-                return render(request, 'producto.html', {'producto': producto_encontrado, 'error': 'Carrito vacío, no se pudo realizar la compra'})
+                return render(request, 'producto.html', {'producto': producto_encontrado, 'error': error_message})
             else:
                 return render(request, 'producto.html', {'producto': producto_encontrado, 'error': 'No se pudo realizar la compra'})
     
@@ -112,19 +125,28 @@ def descarga_compras(request):
     flask_download_url = 'http://localhost:5000/descarga_compras'
     return redirect(flask_download_url)
 
+
 def carga_productos(request):
     if request.method == 'POST':
         file = request.FILES.get('file')
         if file:
-            # Prepara los archivos para la solicitud
+            # Preparar los archivos para la solicitud
             files = {'file': (file.name, file)}
             response = requests.post('http://127.0.0.1:5000/carga_masiva_productos', files=files)
 
+            # Verificar si la carga fue exitosa o si hubo errores
             if response.status_code == 200:
-                return render(request, 'pestaña_CM_Productos.html', {'success': 'Productos cargados correctamente'})
+                return render(request, 'pestaña_CM_Productos.html', {'success': response.json().get('success')})
             else:
-                # Mejora en el manejo de errores para obtener un mensaje más específico del servidor
-                error_message = response.json().get('error', 'Algun error al cargar productos')
+                # Mejor manejo de errores detallando los problemas específicos
+                if response.status_code == 207:
+                    # Si se cargaron algunos productos pero con errores
+                    errors = response.json().get('errors', [])
+                    error_message = "Errores encontrados:\n" + "\n".join(errors)
+                else:
+                    # Para otros errores de HTTP
+                    error_message = response.json().get('error', 'Algún error al cargar productos')
+
                 return render(request, 'pestaña_CM_Productos.html', {'error': error_message})
         else:
             return render(request, 'pestaña_CM_Productos.html', {'error': 'No se seleccionó ningún archivo'})
@@ -135,14 +157,23 @@ def actividades(request):
     if request.method == 'POST':
         file = request.FILES.get('file')
         if file:
-            # Prepara los archivos para la solicitud
+            # Preparar los archivos para la solicitud
             files = {'file': (file.name, file)}
             response = requests.post('http://127.0.0.1:5000/carga_masiva_actividades', files=files)
 
+            # Verificar si la carga fue exitosa o si hubo errores
             if response.status_code == 200:
-                return render(request, 'pestaña_CM_Actividades.html', {'success': 'Actividades cargadas correctamente'})
+                return render(request, 'pestaña_CM_Actividades.html', {'success': response.json().get('success')})
             else:
-                error_message = response.json().get('error', 'Algun error al cargar actividades')
+                # Mejor manejo de errores detallando los problemas específicos
+                if response.status_code == 207:
+                    # Si se cargaron algunas actividades pero con errores
+                    errors = response.json().get('errors', [])
+                    error_message = "Errores encontrados:\n" + "\n".join(errors)
+                else:
+                    # Para otros errores de HTTP
+                    error_message = response.json().get('error', 'Algún error al cargar actividades')
+
                 return render(request, 'pestaña_CM_Actividades.html', {'error': error_message})
         else:
             return render(request, 'pestaña_CM_Actividades.html', {'error': 'No se seleccionó ningún archivo'})
@@ -153,14 +184,23 @@ def carga_empleados(request):
     if request.method == 'POST':
         file = request.FILES.get('file')
         if file:
-            # Prepara los archivos para la solicitud
+            # Preparar los archivos para la solicitud
             files = {'file': (file.name, file)}
             response = requests.post('http://127.0.0.1:5000/carga_masiva_empleados', files=files)
 
+            # Verificar si la carga fue exitosa o si hubo errores
             if response.status_code == 200:
-                return render(request, 'pestaña_CM_Empleados.html', {'success': 'Empleados cargados correctamente'})
+                return render(request, 'pestaña_CM_Empleados.html', {'success': response.json().get('success')})
             else:
-                error_message = response.json().get('error', 'Algun error al cargar empleados')
+                # Mejor manejo de errores detallando los problemas específicos
+                if response.status_code == 207:
+                    # Si se cargaron algunos empleados pero con errores
+                    errors = response.json().get('errors', [])
+                    error_message = "Errores encontrados:\n" + "\n".join(errors)
+                else:
+                    # Para otros errores de HTTP
+                    error_message = response.json().get('error', 'Algún error al cargar empleados')
+
                 return render(request, 'pestaña_CM_Empleados.html', {'error': error_message})
         else:
             return render(request, 'pestaña_CM_Empleados.html', {'error': 'No se seleccionó ningún archivo'})
@@ -186,4 +226,8 @@ def colaboradores(request):
 
 def docu(request):
     return render(request, 'docu.html')
+
+def estadisticas(request):
+    return render(request, 'estadisticas.html')
+
 

@@ -1,2 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
-<cart />
+<cart>
+   <producto id="IPCMK-1">
+    <nombre>Televisor</nombre>
+    <cantidad>67</cantidad>
+  </producto>
+</cart>

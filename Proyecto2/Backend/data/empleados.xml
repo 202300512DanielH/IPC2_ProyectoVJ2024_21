@@ -4,15 +4,15 @@
         <nombre>Zacarías Garriga Cobo</nombre>
         <puesto>Vendedor</puesto>
     </empleado>
-    <empleado codigo="101">
+    <empleado codigo="102">
         <nombre>África Trini Lloret Puerta</nombre>
         <puesto>Administrador</puesto>
     </empleado>
-    <empleado codigo="102">
+    <empleado codigo="103">
         <nombre>Carlos Onofre Palmer Pagès</nombre>
         <puesto>Recepcionista</puesto>
     </empleado>
-    <empleado codigo="103">
+    <empleado codigo="104">
         <nombre>Juan Bautista Pascual Arellano Conde</nombre>
         <puesto>Gerente</puesto>
     </empleado>

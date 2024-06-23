@@ -4,6 +4,7 @@ import xml.etree.ElementTree as ET
 import os
 import datetime
 import re
+from collections import Counter
 
 app = Flask(__name__)
 CORS(app)
@@ -583,7 +584,10 @@ def comprar():
                     total += precio * cantidad
                     #restando la cantidad comprada al xml de productos
                     cantidad_actual = int(producto_xml.find('cantidad').text)
-                    producto_xml.find('cantidad').text = str(cantidad_actual - cantidad)
+                    nueva_cantidad = cantidad_actual - cantidad
+                    if nueva_cantidad < 0:
+                        return jsonify({"error": f"No hay suficiente cantidad de {nombre_producto} para la compra"}), 400
+                    producto_xml.find('cantidad').text = str(nueva_cantidad)
                     #guardando los cambios 
                     tree_productos.write(PRODUCTS_FILE, encoding="utf-8", xml_declaration=True)
                     #agregando el producto a la lista de productos                    
@@ -594,8 +598,9 @@ def comprar():
                     })
                     break
                 
-        if not all([num_compra, id_usuario, nombre_usuario, total, productos]):
-            return jsonify({"error": "Faltan datos obligatorios"}), 400
+        #si la lista de productos esta vacia, no se puede realizar la compra
+        if not productos:
+            return jsonify({"error": "No hay productos en el carrito de compras"}), 400
 
         # Crear el elemento de la compra
         compra_element = ET.Element('compra')
@@ -737,6 +742,43 @@ def dia_nombre(dia_num):
 def protected():
     # Aquí tenemos el recurso protegido
     return jsonify({"msg": "Has accedido al módulo de administrador"}), 200
+
+
+@app.route('/categorias_estadisticas', methods=['GET'])
+def categorias_estadisticas():
+    try:
+        tree = ET.parse(PRODUCTS_FILE)  # Asegúrate de que PRODUCTS_FILE esté correctamente definido
+        root = tree.getroot()
+        categorias = [prod.find('categoria').text for prod in root.findall('producto') if
+                    prod.find('categoria') is not None]
+        categoria_count = Counter(categorias)
+
+        # Selecciona las tres categorías con más productos
+        top_categorias = categoria_count.most_common(3)
+        top_categorias_dict = {categoria: count for categoria, count in top_categorias}
+
+        return jsonify(top_categorias_dict), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route('/productos_con_mas_cantidad', methods=['GET'])
+def productos_con_mas_cantidad():
+    try:
+        tree = ET.parse(PRODUCTS_FILE)  # Asegúrate de que PRODUCTS_FILE esté correctamente definido
+        root = tree.getroot()
+
+        productos = [(prod.find('nombre').text, int(prod.find('cantidad').text)) for prod in root.findall('producto')]
+        producto_count = Counter(dict(productos))
+
+        # Selecciona los tres productos con más cantidad
+        top_productos = producto_count.most_common(3)
+        top_productos_dict = {producto: cantidad for producto, cantidad in top_productos}
+
+        return jsonify(top_productos_dict), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -2,9 +2,11 @@ digraph G {
     rankdir="RL";
     label="Cola";
     node[shape=box];
-Nodo0 [label="ID Usuario: IPC2-25\nNombre Usuario: Joseph Walter\nProductos:  Televisor, Auriculares, Pesas, \nTotal: 2968.8300000000004"];
-Nodo1 [label="ID Usuario: IPC2-01\nNombre Usuario: Monica Deleon\nProductos:  Auriculares, Queso, Diario de Anne Frank, \nTotal: 13428.75"];
+Nodo0 [label="ID Usuario: IPC2-01\nNombre Usuario: Monica Deleon\nProductos:  Televisor, Bancopoly, \nTotal: 32216.37"];
+Nodo1 [label="ID Usuario: IPC2-02\nNombre Usuario: Tamara Pratt\nProductos:  Queso, \nTotal: 24395.08"];
+Nodo2 [label="ID Usuario: IPC2-03\nNombre Usuario: Ruth Mcmillan\nProductos:  Harry Potter y la piedra filosofal, \nTotal: 146.32"];
 
 Nodo1 -> Nodo0;
+Nodo2 -> Nodo1;
 
 }
