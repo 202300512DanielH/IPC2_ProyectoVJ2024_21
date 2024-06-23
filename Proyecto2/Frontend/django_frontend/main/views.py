@@ -78,6 +78,10 @@ def producto_detalle_view(request, producto_id):
         cantidad = request.POST['cantidad']
         action = request.POST['action']
         
+        nueva_cantidad = int(producto_encontrado['cantidad']) - int(cantidad)
+        #agregando la nueva cantidad y el producto encontrado a un diccionario 
+        producto_encontrado['cantidad'] = nueva_cantidad
+        
         if action == "add_cart": 
             response = requests.post('http://127.0.0.1:5000/add_cart', data={'nombre_producto': nombre_producto, 'cantidad': cantidad})
             if response.status_code == 200:
@@ -92,8 +96,10 @@ def producto_detalle_view(request, producto_id):
                 # Podrías añadir un mensaje de éxito si lo deseas
                 return render(request, 'producto.html', {'producto': producto_encontrado, 'success': 'Compra realizada exitosamente.'})
             elif response.status_code == 400:
+                # Obteniendo el mensaje de error del servidor
+                error_message = response.json().get('error', 'No se pudo realizar la compra')
                 # Mostrar mensaje de error
-                return render(request, 'producto.html', {'producto': producto_encontrado, 'error': 'Carrito vacío, no se pudo realizar la compra'})
+                return render(request, 'producto.html', {'producto': producto_encontrado, 'error': error_message})
             else:
                 return render(request, 'producto.html', {'producto': producto_encontrado, 'error': 'No se pudo realizar la compra'})
     
