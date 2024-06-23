@@ -584,7 +584,10 @@ def comprar():
                     total += precio * cantidad
                     #restando la cantidad comprada al xml de productos
                     cantidad_actual = int(producto_xml.find('cantidad').text)
-                    producto_xml.find('cantidad').text = str(cantidad_actual - cantidad)
+                    nueva_cantidad = cantidad_actual - cantidad
+                    if nueva_cantidad < 0:
+                        return jsonify({"error": f"No hay suficiente cantidad de {nombre_producto} para la compra"}), 400
+                    producto_xml.find('cantidad').text = str(nueva_cantidad)
                     #guardando los cambios 
                     tree_productos.write(PRODUCTS_FILE, encoding="utf-8", xml_declaration=True)
                     #agregando el producto a la lista de productos                    
@@ -595,8 +598,9 @@ def comprar():
                     })
                     break
                 
-        if not all([num_compra, id_usuario, nombre_usuario, total, productos]):
-            return jsonify({"error": "Faltan datos obligatorios"}), 400
+        #si la lista de productos esta vacia, no se puede realizar la compra
+        if not productos:
+            return jsonify({"error": "No hay productos en el carrito de compras"}), 400
 
         # Crear el elemento de la compra
         compra_element = ET.Element('compra')
@@ -746,7 +750,7 @@ def categorias_estadisticas():
         tree = ET.parse(PRODUCTS_FILE)  # Asegúrate de que PRODUCTS_FILE esté correctamente definido
         root = tree.getroot()
         categorias = [prod.find('categoria').text for prod in root.findall('producto') if
-                      prod.find('categoria') is not None]
+                    prod.find('categoria') is not None]
         categoria_count = Counter(categorias)
 
         # Selecciona las tres categorías con más productos

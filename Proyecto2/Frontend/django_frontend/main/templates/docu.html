@@ -1,9 +1,15 @@
 {% extends 'admin.html' %}
 
+{% load static %}  <!-- Asegúrate de cargar las etiquetas estáticas al inicio de tu archivo HTML -->
+
 {% block title %}Documentación - IPCmarket Admin{% endblock %}
 
 {% block content %}
     <h1>Documentación</h1>
-
+    <!-- Incrusta el PDF en la página usando iframe -->
+    <iframe src="{% static 'Ensayo_Proyecto 2_Grupo21.pdf' %}" style="width:100%; height:500px;" frameborder="0">
+    </iframe>
 {% endblock %}
+
+
 
