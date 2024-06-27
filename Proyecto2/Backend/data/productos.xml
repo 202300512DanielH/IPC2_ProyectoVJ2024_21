@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <productos>
-    <producto id="IPCMK-1">
+    <producto id="IPCMK-10">
         <nombre>Televisor</nombre>
-        <precio>854.25</precio>
+        <precio>854</precio>
         <descripcion>Illo harum vitae eligendi sed quasi fugiat deleniti sit.</descripcion>
         <categoria>Tecnologia</categoria>
         <cantidad>67</cantidad>
