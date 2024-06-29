@@ -13,10 +13,15 @@
                 <p>Precio: {{ producto.precio }}</p>
                 <form method="post">
                     {% csrf_token %}
-                    <label for="cantidad">Cantidad: </label>
-                    <input type="number" id="cantidad" name="cantidad" value="1" min="1" max="{{ producto.cantidad }}"><br><br>
-                    <button type="submit" class="button-cart" name="action" value="add_cart">Agregar al carrito</button>
-                    <button type="submit" class="button-buy" name="action" value="add_buy">Comprar ahora</button>
+                    {% if producto.cantidad == 0 %}
+                        <p class="text-danger">Producto agotado, no puedes añadir más productos al carrito</p>
+                        <button type="submit" class="button-cart-disabled" name="action" value="add_cart" disabled>Agregar al carrito</button>
+                        <button type="submit" class="button-buy" name="action" value="add_buy" >Comprar ahora</button>
+                    {% else %}
+                        <input type="number" id="cantidad" name="cantidad" value="1" min="1" max="{{ producto.cantidad }}"><br><br>
+                        <button type="submit" class="button-cart" name="action" value="add_cart">Agregar al carrito</button>
+                        <button type="submit" class="button-buy" name="action" value="add_buy">Comprar ahora</button>
+                    {% endif %}
                     {% if error %}
                         <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
                             <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
