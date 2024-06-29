@@ -67,42 +67,67 @@ def productos_view_admin(request):
 
 #vista para los detalles de un producto
 def producto_detalle_view(request, producto_id):
+    # Obtener productos y carrito desde el backend
     response = requests.get('http://127.0.0.1:5000/get_products')
+    carrito_response = requests.get('http://127.0.0.1:5000/get_cart')
+
+    # Buscar el producto en la lista de productos
     producto_encontrado = None
     for producto in response.json():
         if producto['id'] == producto_id:
             producto_encontrado = producto
             break
+
+    if not producto_encontrado:
+        return render(request, 'producto.html', {'error': 'Producto no encontrado'})
+
+    # Calcular la cantidad disponible del producto basada en el carrito
+    cantidad_en_carrito = 0
+    for item in carrito_response.json():
+        if item['producto'] == producto_encontrado['nombre']:
+            cantidad_en_carrito += int(item['cantidad'])
+
+    cantidad_disponible = int(producto_encontrado['cantidad']) - cantidad_en_carrito
+    producto_encontrado['cantidad'] = cantidad_disponible
+
     if request.method == 'POST':
-        nombre_producto = producto_encontrado['nombre']
-        cantidad = request.POST['cantidad']
-        action = request.POST['action']
         
-        nueva_cantidad = int(producto_encontrado['cantidad']) - int(cantidad)
-        #agregando la nueva cantidad y el producto encontrado a un diccionario 
-        producto_encontrado['cantidad'] = nueva_cantidad
-        
-        if action == "add_cart": 
+        action = request.POST.get('action')
+
+        if action == "add_cart":
+            nombre_producto = producto_encontrado['nombre']
+            cantidad = request.POST.get('cantidad')
+
+            if not cantidad:
+                return render(request, 'producto.html', {'producto': producto_encontrado, 'error': 'Cantidad no especificada'})
+
+            try:
+                cantidad = int(cantidad)
+                if cantidad <= 0:
+                    return render(request, 'producto.html', {'producto': producto_encontrado, 'error': 'Cantidad no válida'})
+            except ValueError:
+                return render(request, 'producto.html', {'producto': producto_encontrado, 'error': 'Cantidad no válida'})
+
+            if cantidad > cantidad_disponible:
+                return render(request, 'producto.html', {'producto': producto_encontrado, 'error': 'Cantidad excede la cantidad disponible'})
+            
             response = requests.post('http://127.0.0.1:5000/add_cart', data={'nombre_producto': nombre_producto, 'cantidad': cantidad})
             if response.status_code == 200:
-                # Podrías añadir un mensaje de éxito si lo deseas
+                # Actualizar la cantidad disponible del producto
+                producto_encontrado['cantidad'] -= cantidad
                 return render(request, 'producto.html', {'producto': producto_encontrado, 'success': 'Producto agregado al carrito exitosamente.'})
             else:
-                # Mostrar mensaje de error
                 return render(request, 'producto.html', {'producto': producto_encontrado, 'error': 'No se pudo agregar el producto al carrito'})
-        elif action == "add_buy": 
+        elif action == "add_buy":
             response = requests.post('http://127.0.0.1:5000/comprar')
             if response.status_code == 200:
-                # Podrías añadir un mensaje de éxito si lo deseas
                 return render(request, 'producto.html', {'producto': producto_encontrado, 'success': 'Compra realizada exitosamente.'})
             elif response.status_code == 400:
-                # Obteniendo el mensaje de error del servidor
-                error_message = response.json().get('error', 'No se pudo realizar la compra')
-                # Mostrar mensaje de error
+                error_message = response.json().get('error', 'No se pudo realizar la compra, carrito Vacio')
                 return render(request, 'producto.html', {'producto': producto_encontrado, 'error': error_message})
             else:
                 return render(request, 'producto.html', {'producto': producto_encontrado, 'error': 'No se pudo realizar la compra'})
-    
+
     return render(request, 'producto.html', {'producto': producto_encontrado})
 
 #vista de detalle del producto desde el admin

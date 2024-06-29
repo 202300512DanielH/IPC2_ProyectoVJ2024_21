@@ -68,7 +68,8 @@ load_users()
 # Endpoint para login
 @app.route('/login', methods=['POST'])
 def login():
-    global username, users
+    global username, users, carrito
+    carrito.vaciar_carrito()
     load_users()
     username = request.form.get('username')
     password = request.form.get('password')
@@ -416,7 +417,13 @@ def add_cart():
     except Exception as e:
         print(f"Error: {str(e)}")
         return jsonify({"error": str(e)}), 500
-    
+
+# Endpoint para obtener los productos del carrito de compras
+@app.route('/get_cart', methods=['GET'])
+def get_cart():
+    global carrito
+    return jsonify(carrito.productos), 200
+
 # Endpoint para obtener los productos del carrito de compras
 @app.route('/descarga_carrito', methods=['GET'])
 def descarga_carrito():
@@ -488,7 +495,7 @@ def comprar():
         #leyendo el Purchases_file para saber el numero de compra que se va a realizar
         tree = ET.parse(PURCHASES_FILE)
         root = tree.getroot()
-        num_compra = str(len(root.findall('compra')) + 1)
+        num_compra = str(int(compras[-1]['num_compra']) + 1 if len(compras) != 0 else 1)
         
         id_usuario = username
         
@@ -502,7 +509,16 @@ def comprar():
                 break
         
         productos_stock = obtener_productos_stock()
+        if len(carrito.productos) == 0:
+            return jsonify({"error": "No hay productos en el carrito"}), 400
 
+        #si la cantidad de un producto en el carrito es mayor a la cantidad en stock, se manda un error
+        for producto in carrito.productos:
+            for producto_stock in productos_stock:
+                if producto['producto'] == producto_stock['producto']:
+                    if int(producto['cantidad']) > int(producto_stock['cantidad']):
+                        return jsonify({"error": f"No hay suficiente stock para el producto {producto['producto']}"}), 400
+        
         new_compra = Compra(num_compra, id_usuario, nombre_usuario, carrito.productos, productos_stock)
         
         #eliminando los productos comprados del stock
