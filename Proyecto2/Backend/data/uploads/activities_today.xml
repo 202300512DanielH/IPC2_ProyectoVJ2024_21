@@ -1,10 +1,4 @@
 <?xml version='1.0' encoding='utf-8'?>
 <activities_today>
-   <dia>Sábado</dia>
-  <actividad id="5">
-    <nombre>Inventario</nombre>
-    <descripcion>Realizar inventario de los productos en el almacén</descripcion>
-    <empleado>Gil Rovira Robledo</empleado>
-    <hora>2:00</hora>
-  </actividad>
+
 </activities_today>
