@@ -1,10 +1,4 @@
 <?xml version='1.0' encoding='utf-8'?>
 <activities_today>
-   <dia>Viernes</dia>
-  <actividad id="2">
-    <nombre>Recepción de mercancía</nombre>
-    <descripcion>Recepción y revisión de la mercancía entrante</descripcion>
-    <empleado />
-    <hora>23:00</hora>
-  </actividad>
+
 </activities_today>

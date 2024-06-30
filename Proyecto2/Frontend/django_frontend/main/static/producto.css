@@ -31,8 +31,28 @@
 
 /*haciendo el css visible para todos los navegadores para los botones*/
 
+.text-danger {
+    color: red;
+    font-size: 18px;
+}
+
+
 .button-cart {
-    background-color: #82da85 !important; /* Green */
+    background-color: #82da85 !important;
+    border: none !important;
+    color: white !important;
+    padding: 10px 22px !important;
+    text-align: center !important;
+    text-decoration: none !important;
+    display: inline-block !important;
+    font-size: 16px !important;
+    margin: 4px 2px !important;
+    cursor: pointer !important;
+    border-radius: 4px !important;
+}
+
+.button-cart-disabled{
+    background-color: #779378 !important;
     border: none !important;
     color: white !important;
     padding: 10px 22px !important;
