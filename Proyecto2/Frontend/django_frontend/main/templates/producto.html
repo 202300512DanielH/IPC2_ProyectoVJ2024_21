@@ -10,7 +10,7 @@
             <div class="col-md-6">
                 <h1>{{ producto.nombre }}</h1>
                 <p>{{ producto.descripcion }}</p>
-                <p>Precio: {{ producto.precio }}</p>
+                <p>Precio:Q. {{ producto.precio }}</p>
                 <form method="post">
                     {% csrf_token %}
                     {% if producto.cantidad == 0 %}
