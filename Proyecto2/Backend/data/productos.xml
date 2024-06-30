@@ -2,7 +2,7 @@
 <productos>
     <producto id="IPCMK-10">
         <nombre>Televisor</nombre>
-        <precio>854</precio>
+        <precio>854.00</precio>
         <descripcion>Illo harum vitae eligendi sed quasi fugiat deleniti sit.</descripcion>
         <categoria>Tecnologia</categoria>
         <cantidad>67</cantidad>

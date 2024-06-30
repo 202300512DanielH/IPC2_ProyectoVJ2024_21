@@ -9,13 +9,13 @@
     <usuario id="6" password="pass2">
         <nombre>Maria Lopez</nombre>
         <edad>25</edad>
-        <email>mariaexample.com</email>
+        <email>maria@example.com</email>
         <telefono>09876543</telefono>
     </usuario>
     <usuario id="5" password="pass3">
         <nombre>Carlos Ramirez</nombre>
         <edad>35</edad>
         <email>carlos@example.com</email>
-        <telefono>123456789</telefono>
+        <telefono>12345678</telefono>
     </usuario>
 </usuarios>

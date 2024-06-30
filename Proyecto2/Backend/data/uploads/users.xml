@@ -1,27 +1,21 @@
 <?xml version='1.0' encoding='utf-8'?>
 <users>
-   <usuario id="1" password="pass1">
+   <usuario id="7" password="pass1">
     <nombre>Juan Perez</nombre>
     <edad>30</edad>
     <email>juan@example.com</email>
     <telefono>12345678</telefono>
   </usuario>
-  <usuario id="2" password="pass2">
+  <usuario id="6" password="pass2">
     <nombre>Maria Lopez</nombre>
     <edad>25</edad>
     <email>maria@example.com</email>
     <telefono>09876543</telefono>
   </usuario>
-  <usuario id="4" password="pass3">
+  <usuario id="5" password="pass3">
     <nombre>Carlos Ramirez</nombre>
     <edad>35</edad>
     <email>carlos@example.com</email>
-    <telefono>12345678</telefono>
-  </usuario>
-  <usuario id="7" password="pass1">
-    <nombre>Juan Perez</nombre>
-    <edad>30</edad>
-    <email>juan@example.com</email>
     <telefono>12345678</telefono>
   </usuario>
 </users>

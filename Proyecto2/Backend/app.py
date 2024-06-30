@@ -393,24 +393,28 @@ def indentar(elemento_identar, level=0):
 def add_cart():
     global carrito
     try:
-        # Obtener nombre del producto y cantidad desde el frontend
-        data = request.form  # Cambiado a form si los datos se envían como formulario
+        data = request.form
         nombre_producto = data.get('nombre_producto')
-        cantidad = data.get('cantidad')
+        cantidad_solicitada = int(data.get('cantidad'))
 
-        if not nombre_producto or not cantidad:
+        if not nombre_producto or cantidad_solicitada is None:
             return jsonify({"error": "Faltan datos obligatorios (nombre_producto o cantidad)"}), 400
 
-        # Buscando el id del producto en el archivo de productos
+        # Buscando el producto y verificando el stock disponible
         tree = ET.parse(PRODUCTS_FILE)
         root = tree.getroot()
         id_producto = ""
+        cantidad_disponible = 0
         for producto in root.findall('producto'):
             if producto.find('nombre').text == nombre_producto:
                 id_producto = producto.get('id')
+                cantidad_disponible = int(producto.find('cantidad').text)
                 break
-            
-        carrito.agregar_producto(id_producto, nombre_producto, cantidad)
+
+        if cantidad_solicitada > cantidad_disponible:
+            return jsonify({"error": "Cantidad solicitada supera el stock disponible"}), 400
+
+        carrito.agregar_producto(id_producto, nombre_producto, cantidad_solicitada)
 
         return jsonify({"success": f"Producto '{nombre_producto}' añadido al carrito correctamente"}), 200
 
@@ -418,6 +422,7 @@ def add_cart():
         print(f"Error: {str(e)}")
         return jsonify({"error": str(e)}), 500
 
+    
 # Endpoint para obtener los productos del carrito de compras
 @app.route('/get_cart', methods=['GET'])
 def get_cart():
