@@ -2,54 +2,52 @@
 <purchases>
    <compras>
     <compra numero="1">
-      <usuario id=" " />
-      <productos>
-        <producto id="IPCMK-2">
-          <nombre>Queso</nombre>
-          <cantidad>1</cantidad>
-        </producto>
-      </productos>
-      <total>6098.77</total>
-    </compra>
-    <compra numero="2">
-      <usuario id=" " />
-      <productos>
-        <producto id="IPCMK-3">
-          <nombre>Mi Primer libro de Poesia</nombre>
-          <cantidad>33</cantidad>
-        </producto>
-      </productos>
-      <total>282414.0</total>
-    </compra>
-    <compra numero="3">
-      <usuario id="1">Juan Perez</usuario>
-      <productos>
-        <producto id="IPCMK-2">
-          <nombre>Queso</nombre>
-          <cantidad>49</cantidad>
-        </producto>
-      </productos>
-      <total>298839.73000000004</total>
-    </compra>
-    <compra numero="4">
-      <usuario id="1">Juan Perez</usuario>
-      <productos>
-        <producto id="IPCMK-5">
-          <nombre>Camara</nombre>
-          <cantidad>27</cantidad>
-        </producto>
-      </productos>
-      <total>231078.15000000002</total>
-    </compra>
-    <compra numero="5">
-      <usuario id="1">Juan Perez</usuario>
+      <usuario id="IPC2-01">Monica Deleon</usuario>
       <productos>
         <producto id="IPCMK-1">
           <nombre>Televisor</nombre>
-          <cantidad>20</cantidad>
+          <cantidad>67</cantidad>
         </producto>
       </productos>
-      <total>17085.0</total>
+      <total>57234.75</total>
+    </compra>
+    <compra numero="2">
+      <usuario id="IPC2-01">Monica Deleon</usuario>
+      <productos>
+        <producto id="IPCMK-2">
+          <nombre>Queso</nombre>
+          <cantidad>4</cantidad>
+        </producto>
+      </productos>
+      <total>24395.08</total>
+    </compra>
+    <compra numero="3">
+      <usuario id="IPC2-01">Monica Deleon</usuario>
+      <productos>
+        <producto id="IPCMK-7">
+          <nombre>Pesas</nombre>
+          <cantidad>3</cantidad>
+        </producto>
+        <producto id="IPCMK-6">
+          <nombre>Diario de Anne Frank</nombre>
+          <cantidad>5</cantidad>
+        </producto>
+        <producto id="IPCMK-11">
+          <nombre>Cortina</nombre>
+          <cantidad>6</cantidad>
+        </producto>
+      </productos>
+      <total>29701.220000000005</total>
+    </compra>
+    <compra numero="4">
+      <usuario id="IPC2-02">Tamara Pratt</usuario>
+      <productos>
+        <producto id="IPCMK-6">
+          <nombre>Diario de Anne Frank</nombre>
+          <cantidad>8</cantidad>
+        </producto>
+      </productos>
+      <total>42966.08</total>
     </compra>
   </compras>
 </purchases>
