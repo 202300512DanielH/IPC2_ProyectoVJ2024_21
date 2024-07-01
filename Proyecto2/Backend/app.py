@@ -209,6 +209,7 @@ def carga_masiva_productos():
             existing_ids.add(id_producto)
             productos_cargados += 1
 
+        indentar(existing_root)
         existing_tree.write(PRODUCTS_FILE, encoding="utf-8", xml_declaration=True)
 
         if errors:
@@ -414,7 +415,7 @@ def add_cart():
         if cantidad_solicitada > cantidad_disponible:
             return jsonify({"error": "Cantidad solicitada supera el stock disponible"}), 400
 
-        carrito.agregar_producto(id_producto, nombre_producto, cantidad_solicitada)
+        carrito.agregar_producto(id_producto, nombre_producto, str(cantidad_solicitada))
 
         return jsonify({"success": f"Producto '{nombre_producto}' añadido al carrito correctamente"}), 200
 
@@ -557,55 +558,64 @@ def comprar():
 @app.route('/descarga_compras', methods=['GET'])
 def descarga_compras():
     global compras
-    #escribiendo en el archivo de compras
+    # Escribiendo en el archivo de compras
     tree = ET.parse(PURCHASES_FILE)
     root = tree.getroot()
-    
-    #si no hay compras en la lista de compras, se manda un xml vacio
+
+    # Si no hay compras en la lista de compras, se manda un XML vacío
     if len(compras) == 0:
         indentar(root)
         tree.write(PURCHASES_FILE, encoding="utf-8", xml_declaration=True)
         file_path = PURCHASES_FILE
         return send_file(file_path, as_attachment=True)
     
-    #Limpiando el archivo de compras
-    root.clear()
+    # Obteniendo el número de compra más alto en root para asignar el siguiente número de compra
+    compras_element = root.find('compras')
+    if compras_element is None:
+        compras_element = ET.SubElement(root, 'compras')
     
-    #creando el elemento compras
-    compras_element = ET.Element('compras')
-    root.append(compras_element)
+    ultima_compra = compras_element.findall('compra')
+    numero_ultima_compra = 0
     
-    #recorriendo la lista de compras
+    if len(ultima_compra) != 0:
+        numero_ultima_compra = int(ultima_compra[-1].get('numero'))
+    else:
+        numero_ultima_compra = 0
+    
+    # Recorriendo la lista de compras
     for compra in compras:
-        #creando el elemento compra
-        compra_element = ET.Element('compra')
-        compra_element.set('numero', compra['num_compra'])
+        numero_ultima_compra += 1
+        numero_ultima_compra_str = str(numero_ultima_compra)
         
-        #creando el elemento usuario
+        # Creando el elemento compra
+        compra_element = ET.Element('compra')
+        compra_element.set('numero', numero_ultima_compra_str)
+        
+        # Creando el elemento usuario
         usuario_element = ET.SubElement(compra_element, 'usuario')
         usuario_element.set('id', compra['id_usuario'])
         usuario_element.text = compra['nombre_usuario']
         
-        #creando el elemento productos
+        # Creando el elemento productos
         productos_element = ET.SubElement(compra_element, 'productos')
         
-        #recorriendo la lista de productos en la compra
+        # Recorriendo la lista de productos en la compra
         for producto in compra['productos_carrito']:
-            #creando el elemento producto
+            # Creando el elemento producto
             producto_element = ET.Element('producto')
             producto_element.set('id', producto['id'])
             
-            #creando el elemento nombre
+            # Creando el elemento nombre
             nombre_element = ET.SubElement(producto_element, 'nombre')
             nombre_element.text = producto['producto']
             
-            #creando el elemento cantidad
+            # Creando el elemento cantidad
             cantidad_element = ET.SubElement(producto_element, 'cantidad')
-            cantidad_element.text = (producto['cantidad'])
+            cantidad_element.text = str(producto['cantidad'])
             
             productos_element.append(producto_element)
         
-        #creando el elemento total
+        # Creando el elemento total
         total_element = ET.SubElement(compra_element, 'total')
         total_element.text = str(compra['total'])
         
@@ -614,7 +624,10 @@ def descarga_compras():
     indentar(root)
     tree.write(PURCHASES_FILE, encoding="utf-8", xml_declaration=True)
     
-    #descargar el archivo    
+    # Vaciando la lista de compras 
+    compras = []
+    
+    # Descargar el archivo    
     file_path = PURCHASES_FILE
     return send_file(file_path, as_attachment=True)
 
